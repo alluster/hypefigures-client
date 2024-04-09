@@ -28,8 +28,8 @@ const StyledSelect = styled.select`
     -webkit-appearance: none;
     background-position-x: 98%;
     ${({ disabled }) =>
-        disabled &&
-        `
+		disabled &&
+		`
 		border: 1px solid gray;
 		background-color: #dddddd;
 
@@ -44,47 +44,48 @@ const Label = styled.label`
     margin-bottom: ${(props) => props.theme.grid.divider_2};
     display: inline-block;
     ${({ disabled }) =>
-        disabled &&
-        `
+		disabled &&
+		`
 		color: gray;
 
 	`};
 `;
 
 const Select = ({ label, required, register, name, options, type }) => {
-    const [disabled, setDisabled] = useState(false);
-    const checkOptions = () => {
-        if (options && options.length > 0) {
-            setDisabled(false);
-        } else {
-            setDisabled(true);
-        }
-    };
-    useEffect(() => {
-        checkOptions();
-    }, [options]);
-    return (
-        <Wrapper>
-            <Label disabled={disabled}>{label}</Label>
-            <StyledSelect
-                {...register(name, { required })}
-                label={label}
-                type={type}
-                disabled={disabled}
-            >
-                <option hidden></option>
+	const [disabled, setDisabled] = useState(false);
 
-                {options &&
-                    options.map((item, i) => {
-                        return (
-                            <option key={i} value={item.id}>
-                                {item.title}
-                            </option>
-                        );
-                    })}
-            </StyledSelect>
-        </Wrapper>
-    );
+	const checkOptions = () => {
+		if (options && options.length > 0) {
+			setDisabled(false);
+		} else {
+			setDisabled(true);
+		}
+	};
+	useEffect(() => {
+		checkOptions();
+	}, [options]);
+	return (
+		<Wrapper>
+			<Label disabled={disabled}>{label}</Label>
+			<StyledSelect
+				{...register(name, { required })}
+				label={label}
+				type={type}
+				disabled={disabled}
+			>
+				<option hidden></option>
+
+				{options &&
+					options.map((item, i) => {
+						return (
+							<option key={i} value={item.id}>
+								{item.title}
+							</option>
+						);
+					})}
+			</StyledSelect>
+		</Wrapper>
+	);
 };
 
 export default Select;

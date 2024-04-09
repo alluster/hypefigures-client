@@ -7,31 +7,31 @@ const Wrapper = styled.div`
 `;
 
 const Label = styled.p`
-    // color: ${(props) => props.theme.colors.gray_80};
+    color: ${(props) => props.theme.colors.gray_80};
     font-size: 22px;
     font-weight: 400;
     // text-transform: uppercase;
     margin-bottom: ${(props) => props.theme.grid.divider_2};
 `;
 const LabelSmall = styled.p`
-    // color: ${(props) => props.theme.colors.gray_80};
+    color: ${(props) => props.theme.colors.gray_80};
     font-size: 14px;
     font-weight: 400;
     // text-transform: uppercase;
-    margin-bottom: ${(props) => props.theme.grid.divider_1};
+    // margin-bottom: ${(props) => props.theme.grid.divider_1};
 `;
 const Title = styled.h3`
     // color: ${(props) => props.theme.colors.gray_80};
     font-weight: 400;
     // text-transform: uppercase;
-    margin-bottom: ${(props) => props.theme.grid.divider_2};
+    // margin-bottom: ${(props) => props.theme.grid.divider_2};
 `;
 const TitleSmall = styled.h5`
     // color: ${(props) => props.theme.colors.gray_80};
-    font-size: 23px;
+    font-size: 20px;
     font-weight: 400;
     // text-transform: uppercase;
-    margin-bottom: ${(props) => props.theme.grid.divider_1};
+    // margin-bottom: ${(props) => props.theme.grid.divider_1};
 `;
 const Description = styled.p`
     color: ${(props) => props.theme.colors.gray_80};
@@ -42,8 +42,8 @@ const Description = styled.p`
 `;
 const Content = styled.div`
     ${({ line }) =>
-        line &&
-        `
+		line &&
+		`
 	padding-top: 16px;
 	padding-bottom: 16px;
 	padding-left: 32px;
@@ -55,23 +55,23 @@ const Content = styled.div`
 `;
 
 const TextWithLabel = ({ title, label, description, line, small }) => {
-    return (
-        <Wrapper>
-            {small ? (
-                <Content line={line}>
-                    <LabelSmall>{label || ''}</LabelSmall>
-                    <TitleSmall>{title || ''}</TitleSmall>
-                    <Description>{description || ''}</Description>
-                </Content>
-            ) : (
-                <Content line={line}>
-                    <Label>{label || ''}</Label>
-                    <Title>{title || ''}</Title>
-                    <Description>{description || ''}</Description>
-                </Content>
-            )}
-        </Wrapper>
-    );
+	return (
+		<Wrapper>
+			{small ? (
+				<Content line={line}>
+					<LabelSmall>{label || ''}</LabelSmall>
+					<TitleSmall>{title || ''}</TitleSmall>
+					<Description>{description || ''}</Description>
+				</Content>
+			) : (
+				<Content line={line}>
+					<Label>{label || ''}</Label>
+					<Title>{title || ''}</Title>
+					<Description>{description || ''}</Description>
+				</Content>
+			)}
+		</Wrapper>
+	);
 };
 
 export default TextWithLabel;

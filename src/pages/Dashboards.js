@@ -30,6 +30,7 @@ const Dashboards = () => {
 	const {
 		dashboards,
 		Get,
+		Post,
 		loadingDashboards,
 		setDashboards,
 		setLoadingDashboards,
@@ -80,8 +81,14 @@ const Dashboards = () => {
 
 	const onSubmit = async (data) => {
 		try {
-
-			setNotifyMessage(`New dashboard ${data.dashboardName} added`);
+			const response = await Post({ params: { title: data.dashboardName, description: data.dashboardDescription }, path: 'dashboard', dataSetter: setDashboards, loader: setLoadingDashboards })
+			console.log('response from response', response.status)
+			if (response.status === 200) {
+				setNotifyMessage(`New dashboard ${data.dashboardName} added`);
+			}
+			else {
+				setNotifyMessage(`New dashboard ${data.dashboardName} could not be added`);
+			}
 		} catch (error) {
 			console.log(error);
 			setNotifyMessage('Something went wrong');
@@ -107,7 +114,7 @@ const Dashboards = () => {
 					onClickFunction={() => setOpenModal(!openModal)}
 					locationText=""
 					title="Dashboards"
-					description="Your organization data dashboards"
+					description="Your team data dashboards"
 				/>
 				{DashboardsList()}
 			</Container>

@@ -25,32 +25,33 @@ const ButtonContainer = styled.div`
 `;
 
 const HeaderText = ({
-    locationText,
-    title,
-    description,
-    onClickFunction,
-    buttonTitle,
+	locationText,
+	title,
+	description,
+	onClickFunction,
+	buttonTitle,
 }) => {
-    return (
-        <HeaderTextWrapper>
-            <TextContainer>
-                <h6>{locationText || ''}</h6>
-                <h4>{title || ''}</h4>
-                <h5>{description || ''}</h5>
-            </TextContainer>
-            {buttonTitle != null && (
-                <ButtonContainer>
-                    <Button
-                        type="button"
-                        primary
-                        onClick={() => onClickFunction()}
-                    >
-                        {buttonTitle}
-                    </Button>
-                </ButtonContainer>
-            )}
-        </HeaderTextWrapper>
-    );
+	return (
+		<HeaderTextWrapper>
+			<TextContainer>
+				<h6>{locationText || ''}</h6>
+				<h4>{title || ''}</h4>
+				<h5>{description || ''}</h5>
+			</TextContainer>
+			{buttonTitle != null && (
+				<ButtonContainer>
+					<Button
+						small
+						type="button"
+						primary
+						onClick={() => onClickFunction()}
+					>
+						{buttonTitle}
+					</Button>
+				</ButtonContainer>
+			)}
+		</HeaderTextWrapper>
+	);
 };
 
 export default HeaderText;

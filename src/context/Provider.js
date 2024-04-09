@@ -21,6 +21,11 @@ const Provider = ({ children }) => {
 	const [analyticsData, setAnalyticsData] = useState([]);
 	const [user, setUser] = useState([]);
 	const [loadingUser, setLoadingUser] = useState(false);
+	const [loadingTeams, setLoadingTeams] = useState(false);
+	const [teams, setTeams] = useState([]);
+	const [dataProviders, setDataProviders] = useState([]);
+	const [loadingDataProviders, setLoadingDataProviders] = useState(false);
+
 
 	const CheckAuth = async () => {
 		try {
@@ -84,10 +89,13 @@ const Provider = ({ children }) => {
 				dataSetter([])
 			}
 			loader(false)
-			return response
+			return response.data
 		}
 		catch (err) {
 			console.log(err)
+		}
+		finally {
+			loader(false)
 		}
 	};
 
@@ -123,6 +131,9 @@ const Provider = ({ children }) => {
 	}
 	useEffect(() => {
 		CheckAuth();
+		Get({ params: {}, path: 'dashboard', dataSetter: setDashboards, loader: setLoadingDashboards })
+		Get({ params: {}, path: 'data_provider', dataSetter: setDataProviders, loader: setLoadingDataProviders })
+
 	}, [])
 	useEffect(() => {
 		localStorage.setItem('path', path);
@@ -138,16 +149,25 @@ const Provider = ({ children }) => {
 				analyticsData,
 				setLoadingAnalyticsData,
 				setAnalyticsData,
+				loadingDataProviders,
+				setLoadingDataProviders,
+				dataProviders,
+				setDataProviders,
 				user,
 				Get,
 				setUser,
 				loadingUser,
+				loadingTeams,
+				setLoadingTeams,
+				teams,
+				setTeams,
 				setLoadingUser,
 				isAuthenticated,
 				Post,
 				setDashboards,
 				setDashboard,
 				dashboard,
+				dataPoints,
 				setDataPoints,
 				setLoadingDataPoints,
 				loadingDataPoints,

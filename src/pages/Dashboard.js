@@ -21,6 +21,7 @@ import Button from '../components/Button';
 import ButtonGoBack from '../components/ButtonGoBack';
 import SpreadsheetGoogle from '../components/Forms/DataPoints/SpreadsheetGoogle';
 import SpinnerSmall from '../components/SpinnerSmall';
+import FormGoogleSpreadsheetDataPoint from '../components/Forms/DataPoints/FormGoogleSpreadsheetDataPoint';
 
 const Logo = styled.div`
    	max-width: 40px;
@@ -112,7 +113,9 @@ const Dashboard = () => {
 		setAnalyticsData,
 		setLoadingAnalyticsData,
 		loadingAnalyticsData,
-		analyticsData
+		analyticsData,
+		loadingDashboards,
+		setLoadingDataPoints
 	} = useContext(AppContext);
 	const {
 		control,
@@ -124,14 +127,14 @@ const Dashboard = () => {
 
 	const DataPointSelectorHandler = () => {
 		switch (dataPointSelector) {
-			// case 'Google Sheets':
-			// 	return (
-			// 		<FormGoogleSpreadsheetDataPoint
-			// 			setOpenDataPointModal={setOpenDataPointModal}
-			// 			googleSheetsList={(googleSheets && googleSheets) || []}
-			// 			dashboardsList={(dashboards && dashboards) || []}
-			// 		/>
-			// 	);
+			case 'Google Sheets':
+				return (
+					<FormGoogleSpreadsheetDataPoint
+						setOpenDataPointModal={setOpenDataPointModal}
+						googleSheetsList={(googleSheets && googleSheets) || []}
+						dashboardsList={(dashboards && dashboards) || []}
+					/>
+				);
 			case 'Google Sheets with Spreadsheet':
 				return (
 					<SpreadsheetGoogle
@@ -146,48 +149,51 @@ const Dashboard = () => {
 		}
 	};
 	const DataPoints = () => {
-
+		if (loadingDataPoints) {
+			return <p>Loading data...</p>;
+		}
 		return (
-			<div>
-				<CardGrid>
-					{dataPoints && dataPoints.map((item, i) => {
-						return (
-							<CardDataPoint
-								// loading={item.value.loaderFunction}
-								key={i}
-								to={`/datapoints/${item.id}`}
-								cell={item.cell || ''}
-								spreadsheetId={item.spreadsheet_id || ''}
-								sheetId={item.sheet_id || ''}
-								title={item.title}
-								description={item.sheet_title}
-							// value={item.value}
-							></CardDataPoint>
-						);
-					})}
-				</CardGrid>
-			</div>
+			// <CardGrid>
+
+			dataPoints.length > 0 ? dataPoints.map((item, i) => {
+				return (
+					<CardDataPoint
+						type='google-analytics'
+						key={i}
+						to={`/datapoints/${item.id}`}
+						cell={item.cell || ''}
+						spreadsheetId={item.spreadsheet_id || ''}
+						sheetId={item.sheet_id || ''}
+						title={item.title}
+						description={item.sheet_title}
+						value={item.value}
+					/>
+				);
+			}) :
+				<p>This dashboard does not contain any data yet.</p>
+
+
+			// </CardGrid>
 		);
 
 	};
 
 	const DashboardContent = () => {
-		if (loadingDataPoints) {
-			return <p>Loading data...</p>;
-		}
 
-		<div>
-			<p>This dashboard does not contain any data yet.</p>
-			<Button
-				type="button"
-				primary
-				onClick={() =>
-					setOpenDataPointModal(!openDataPointModal)
-				}
-			>
-				Add new Data point
-			</Button>
-		</div>
+		return (
+			<div>
+				<HeaderText
+					buttonTitle="Add new datapoint"
+					onClickFunction={() => setOpenDataPointModal(!openDataPointModal)}
+					locationText=""
+					title="Datapoints"
+					description="Your dahboard datapoints"
+				/>
+				{DataPoints()}
+
+			</div >
+		)
+
 
 	}
 
@@ -261,7 +267,7 @@ const Dashboard = () => {
 					</LinksContainer>
 				</Accordion> */}
 				{/* <SideBarSubTitle>All Dashboards</SideBarSubTitle> */}
-				{/* <Accordion title="Dashboards">
+				<Accordion title="Dashboards">
 					<LinksContainer>
 						{loadingDashboards ? (
 							<p>Loading dashboard data....</p>
@@ -289,7 +295,7 @@ const Dashboard = () => {
 					>
 						Create New
 					</Button>
-				</Accordion> */}
+				</Accordion>
 			</SideBar>
 		);
 	};
@@ -298,6 +304,7 @@ const Dashboard = () => {
 			return <SpinnerSmall />
 		} else {
 			if (analyticsData.length > 0) {
+				console.log(analyticsData)
 				return (
 					<div>
 						<h2>Report Data</h2>
@@ -329,23 +336,28 @@ const Dashboard = () => {
 
 	useEffect(() => {
 		Get({ params: { id: id }, path: 'dashboard', dataSetter: setDashboard, loader: setLoadingDashboard })
-		Get({ path: 'google/auth_google', dataSetter: setAnalyticsData, loader: setLoadingAnalyticsData })
+		Get({ params: { dashboard_id: id }, path: 'data_point', dataSetter: setDataPoints, loader: setLoadingDataPoints })
+		// Get({ path: 'google/auth_google', dataSetter: setAnalyticsData, loader: setLoadingAnalyticsData })
 	}, [id])
 
 	useEffect(() => {
 		SideBarContainer()
-		console.log(dashboard.length > 0 && dashboard[0].title)
 	}, [dashboard])
 
 	useEffect(() => {
 		setPath('/dashboard');
 
 	}, []);
+	useEffect(() => {
+		DataPoints()
+	}, [dataPoints])
+
 
 	return (
 		<Content>
 			{SideBarContainer()}
-			<Container>{DashboardContent()}
+			<Container>
+				{DashboardContent()}
 				<AnalyticsDataContainer />
 			</Container>
 			<Modal
@@ -406,11 +418,11 @@ const Dashboard = () => {
 								/>
 							</Logo>
 							<div>
-								<p>integration</p>
+								<p>Integration method</p>
 								<h5>Google Sheets with selected Cell</h5>
 							</div>
 						</Card>
-						<Card
+						{/* <Card
 							onClick={() =>
 								setDataPointSelector(
 									'Google Sheets with Spreadsheet',
@@ -428,7 +440,7 @@ const Dashboard = () => {
 								<p>integration</p>
 								<h5>Google Sheets with Spreadsheet</h5>
 							</div>
-						</Card>
+						</Card> */}
 					</div>
 				) : (
 					<div>

@@ -24,82 +24,70 @@ const Wrapper = styled.div`
 `;
 
 const DataSources = () => {
-    const { user } = useAuth0();
-    const { setPath } = useContext(AppContext);
+	const { user } = useAuth0();
+	const { setPath, loadingDataProviders, dataProviders } = useContext(AppContext);
 
-    const [dataSources, setDataSources] = useState([]);
-    const { data, error, loading } = useQuery(
-        LOAD_GOOGLE_SPREADSHEET_DATA_SOURCES,
-        {
-            variables: { org_id: user.org_id },
-        },
-    );
-    useEffect(() => {
-        setPath('/dataSources');
-        window.scroll(0, 0);
-    }, []);
 
-    const DataSources = () => {
-        if (loading) {
-            return <p>Loading data...</p>;
-        }
-        if (error) {
-            console.log('error occured', error);
-        } else {
-            return dataSources.map((item, i) => {
-                return (
-                    <Card key={i}>
-                        {/* <Logo>
+	useEffect(() => {
+		setPath('/dataSources');
+		window.scroll(0, 0);
+	}, []);
+
+	const DataSources = () => {
+		if (loadingDataProviders) {
+			return <p>Loading data...</p>;
+		}
+		else {
+			return (
+				dataProviders.length > 0 ? dataProviders.map((item, i) => {
+					return (
+						<Card key={i}>
+							{/* <Logo>
 								<img src="/google_sheets.png" alt="Google Sheets" />
 							</Logo> */}
 
-                        <TextWithLabel
-                            small
-                            title={item.title}
-                            label="Data Provider"
-                        />
-                        <TextWithLabel
-                            small
-                            title={item.service_account}
-                            label="Service Account Email"
-                        />
-                        <DividerLine />
-                        <Button small primary to="/datasources/google">
-                            Integrate
-                        </Button>
-                    </Card>
-                );
-            });
-        }
-    };
+							<TextWithLabel
+								small
+								title={item.title}
+								label="Data Provider"
+							/>
+							<TextWithLabel
+								small
+								title={item.service_account}
+								label="Service Account Email"
+							/>
 
-    const {
-        control,
-        register,
-        handleSubmit,
-        reset,
-        formState: { errors },
-    } = useForm();
+						</Card>
+					);
+				}) :
+					<h2>No data Providers added</h2>);
 
-    useEffect(() => {
-        window.scroll(0, 0);
+		}
+	};
 
-        if (data) {
-            setDataSources(data.getAllGoogleSpreadsheetDataSources);
-        }
-    }, [data]);
+	const {
+		control,
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm();
 
-    return (
-        <Container>
-            <ButtonGoBack text="Go Back" />
-            <HeaderText
-                locationText=""
-                title="Data Streams"
-                description="List of all Data Streams available for your organization."
-            />
-            <Wrapper>{DataSources()}</Wrapper>
-        </Container>
-    );
+	useEffect(() => {
+		window.scroll(0, 0);
+	}, []);
+
+	return (
+		<Container>
+			<ButtonGoBack text="Go Back" />
+			<HeaderText
+				locationText=""
+				title="Data Integrations"
+				description="List of all Data Streams available for you."
+			/>
+			<Wrapper>{DataSources()}</Wrapper>
+		</Container>
+	);
 };
 
 export default DataSources;

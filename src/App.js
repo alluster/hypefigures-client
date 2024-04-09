@@ -49,7 +49,7 @@ const GlobalStyle = createGlobalStyle`
 		color: ${(props) => props.theme.colors.black};
 		hyphens: manual;
 		text-rendering: optimizeLegibility;
-		background-color: ${(props) => props.theme.colors.white};
+		background-color: ${(props) => props.theme.colors.gray_20};
 	}
 
     

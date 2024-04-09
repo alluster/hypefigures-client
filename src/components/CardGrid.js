@@ -7,15 +7,15 @@ const CardGridWrapper = styled.div`
 `;
 
 const CardGrid = ({ children }) => {
-    return (
-        <CardGridWrapper>
-            <ResponsiveMasonry
-                columnsCountBreakPoints={{ 350: 1, 1250: 2, 1300: 3 }}
-            >
-                <Masonry>{children}</Masonry>
-            </ResponsiveMasonry>
-        </CardGridWrapper>
-    );
+	return (
+		<CardGridWrapper>
+			<ResponsiveMasonry
+				columnsCountBreakPoints={{ 350: 1, 1250: 2, 1300: 3 }}
+			>
+				<Masonry>{children || []}</Masonry>
+			</ResponsiveMasonry>
+		</CardGridWrapper>
+	);
 };
 
 export default CardGrid;
