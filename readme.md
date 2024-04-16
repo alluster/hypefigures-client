@@ -1,5 +1,7 @@
 ## Hyperfigures React front end client web app
 
+![screenshot](screenshot-1.png)
+
 #### Idea:
 
 Crunching data from various endpoints to create AI generated analysis and sharing with team members.
