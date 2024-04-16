@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { device } from '../device';
-import Button from '../components/Button';
+import Button from '../components/Button/Button';
 
 const ButtonRow = styled.div`
     display: flex;
@@ -41,8 +41,8 @@ const StyledInput = styled.input`
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
     ${({ disabled }) =>
-        disabled &&
-        `
+		disabled &&
+		`
 	border: 1px solid gray;
 	background-color: #dddddd;
 
@@ -88,8 +88,8 @@ const StyledTextArea = styled.textarea`
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
     ${({ disabled }) =>
-        disabled &&
-        `
+		disabled &&
+		`
 		border: 1px solid gray;
 		background-color: #dddddd;
 
@@ -99,111 +99,118 @@ const StyledTextArea = styled.textarea`
 `;
 
 const FormCompiler = ({
-    fields,
-    onSubmit,
-    buttonTitle,
-    errors,
-    openModal,
-    register,
-    onChange,
-    noButtons,
+	fields,
+	onSubmit,
+	buttonTitle,
+	errors,
+	openModal,
+	register,
+	noButtons,
 }) => {
-    return (
-        <form onSubmit={onSubmit()}>
-            {fields.length > 0 &&
-                fields.map((item, i) => {
-                    let name = item.name;
-                    switch (item.type) {
-                        case 'input':
-                            return (
-                                <Wrapper key={i}>
-                                    <Label>{item.label}</Label>
-                                    <StyledInput
-                                        type="text"
-                                        {...register(item.name, {
-                                            required: item.required,
-                                        })}
-                                        label={item.label}
-                                        placeholder={item.placeholder}
-                                        name={item.name}
-                                    />
-                                    {name in errors ? (
-                                        <p>{item.errorMessage}</p>
-                                    ) : null}
-                                </Wrapper>
-                            );
-                        case 'textarea':
-                            return (
-                                <Wrapper key={i}>
-                                    <Label>{item.label}</Label>
-                                    <StyledTextArea
-                                        type="textarea"
-                                        {...register(item.name, {
-                                            required: item.required,
-                                        })}
-                                        label={item.label}
-                                        placeholder={item.placeholder}
-                                        name={item.name}
-                                        rows={3}
-                                    />
-                                    {name in errors ? (
-                                        <p>{item.errorMessage}</p>
-                                    ) : null}
-                                </Wrapper>
-                            );
-                        case 'select':
-                            return (
-                                <Wrapper key={i}>
-                                    <Label>{item.label}</Label>
-                                    <StyledSelect
-                                        type="select"
-                                        {...register(item.name, {
-                                            required: item.required,
-                                        })}
-                                        label={item.label}
-                                        placeholder={item.placeholder}
-                                        name={item.name}
-                                        onChange={(e) =>
-                                            item.onChange(e.target.value) ||
-                                            null
-                                        }
-                                    >
-                                        <option hidden></option>
-                                        <option value={null}></option>
+	return (
+		<form onSubmit={onSubmit()}>
+			{fields.length > 0 &&
+				fields.map((item, i) => {
+					let name = item.name;
+					switch (item.type) {
+						case 'input':
+							return (
+								<Wrapper key={i}>
+									<Label>{item.label}</Label>
+									<StyledInput
+										type="text"
+										{...register(item.name, {
+											required: item.required,
+										})}
+										label={item.label}
+										placeholder={item.placeholder}
+										name={item.name}
+									/>
+									{name in errors ? (
+										<p>{item.errorMessage}</p>
+									) : null}
+								</Wrapper>
+							);
+						case 'textarea':
+							return (
+								<Wrapper key={i}>
+									<Label>{item.label}</Label>
+									<StyledTextArea
+										type="textarea"
+										{...register(item.name, {
+											required: item.required,
+										})}
+										label={item.label}
+										placeholder={item.placeholder}
+										name={item.name}
+										rows={3}
+									/>
+									{name in errors ? (
+										<p>{item.errorMessage}</p>
+									) : null}
+								</Wrapper>
+							);
+						case 'select':
+							return (
+								<Wrapper key={i}>
+									<Label>{item.label}</Label>
+									<StyledSelect
+										type="select"
+										{...register(item.name, {
+											required: item.required,
+										})}
+										label={item.label}
+										placeholder={item.placeholder}
+										name={item.name}
+										onChange={(e) =>
+											item.onChange(e.target.value) ||
+											null
+										}
+									>
+										<option hidden></option>
+										<option value={null}></option>
 
-                                        {item.options &&
-                                            item.options.map((item, i) => {
-                                                return (
-                                                    <option
-                                                        key={i}
-                                                        value={item.id}
-                                                    >
-                                                        {item.title}
-                                                    </option>
-                                                );
-                                            })}
-                                    </StyledSelect>
-                                    {name in errors ? (
-                                        <p>{item.errorMessage}</p>
-                                    ) : null}
-                                </Wrapper>
-                            );
-                        default:
-                            return <p>No form element</p>;
-                    }
-                })}
-            {noButtons ? null : (
-                <ButtonRow>
-                    <Button primary dividerRight type="submit">
-                        {buttonTitle || 'Create'}
-                    </Button>
-                    <Button type="reset" white onClick={() => openModal(false)}>
-                        Peruuta
-                    </Button>
-                </ButtonRow>
-            )}
-        </form>
-    );
+										{item.options &&
+											item.options.map((item, i) => {
+												return (
+													<option
+														key={i}
+														value={item.id}
+													>
+														{item.title}
+													</option>
+												);
+											})}
+									</StyledSelect>
+									{name in errors ? (
+										<p>{item.errorMessage}</p>
+									) : null}
+								</Wrapper>
+							);
+						default:
+							return <p>No form element</p>;
+					}
+				})}
+			{noButtons ? null : (
+				<ButtonRow>
+					<Button
+						type='submit'
+						dividerRight
+					>
+						{buttonTitle || 'Create'}
+
+					</Button>
+					<Button
+						white
+						onClick={() => openModal(false)}
+
+					>
+						Peruuta
+					</Button>
+				</ButtonRow>
+			)}
+		</form>
+	);
 };
 
 export default FormCompiler;

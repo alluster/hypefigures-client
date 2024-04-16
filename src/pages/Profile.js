@@ -2,15 +2,15 @@ import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { AppContext } from '../context/Context';
 import { device } from '../device';
-import Button from '../components/Button';
-import Container from '../components/Container';
+import Button from '../components/Button/Button';
+import Container from '../components/Container/Container';
 import { useAuth0 } from '@auth0/auth0-react';
-import Modal from '../components/Modal';
+import Modal from '../components/Modal/Modal';
 import FormCompiler from '../supportFunctions/FormComplier';
 import { useForm } from 'react-hook-form';
-import HeaderText from '../components/HeaderText';
-import Card from '../components/Card';
-import CardGrid from '../components/CardGrid';
+import HeaderText from '../components/Text/HeaderText';
+import Card from '../components/Card/Card';
+import CardGrid from '../components/Card/CardGrid';
 
 const Wrapper = styled.div`
     @media ${device.laptop} {
@@ -84,6 +84,10 @@ const Profile = () => {
 		Get({ params: {}, path: 'team', dataSetter: setTeams, loader: setLoadingTeams })
 
 	}, []);
+	const Logout = () => {
+		localStorage.removeItem('token');
+		location.reload();
+	}
 	return (
 		<Container>
 			<HeaderText
@@ -95,19 +99,14 @@ const Profile = () => {
 			/>
 			{TeamsList()}
 
-			{isAuthenticated ? (
-				<div>
 
-					<Button primary type="button" onClick={() => {
-						localStorage.removeItem('token');
-						location.reload();
-					}}>
-						Logout
-					</Button>
-				</div>
-			) : (
-				<p>login</p>
-			)}
+			<Button
+				onClick={Logout}
+				type='button'
+			>
+				Logout
+			</Button>
+
 			<Modal
 				open={openModal}
 				openModal={() => setOpenModal()}

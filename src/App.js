@@ -10,13 +10,13 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 
 
-import Navigation from './components/Navigation';
-import Notification from './components/Notification';
-import SpinnerSmall from './components/SpinnerSmall';
-import Footer from './components/Footer';
+import Navigation from './components/Navigation/Navigation';
+import Notification from './components/Notification/Notification';
+import SpinnerSmall from './components/Spinner/SpinnerSmall';
+import Footer from './components/Navigation/Footer';
 import DataSources from './pages/DataSources';
-import TopNav from './components/TopNav';
-import Spinner from './components/Spinner';
+import TopNav from './components/Navigation/TopNav';
+import Spinner from './components/Spinner/Spinner';
 //pages
 const Profile = React.lazy(() => import('./pages/Profile'));
 const Dashboard = React.lazy(() => import('./pages/Dashboard'));
@@ -30,9 +30,10 @@ const DataPoints = React.lazy(() => import('./pages/DataPoints'));
 
 import DataSourceGoogle from './pages/DataSourceGoogle';
 import DashboardPublic from './pages/DashboardPublic';
-import Container from './components/Container';
+import Container from './components/Container/Container';
 import { AppContext } from './context/Context';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
+import Team from './pages/Team';
 
 library.add(fas);
 
@@ -245,6 +246,11 @@ const App = () => {
 							exact
 							path="/datapoints/:id"
 							component={DataPoint}
+						/>
+						<PrivateRoute
+							exact
+							path="/teams/:id"
+							component={Team}
 						/>
 						<PrivateRoute
 							exact

@@ -1,15 +1,15 @@
 import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { AppContext } from '../context/Context';
-import Card from '../components/Card';
-import HeaderText from '../components/HeaderText';
-import Container from '../components/Container';
-import ButtonGoBack from '../components/ButtonGoBack';
+import Card from '../components/Card/Card';
+import HeaderText from '../components/Text/HeaderText';
+import Container from '../components/Container/Container';
+import ButtonGoBack from '../components/Button/ButtonGoBack';
 import { useForm } from 'react-hook-form';
 import { useParams, useHistory } from 'react-router-dom';
-import TextWithLabel from '../components/TextWithLabel';
+import TextWithLabel from '../components/Text/TextWithLabel';
 import { useAuth0 } from '@auth0/auth0-react';
-import Button from '../components/Button';
+import Button from '../components/Button/Button';
 
 const Value = styled.h3`
     font-weight: bold;
@@ -36,12 +36,29 @@ const DataPoint = () => {
 		formState: { errors },
 	} = useForm();
 
-	const history = useHistory();
-	const { setNotifyMessage, setPath } = useContext(AppContext);
-
 	let { id } = useParams();
+	const history = useHistory();
+	const { setNotifyMessage, setPath, dataPoints, Get, Post, setLoadingDataPoints, setDataPoint, dataPoint } = useContext(AppContext);
+	const DeleteDataPoint = async () => {
+		try {
+			const response = await Post({
+				params: {
+					id: id,
+					deleted_at: true
+				}, path: 'data_point', dataSetter: setDataPoint, loader: setLoadingDataPoints
+			})
+			if (response.status === 200) {
+				history.goBack();
+				setNotifyMessage('Data Point Deleted')
+			} else {
+				setNotifyMessage('Data Point removal failed')
 
-	const [dataPoint, setDataPoint] = useState({
+			}
+		}
+		catch (err) { console.log(err), setNotifyMessage('Data Point removal failed') }
+	}
+
+	const [data, setData] = useState({
 		created_at: 'Loading data...',
 		title: 'Loading data...',
 		description: 'Loading data...',
@@ -54,18 +71,38 @@ const DataPoint = () => {
 		creator: 'Loading data...',
 		data_point_group: 'Loading data...',
 		serviceAccount: 'Loading data...',
+		property_id: 'Loading data...',
+		type: 'Loading data...'
 	});
-
-
-
-
-
 
 	useEffect(() => {
 		setPath('/dataPoint');
 		window.scroll(0, 0);
+		Get({ params: { id: id }, path: 'data_point', dataSetter: setDataPoint, loader: setLoadingDataPoints })
 	}, []);
+	useEffect(() => {
+		DataPointContent()
+	}, [data])
+	useEffect(() => {
+		if (dataPoint.length > 0) {
+			setData({
+				created_at: dataPoint[0].created_at || 'No data',
+				title: dataPoint[0].title || 'No data',
+				description: dataPoint[0].description || 'No data',
+				updated_at: dataPoint[0].updated_at || 'No data',
+				deleted_at: dataPoint[0].deleted_at || 'No data',
+				value: dataPoint[0].value || 'No data',
+				cell: dataPoint[0].cell || 'No data',
+				spreadsheetId: dataPoint[0].spreadsheetId || 'No data',
+				sheetId: dataPoint[0].sheetId || 'No data',
+				creator: dataPoint[0].creator || 'No data',
+				serviceAccount: dataPoint[0].title || 'No data',
+				property_id: dataPoint[0].property_id || 'No data',
+				type: dataPoint[0].type || 'No data'
+			})
+		}
 
+	}, [dataPoint])
 
 	const DataPointContent = () => {
 
@@ -76,30 +113,30 @@ const DataPoint = () => {
 				<div>
 					<HeaderText
 						locationText="Data Point"
-						title={dataPoint.title || '-'}
-						description={dataPoint.description || '-'}
+						title={data.title || '-'}
+						description={data.description || '-'}
 					/>
 					<Card>
 						<TextWithLabel
-							title={dataPoint.value || '-'}
+							title={data.value || '-'}
 							label="Value"
 						/>
 					</Card>
 					<Card>
 						<TextWithLabel
-							title={dataPoint.updated_at}
+							title={data.updated_at}
 							label="Updated"
 						/>
 						<TextWithLabel
-							title={dataPoint.created_at}
+							title={data.created_at}
 							label="Created"
 						/>
 						<TextWithLabel
-							title={dataPoint.data_point_group}
+							title={data.data_point_group}
 							label="Group"
 						/>
 						<TextWithLabel
-							title={dataPoint.creator}
+							title={data.creator}
 							label="Creator"
 						/>
 					</Card>
@@ -109,21 +146,21 @@ const DataPoint = () => {
 							label="Sheet name"
 						/>
 						<TextWithLabel
-							title={dataPoint.spreadsheetId}
+							title={data.spreadsheetId}
 							label="Spreadsheet"
 						/>
 						<TextWithLabel
-							title={dataPoint.sheetId}
+							title={data.sheetId}
 							label="Sheet"
 						/>
 						<TextWithLabel
-							title={dataPoint.cell}
+							title={data.cell}
 							label="Cell"
 						/>
 					</Card>
 					<Button
-						primary
 						type="button"
+						onClick={() => DeleteDataPoint()}
 					>
 						<p>Delete Data Point</p>
 					</Button>

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { device } from '../device';
-import Button from '../components/Button';
+import Button from '../components/Button/Button';
 import { AppContext } from '../context/Context';
 import { useParams, useHistory } from 'react-router-dom';
 
@@ -113,7 +113,9 @@ const Home = () => {
 						calculations and business operations without boundaries.
 					</p>
 				</List>
-				<Button type="button" primary onClick={handleClick}>
+				<Button
+					onClick={() => handleClick}
+				>
 					Not yet a user? Get in touch
 				</Button>
 				{/* <h5 style={{ marginTop: '24px', marginBottom: '24px' }}>or</h5>

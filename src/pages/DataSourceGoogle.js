@@ -1,16 +1,16 @@
 import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { AppContext } from '../context/Context';
-import Container from '../components/Container';
-import ButtonGoBack from '../components/ButtonGoBack';
+import Container from '../components/Container/Container';
+import ButtonGoBack from '../components/Button/ButtonGoBack';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 
 import { useAuth0 } from '@auth0/auth0-react';
-import HeaderText from '../components/HeaderText';
-import Card from '../components/Card';
+import HeaderText from '../components/Text/HeaderText';
+import Card from '../components/Card/Card';
 import FormGoogleSheet from '../components/Forms/FormGoogleSheet';
-import Modal from '../components/Modal';
+import Modal from '../components/Modal/Modal';
 
 const Value = styled.h3`
     font-weight: bold;

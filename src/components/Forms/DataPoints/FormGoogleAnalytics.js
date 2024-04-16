@@ -11,10 +11,8 @@ const Title = styled.h4`
     margin-top: ${(props) => props.theme.grid.divider_2};
     margin-bottom: ${(props) => props.theme.grid.divider_2};
 `;
-const FormGoogleSpreadsheetDataPoint = ({
-	setOpenDataPointModal,
-
-
+const FormGoogleAnalytics = ({
+	setOpenDataPointModal
 }) => {
 	const {
 		control,
@@ -23,7 +21,7 @@ const FormGoogleSpreadsheetDataPoint = ({
 		reset,
 		formState: { errors },
 	} = useForm();
-	const [openModal, setOpenModal] = useState(false)
+
 	let { id } = useParams();
 
 	const {
@@ -43,11 +41,9 @@ const FormGoogleSpreadsheetDataPoint = ({
 				params: {
 					title: data.dataPointName,
 					description: data.dataPointDescription,
-					spreadsheet_id: data.spreadsheet_id,
-					sheet_id: data.sheet_id,
-					cell: data.cell,
+					property_id: data.propertyId,
 					dashboard_id: data.dashboard_id,
-					type: 'google-sheet'
+					type: 'google-analytics'
 				}, path: 'data_point', dataSetter: setDataPoints, loader: setLoadingDataPoints
 			})
 			console.log('response from response', response.status)
@@ -82,30 +78,12 @@ const FormGoogleSpreadsheetDataPoint = ({
 
 					{
 						type: 'input',
-						name: 'spreadsheet_id',
-						label: 'Spreadsheet Id',
+						name: 'propertyId',
+						label: 'Property Id Analytics',
 						options: '',
 						required: true,
-						errorMessage: 'Spreadsheet Id is required',
-						placeholder: 'Find this from the sheet URL...',
-					},
-					{
-						type: 'input',
-						name: 'sheet_id',
-						label: 'Sheet Id',
-						options: '',
-						required: true,
-						errorMessage: 'Sheet Id is required',
-						placeholder: 'Find this from the sheet URL...',
-					},
-					{
-						type: 'input',
-						name: 'cell',
-						label: 'Cell',
-						options: '',
-						required: true,
-						errorMessage: 'Data Point cell is required',
-						placeholder: 'A1, C56 ... etc.',
+						errorMessage: 'Required',
+						placeholder: 'Find this from Analytics account',
 					},
 					{
 						type: 'input',
@@ -142,4 +120,4 @@ const FormGoogleSpreadsheetDataPoint = ({
 	);
 };
 
-export default FormGoogleSpreadsheetDataPoint;
+export default FormGoogleAnalytics;

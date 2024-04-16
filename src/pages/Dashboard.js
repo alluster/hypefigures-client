@@ -1,27 +1,30 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { AppContext } from '../context/Context';
-import CardGrid from '../components/CardGrid';
-import HeaderText from '../components/HeaderText';
-import Container from '../components/Container';
+import CardGrid from '../components/Card/CardGrid';
+import HeaderText from '../components/Text/HeaderText';
+import Container from '../components/Container/Container';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import CardDataPoint from '../components/CardDataPoint';
-import Modal from '../components/Modal';
+import CardDataPoint from '../components/Card/CardDataPoint';
+import Modal from '../components/Modal/Modal';
 import FormCompiler from '../supportFunctions/FormComplier';
-import Accordion from '../components/Accordion';
+import Accordion from '../components/Accordion/Accordion';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import styled from 'styled-components';
-import ButtonMulti from '../components/ButtonMulti';
+import ButtonMulti from '../components/Button/ButtonMulti';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import DividerLine from '../components/DividerLine';
-import Card from '../components/Card';
+import DividerLine from '../components/Container/DividerLine';
+import Card from '../components/Card/Card';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import SideBar from '../components/SideBar';
-import Button from '../components/Button';
-import ButtonGoBack from '../components/ButtonGoBack';
+import SideBar from '../components/Navigation/SideBar';
+import Button from '../components/Button/Button';
+import ButtonGoBack from '../components/Button/ButtonGoBack';
 import SpreadsheetGoogle from '../components/Forms/DataPoints/SpreadsheetGoogle';
-import SpinnerSmall from '../components/SpinnerSmall';
+import SpinnerSmall from '../components/Spinner/SpinnerSmall';
 import FormGoogleSpreadsheetDataPoint from '../components/Forms/DataPoints/FormGoogleSpreadsheetDataPoint';
+import FormGoogleAnalytics from '../components/Forms/DataPoints/FormGoogleAnalytics';
+import { useHistory } from "react-router-dom";
+
 
 const Logo = styled.div`
    	max-width: 40px;
@@ -62,6 +65,7 @@ const Text = styled.h5`
 `;
 
 const StyledLink = styled(Link)``;
+
 const LinkText = styled.p`
     font-size: 12px;
     color: ${(props) => props.theme.colors.brand_100};
@@ -70,6 +74,10 @@ const ActionText = styled.p`
     font-size: 16px;
     color: ${(props) => props.theme.colors.brand_100};
     line-height: 36px;
+	&:hover {
+        cursor: pointer;
+    }
+
 `;
 const SideBarSubTitle = styled.p`
     font-size: 12px;
@@ -90,6 +98,8 @@ const LinksContainer = styled.div`
 const Dashboard = () => {
 	const [publicDashboards, setPublicDashboards] = useState([]);
 	const [openDataPointModal, setOpenDataPointModal] = useState(false);
+	const [openActionsModal, setOpenActionsModal] = useState(false);
+
 	const [dataPointSelector, setDataPointSelector] = useState('');
 	const [googleSheets, setGoogleSheets] = useState([]);
 	// const [dashboards, setDashboards] = useState([]);
@@ -97,6 +107,7 @@ const Dashboard = () => {
 	const [openNewDashboardModal, setOpenNewDashboardModal] = useState(false);
 
 	let { id } = useParams();
+	const history = useHistory();
 
 	const {
 		Get,
@@ -115,7 +126,8 @@ const Dashboard = () => {
 		loadingAnalyticsData,
 		analyticsData,
 		loadingDashboards,
-		setLoadingDataPoints
+		setLoadingDataPoints,
+		setNotifyMessage
 	} = useContext(AppContext);
 	const {
 		control,
@@ -143,14 +155,20 @@ const Dashboard = () => {
 						dashboardsList={(dashboards && dashboards) || []}
 					/>
 				);
-
+			case 'Google Analytics':
+				return (
+					<FormGoogleAnalytics
+						setOpenDataPointModal={setOpenDataPointModal}
+						dashboardsList={(dashboards && dashboards) || []}
+					/>
+				);
 			default:
 				return;
 		}
 	};
 	const DataPoints = () => {
 		if (loadingDataPoints) {
-			return <p>Loading data...</p>;
+			return <SpinnerSmall />;
 		}
 		return (
 			// <CardGrid>
@@ -158,14 +176,15 @@ const Dashboard = () => {
 			dataPoints.length > 0 ? dataPoints.map((item, i) => {
 				return (
 					<CardDataPoint
-						type='google-analytics'
+						// loading={item.value.loaderFunction}
+						type={item.type}
 						key={i}
 						to={`/datapoints/${item.id}`}
 						cell={item.cell || ''}
 						spreadsheetId={item.spreadsheet_id || ''}
 						sheetId={item.sheet_id || ''}
 						title={item.title}
-						description={item.sheet_title}
+						description={item.description}
 						value={item.value}
 					/>
 				);
@@ -191,12 +210,51 @@ const Dashboard = () => {
 				/>
 				{DataPoints()}
 
+
+				<HeaderText
+					buttonTitle="Add new Action"
+					onClickFunction={() => setOpenActionsModal(!openActionsModal)}
+					locationText=""
+					title="Actions"
+					description="Create New Action"
+				/>
+				{
+					loadingDataPoints ? <SpinnerSmall /> :
+						<CardDataPoint
+							type='hyperfigures'
+							to={`/datapoints`}
+
+							title='User Cost 2024'
+							description='Website user cost 2024'
+							value='1.8€'
+						/>
+				}
+
 			</div >
 		)
 
 
 	}
+	const DeleteDashboard = async () => {
+		try {
+			const response = await Post({
+				params: {
+					id: id,
+					deleted_at: true
+				}, path: 'dashboard', dataSetter: setDashboard, loader: setLoadingDashboard
+			})
+			if (response.status === 200) {
+				history.push("/dashboards");
+				setNotifyMessage('Dashboard deleted')
+			} else {
+				setNotifyMessage('Dashboard removal failed')
 
+			}
+		}
+		catch (err) {
+			console.log(err), setNotifyMessage('Dashboard removal failed')
+		}
+	}
 	const onSubmitNewDashboard = async (data) => {
 		// try {
 		// 	setNotifyMessage(`New dashboard ${data.dashboardName} added`);
@@ -231,12 +289,23 @@ const Dashboard = () => {
 					>
 						Create New Public Dashboard
 					</ActionText>
+
 					<ActionText
+						onClick={() => {
+							setOpenModal(!openModal);
+						}}
+					>
+						Create New Public Dashboard
+					</ActionText>
+					<ActionText
+						style={{ color: 'red' }}
+
 						onClick={() =>
-							setOpenDataPointModal(!openDataPointModal)
+							DeleteDashboard()
+
 						}
 					>
-						Add new Data point
+						Delete Dashboard
 					</ActionText>
 				</ButtonMulti>
 				{/* <Accordion title="Published Dashboards">
@@ -290,8 +359,7 @@ const Dashboard = () => {
 						onClick={() =>
 							setOpenNewDashboardModal(!openNewDashboardModal)
 						}
-						small={true}
-						primary={true}
+
 					>
 						Create New
 					</Button>
@@ -335,10 +403,10 @@ const Dashboard = () => {
 	}
 
 	useEffect(() => {
+		setDataPoints([])
 		Get({ params: { id: id }, path: 'dashboard', dataSetter: setDashboard, loader: setLoadingDashboard })
 		Get({ params: { dashboard_id: id }, path: 'data_point', dataSetter: setDataPoints, loader: setLoadingDataPoints })
-		// Get({ path: 'google/auth_google', dataSetter: setAnalyticsData, loader: setLoadingAnalyticsData })
-	}, [id])
+	}, [])
 
 	useEffect(() => {
 		SideBarContainer()
@@ -357,6 +425,7 @@ const Dashboard = () => {
 		<Content>
 			{SideBarContainer()}
 			<Container>
+
 				{DashboardContent()}
 				<AnalyticsDataContainer />
 			</Container>
@@ -413,13 +482,30 @@ const Dashboard = () => {
 						>
 							<Logo>
 								<img
-									src="/google_sheets.png"
+									src="/integration-logos/google-sheets.png"
 									alt="Google Sheets"
 								/>
 							</Logo>
 							<div>
 								<p>Integration method</p>
 								<h5>Google Sheets with selected Cell</h5>
+							</div>
+						</Card>
+						<Card
+							onClick={() =>
+								setDataPointSelector('Google Analytics')
+							}
+							row
+						>
+							<Logo>
+								<img
+									src="/integration-logos/google-analytics.png"
+									alt="Google Analytics"
+								/>
+							</Logo>
+							<div>
+								<p>Integration method</p>
+								<h5>Google Analytics</h5>
 							</div>
 						</Card>
 						{/* <Card

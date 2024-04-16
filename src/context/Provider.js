@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AppContext } from './Context';
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -14,6 +14,7 @@ const Provider = ({ children }) => {
 	const [dashboards, setDashboards] = useState([])
 	const [dashboard, setDashboard] = useState([])
 	const [dataPoints, setDataPoints] = useState([])
+	const [dataPoint, setDataPoint] = useState([]);
 	const [loadingDataPoints, setLoadingDataPoints] = useState(false);
 	const [loadingDashboard, setLoadingDashboard] = useState(false);
 	const [loadingDashboards, setLoadingDashboards] = useState(false);
@@ -23,6 +24,8 @@ const Provider = ({ children }) => {
 	const [loadingUser, setLoadingUser] = useState(false);
 	const [loadingTeams, setLoadingTeams] = useState(false);
 	const [teams, setTeams] = useState([]);
+	const [team, setTeam] = useState([]);
+	const [loadingTeam, setLoadingTeam] = useState(false);
 	const [dataProviders, setDataProviders] = useState([]);
 	const [loadingDataProviders, setLoadingDataProviders] = useState(false);
 
@@ -116,7 +119,6 @@ const Provider = ({ children }) => {
 			if (response.status === 403) {
 				setIsAuthenticated(false)
 			}
-			console.log(response)
 			if (response && response.data.length > 0) {
 				dataSetter(response.data)
 			}
@@ -133,6 +135,7 @@ const Provider = ({ children }) => {
 		CheckAuth();
 		Get({ params: {}, path: 'dashboard', dataSetter: setDashboards, loader: setLoadingDashboards })
 		Get({ params: {}, path: 'data_provider', dataSetter: setDataProviders, loader: setLoadingDataProviders })
+		Get({ params: {}, path: 'team', dataSetter: setTeams, loader: setLoadingTeams })
 
 	}, [])
 	useEffect(() => {
@@ -142,10 +145,27 @@ const Provider = ({ children }) => {
 			setSideBarOpen(true);
 		}
 	}, [path]);
+	const dropdownRef = useRef();
 
+	const [openDropdown, setOpenDropdown] = useState(false);
+
+	useEffect(() => {
+		const checkIfClickedOutside = (e) => {
+			if (openDropdown && dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+				setOpenDropdown(false);
+			}
+		};
+		document.addEventListener('mousedown', checkIfClickedOutside);
+		return () => {
+			document.removeEventListener('mousedown', checkIfClickedOutside);
+		};
+	}, [openDropdown]);
 	return (
 		<AppContext.Provider
 			value={{
+				dropdownRef,
+				openDropdown,
+				setOpenDropdown,
 				analyticsData,
 				setLoadingAnalyticsData,
 				setAnalyticsData,
@@ -157,6 +177,10 @@ const Provider = ({ children }) => {
 				Get,
 				setUser,
 				loadingUser,
+				team,
+				setTeam,
+				loadingTeam,
+				setLoadingTeam,
 				loadingTeams,
 				setLoadingTeams,
 				teams,
@@ -168,6 +192,8 @@ const Provider = ({ children }) => {
 				setDashboard,
 				dashboard,
 				dataPoints,
+				dataPoint,
+				setDataPoint,
 				setDataPoints,
 				setLoadingDataPoints,
 				loadingDataPoints,

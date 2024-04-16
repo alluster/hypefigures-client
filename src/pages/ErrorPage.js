@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { device } from '../device';
-import Button from '../components/Button';
-import Container from '../components/Container';
+import Button from '../components/Button/Button';
+import Container from '../components/Container/Container';
 import { AppContext } from '../context/Context';
 
 const Grid = styled.div`
@@ -43,26 +43,26 @@ const Ingress = styled.h3`
 `;
 
 const ErrorPage = () => {
-    const context = useContext(AppContext);
+	const context = useContext(AppContext);
 
-    useEffect(() => {
-        context.setAppLocation('Error');
-    }, []);
-    useEffect(() => {
-        context.setPath('/error');
-        window.scroll(0, 0);
-    }, []);
-    return (
-        <Container>
-            <WelcomeTitle>
-                <Title>Jokin meni pieleen</Title>
-                <Ingress>Selvitämme ongelmaa!</Ingress>
-                <Button to="/" primary>
-                    Ota palvelu käyttöön
-                </Button>
-            </WelcomeTitle>
-        </Container>
-    );
+	useEffect(() => {
+		context.setAppLocation('Error');
+	}, []);
+	useEffect(() => {
+		context.setPath('/error');
+		window.scroll(0, 0);
+	}, []);
+	return (
+		<Container>
+			<WelcomeTitle>
+				<Title>Jokin meni pieleen</Title>
+				<Ingress>Selvitämme ongelmaa!</Ingress>
+				<Button to="/" primary>
+					Ota palvelu käyttöön
+				</Button>
+			</WelcomeTitle>
+		</Container>
+	);
 };
 
 export default ErrorPage;

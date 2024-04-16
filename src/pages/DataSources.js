@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Card from '../components/Card';
-import HeaderText from '../components/HeaderText';
-import Container from '../components/Container';
-import ButtonGoBack from '../components/ButtonGoBack';
+import Card from '../components/Card/Card';
+import HeaderText from '../components/Text/HeaderText';
+import Container from '../components/Container/Container';
+import ButtonGoBack from '../components/Button/ButtonGoBack';
 import { useForm } from 'react-hook-form';
-import TextWithLabel from '../components/TextWithLabel';
+import TextWithLabel from '../components/Text/TextWithLabel';
 import { useAuth0 } from '@auth0/auth0-react';
-import Button from '../components/Button';
-import DividerLine from '../components/DividerLine';
+import Button from '../components/Button/Button';
+import DividerLine from '../components/Container/DividerLine';
 import { AppContext } from '../context/Context';
 
 const Logo = styled.div`
@@ -60,7 +60,7 @@ const DataSources = () => {
 						</Card>
 					);
 				}) :
-					<h2>No data Providers added</h2>);
+					<p>No data Providers added</p>);
 
 		}
 	};

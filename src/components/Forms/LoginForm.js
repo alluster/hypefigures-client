@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import Button from '../Button';
-import Container from '../Container';
-import SpinnerSmall from '../SpinnerSmall';
+import Button from '../Button/Button';
+import Container from '../Container/Container';
+import SpinnerSmall from '../Spinner/SpinnerSmall';
 import { AppContext } from '../../context/Context';
 
 const WarningText = styled.p`
@@ -69,12 +69,11 @@ const FormContainer = styled.div`
 
 const LoginForm = () => {
 	const {
-		control,
 		register,
 		handleSubmit,
-		reset,
 		formState: { errors },
 	} = useForm();
+
 	const { Login, loadingUser } = useContext(AppContext);
 
 	const onSubmit = (data) => {
@@ -117,8 +116,11 @@ const LoginForm = () => {
 							)}
 						</InputWrapper>
 						<ButtonRow>
-							<Button primary dividerRight type="submit">
-								{'Login'}
+							<Button
+								type='submit'
+								dividerRight
+							>
+								Sign In
 							</Button>
 
 						</ButtonRow>

@@ -1,11 +1,17 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { device } from '../device';
-import Button from '../components/Button';
-import Container from '../components/Container';
+import Button from '../components/Button/Button';
+import Container from '../components/Container/Container';
 import { AppContext } from '../context/Context';
 import LoginForm from '../components/Forms/LoginForm';
 import { useHistory } from "react-router-dom";
+
+const Content = styled.div`
+	margin-bottom: 100px;
+	min-height: 100vh;
+
+`;
 
 const Grid = styled.div`
     margin-top: ${(props) => props.theme.grid.divider_12};
@@ -43,7 +49,7 @@ const Background = styled.div`
 `;
 const WelcomeTitle = styled.div`
     margin-top: ${(props) => props.theme.grid.divider_12};
-    margin-bottom: ${(props) => props.theme.grid.divider_8};
+    // margin-bottom: ${(props) => props.theme.grid.divider_8};
 
     display: flex;
     flex-direction: column;
@@ -85,7 +91,7 @@ const Login = () => {
 	}, []);
 	return (
 
-		<Container>
+		<Content>
 			<WelcomeTitle>
 				<Title>Welcome to Hyperfigures</Title>
 				<Ingress>
@@ -94,7 +100,7 @@ const Login = () => {
 			</WelcomeTitle>
 			<LoginForm />
 
-		</Container>
+		</Content>
 
 	);
 };

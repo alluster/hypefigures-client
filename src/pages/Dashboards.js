@@ -1,12 +1,12 @@
 import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
-import Card from '../components/Card';
-import CardGrid from '../components/CardGrid';
-import HeaderText from '../components/HeaderText';
-import Container from '../components/Container';
-import ButtonGoBack from '../components/ButtonGoBack';
+import Card from '../components/Card/Card';
+import CardGrid from '../components/Card/CardGrid';
+import HeaderText from '../components/Text/HeaderText';
+import Container from '../components/Container/Container';
+import ButtonGoBack from '../components/Button/ButtonGoBack';
 import { useForm } from 'react-hook-form';
-import Modal from '../components/Modal';
+import Modal from '../components/Modal/Modal';
 import FormCompiler from '../supportFunctions/FormComplier';
 import { AppContext } from '../context/Context';
 import { useAuth0 } from '@auth0/auth0-react';
