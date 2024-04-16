@@ -1,6 +1,6 @@
 ## Hyperfigures React front end client web app
 
-![screenshot](app-images/screenshot-1.png)
+![screenshot](public/app-images/screenshot-1.png)
 
 #### Idea:
 
