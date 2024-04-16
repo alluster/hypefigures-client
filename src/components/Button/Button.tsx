@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { device } from '../../device';
-import { ButtonProps } from '../interface/ButtonProps';
+import { ButtonProps } from '../../interface/ButtonProps';
 
 const StyledButtonBase = styled.button<ButtonProps>`
     text-align: center;

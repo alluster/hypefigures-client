@@ -42,9 +42,7 @@ const DataSources = () => {
 				dataProviders.length > 0 ? dataProviders.map((item, i) => {
 					return (
 						<Card key={i}>
-							{/* <Logo>
-								<img src="/google_sheets.png" alt="Google Sheets" />
-							</Logo> */}
+
 
 							<TextWithLabel
 								small

@@ -93,10 +93,7 @@ const Team = () => {
 							/>
 
 							<Button
-								props={{
-									small: true,
-									onClick: () => DeleteTeam()
-								}}
+								onClick={DeleteTeam}
 							>
 								Delete Team
 							</Button>

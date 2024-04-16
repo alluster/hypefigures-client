@@ -17,28 +17,28 @@ const Container = styled.div`
 
 const Icon = styled(FontAwesomeIcon)`
     color: ${(props) => props.theme.colors.fontDark};
-    font-size: 20px;
+    font-size: 16px;
     margin-right: ${(props) => props.theme.grid.divider_1};
     align-self: center;
 `;
-const Text = styled.h5`
+const Text = styled.h6`
     color: ${(props) => props.theme.colors.fontDark};
     white-space: nowrap;
     align-self: center;
 `;
 
 const ButtonWithIcon = ({ text }) => {
-    const history = useHistory();
-    return (
-        <Container onClick={history.goBack}>
-            <Icon icon={faArrowLeft} />
-            <Text>{text}</Text>
-        </Container>
-    );
+	const history = useHistory();
+	return (
+		<Container onClick={history.goBack}>
+			<Icon icon={faArrowLeft} />
+			<Text>{text}</Text>
+		</Container>
+	);
 };
 
 ButtonWithIcon.propTypes = {
-    text: PropTypes.string,
+	text: PropTypes.string,
 };
 
 export default ButtonWithIcon;

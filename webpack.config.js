@@ -1,6 +1,6 @@
-const path = require('path');
-const dotenv = require('dotenv');
-const webpack = require('webpack');
+import path from 'path';
+import dotenv from 'dotenv';
+import webpack from 'webpack';
 var env = dotenv.config().parsed;
 var envKeys = Object.keys(env).reduce(function (prev, next) {
 	prev['process.env.' + next] = JSON.stringify(env[next]);

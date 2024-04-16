@@ -74,7 +74,7 @@ const Footer = ({ locationText, title, description }) => {
 		<FooterWrapper>
 			<FooterContent>
 				<Logo>
-					<img src="/logo-text-light.svg" alt="Logo" />
+					<img src="/logos/logo-text-light.svg" alt="Logo" />
 				</Logo>
 				<Description>
 					We help organizations create Supersets™ from business data

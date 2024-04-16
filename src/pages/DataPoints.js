@@ -158,7 +158,7 @@ const DataPoints = () => {
 						>
 							<Logo>
 								<img
-									src="/google_sheets.png"
+									src="/integration-logos/google-sheets.png"
 									alt="Google Sheets"
 								/>
 							</Logo>

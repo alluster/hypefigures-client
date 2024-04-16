@@ -253,13 +253,6 @@ const Navigation = () => {
 			ingress: 'Your Business Data in One View!',
 			description: 'Combined view to your business data',
 		},
-		// {
-		// 	link: '/settings',
-		// 	icon: faCog,
-		// 	title: 'Settings',
-		// 	ingress: 'Your Business Data in One View!',
-		// 	description: 'Combined view to your business data'
-		// },
 		{
 			link: '/user',
 			icon: faUser,
@@ -274,7 +267,7 @@ const Navigation = () => {
 		<div>
 			<MobileNavToggleContainer mobileNavOpen={mobileNavOpen}>
 				<LogoMobile>
-					<LogoMobileImage src="/arm-logo-dark.svg" />
+					<LogoMobileImage src="/logos/icon-dark.svg" />
 				</LogoMobile>
 
 				<MobileNavToggler
@@ -298,20 +291,7 @@ const Navigation = () => {
 								<IconContainer>
 									<Icon icon={item.icon} />
 								</IconContainer>
-								{
-									// !sideBarOpen &&
-									// <Tooltip>
-									// 	<p style={{ fontWeight: 'bold' }}>
-									// 		{item.ingress}
-									// 	</p>
-									// 	<h4 style={{ fontWeight: 'bold', marginTop: '8px', marginBottom: '8px' }}>
-									// 		{item.title}
-									// 	</h4>
-									// 	{/* <p>
-									// 		{item.description}
-									// 	</p> */}
-									// </Tooltip>
-								}
+
 								{mobileNavOpen && (
 									<LinkText>{item.title}</LinkText>
 								)}
@@ -322,8 +302,8 @@ const Navigation = () => {
 			</MobileNav>
 			<SideNav open={navigationOpen}>
 				<BarsIcon onClick={() => setNavigationOpen(!navigationOpen)}>
-					{!navigationOpen && <LogoIcon src="/arm.svg" />}
-					{navigationOpen && <Logo src="/arm-logo-dark.svg" />}
+					{!navigationOpen && <LogoIcon src="/logos/icon-dark.svg" />}
+					{navigationOpen && <Logo src="/logos/text-dark.svg" />}
 				</BarsIcon>
 				<Links>
 					{routeList.map((item, i) => {

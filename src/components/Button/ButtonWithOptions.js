@@ -104,7 +104,7 @@ const IconContainer = styled.div`
 const ArrowIcon = styled(FontAwesomeIcon)`
     font-size: 14px;
 `;
-const ButtonMulti = ({ title, children }) => {
+const ButtonWithOptions = ({ title, children }) => {
 	const [open, setOpen] = useState(false);
 
 	return (
@@ -129,4 +129,4 @@ const ButtonMulti = ({ title, children }) => {
 	);
 };
 
-export default ButtonMulti;
+export default ButtonWithOptions;

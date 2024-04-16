@@ -11,7 +11,7 @@ import FormCompiler from '../supportFunctions/FormComplier';
 import Accordion from '../components/Accordion/Accordion';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import styled from 'styled-components';
-import ButtonMulti from '../components/Button/ButtonMulti';
+import ButtonMulti from '../components/Button/ButtonWithOptions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DividerLine from '../components/Container/DividerLine';
 import Card from '../components/Card/Card';
@@ -24,6 +24,7 @@ import SpinnerSmall from '../components/Spinner/SpinnerSmall';
 import FormGoogleSpreadsheetDataPoint from '../components/Forms/DataPoints/FormGoogleSpreadsheetDataPoint';
 import FormGoogleAnalytics from '../components/Forms/DataPoints/FormGoogleAnalytics';
 import { useHistory } from "react-router-dom";
+import ButtonWithOptions from '../components/Button/ButtonWithOptions';
 
 
 const Logo = styled.div`
@@ -79,16 +80,7 @@ const ActionText = styled.p`
     }
 
 `;
-const SideBarSubTitle = styled.p`
-    font-size: 12px;
-    font-weight: 700;
-    border-bottom: 1px solid ${(props) => props.theme.colors.gray_60};
-    color: ${(props) => props.theme.colors.fontDark};
-    line-height: 36px;
-    margin-bottom: 32px;
-    margin-top: 32px;
-    margin-left: 16px;
-`;
+
 const LinksContainer = styled.div`
     margin-top: 16px;
     display: flex;
@@ -96,19 +88,14 @@ const LinksContainer = styled.div`
 `;
 
 const Dashboard = () => {
-	const [publicDashboards, setPublicDashboards] = useState([]);
 	const [openDataPointModal, setOpenDataPointModal] = useState(false);
 	const [openActionsModal, setOpenActionsModal] = useState(false);
-
 	const [dataPointSelector, setDataPointSelector] = useState('');
 	const [googleSheets, setGoogleSheets] = useState([]);
-	// const [dashboards, setDashboards] = useState([]);
 	const [openModal, setOpenModal] = useState(false);
 	const [openNewDashboardModal, setOpenNewDashboardModal] = useState(false);
-
 	let { id } = useParams();
 	const history = useHistory();
-
 	const {
 		Get,
 		Post,
@@ -117,12 +104,9 @@ const Dashboard = () => {
 		dataPoints,
 		loadingDataPoints,
 		dashboards,
-		loadingDashboard,
 		setLoadingDashboard,
 		setDashboard,
 		dashboard,
-		setAnalyticsData,
-		setLoadingAnalyticsData,
 		loadingAnalyticsData,
 		analyticsData,
 		loadingDashboards,
@@ -130,7 +114,6 @@ const Dashboard = () => {
 		setNotifyMessage
 	} = useContext(AppContext);
 	const {
-		control,
 		register,
 		handleSubmit,
 		reset,
@@ -171,8 +154,6 @@ const Dashboard = () => {
 			return <SpinnerSmall />;
 		}
 		return (
-			// <CardGrid>
-
 			dataPoints.length > 0 ? dataPoints.map((item, i) => {
 				return (
 					<CardDataPoint
@@ -190,9 +171,6 @@ const Dashboard = () => {
 				);
 			}) :
 				<p>This dashboard does not contain any data yet.</p>
-
-
-			// </CardGrid>
 		);
 
 	};
@@ -223,7 +201,6 @@ const Dashboard = () => {
 						<CardDataPoint
 							type='hyperfigures'
 							to={`/datapoints`}
-
 							title='User Cost 2024'
 							description='Website user cost 2024'
 							value='1.8€'
@@ -255,24 +232,21 @@ const Dashboard = () => {
 			console.log(err), setNotifyMessage('Dashboard removal failed')
 		}
 	}
-	const onSubmitNewDashboard = async (data) => {
-		// try {
-		// 	setNotifyMessage(`New dashboard ${data.dashboardName} added`);
-		// } catch (error) {
-		// 	console.log(error);
-		// 	setNotifyMessage('Something went wrong');
-		// } finally {
-		// 	setOpenNewDashboardModal(false);
-		// 	reset();
-		// }
+	const submitNewDashboard = async (data) => {
+		try {
+			setNotifyMessage(`New dashboard ${data.dashboardName} added`);
+		} catch (error) {
+			console.log(error);
+			setNotifyMessage('Something went wrong');
+		} finally {
+			setOpenNewDashboardModal(false);
+			reset();
+		}
 	};
-
 	const SideBarContainer = () => {
 		return (
 			<SideBar>
-				{/* <SideBarSubTitle>Dashboard Details</SideBarSubTitle> */}
 				<ButtonGoBack text="Go Back" />
-
 				<HeaderText
 					locationText="Dashboard"
 					title={dashboard.length > 0 ? dashboard[0].title : '-'}
@@ -281,7 +255,7 @@ const Dashboard = () => {
 							'-'
 					}
 				/>
-				<ButtonMulti title="Dashboard Options">
+				<ButtonWithOptions title="Dashboard Options">
 					<ActionText
 						onClick={() => {
 							setOpenModal(!openModal);
@@ -307,35 +281,8 @@ const Dashboard = () => {
 					>
 						Delete Dashboard
 					</ActionText>
-				</ButtonMulti>
-				{/* <Accordion title="Published Dashboards">
-					<LinksContainer>
-						{loadingPublicDashboards ? (
-							<p>Loading public dashboard data....</p>
-						) : (
-							publicDashboards.length > 0 &&
-							publicDashboards.map((item, i) => {
-								return (
-									<StyledLink
-										to={`/publicDashboard/${item.id}`}
-										key={i}
-									>
-										<LinkText>{item.title}</LinkText>
-									</StyledLink>
-								);
-							})
-						)}
-						<Button
-							type="button"
-							onClick={() => setOpenModal(!openModal)}
-							small={true}
-							primary={true}
-						>
-							Create New
-						</Button>
-					</LinksContainer>
-				</Accordion> */}
-				{/* <SideBarSubTitle>All Dashboards</SideBarSubTitle> */}
+				</ButtonWithOptions>
+
 				<Accordion title="Dashboards">
 					<LinksContainer>
 						{loadingDashboards ? (
@@ -359,7 +306,6 @@ const Dashboard = () => {
 						onClick={() =>
 							setOpenNewDashboardModal(!openNewDashboardModal)
 						}
-
 					>
 						Create New
 					</Button>
@@ -419,7 +365,6 @@ const Dashboard = () => {
 	useEffect(() => {
 		DataPoints()
 	}, [dataPoints])
-
 
 	return (
 		<Content>
@@ -508,25 +453,6 @@ const Dashboard = () => {
 								<h5>Google Analytics</h5>
 							</div>
 						</Card>
-						{/* <Card
-							onClick={() =>
-								setDataPointSelector(
-									'Google Sheets with Spreadsheet',
-								)
-							}
-							row
-						>
-							<Logo>
-								<img
-									src="/google_sheets.png"
-									alt="Google Sheets"
-								/>
-							</Logo>
-							<div>
-								<p>integration</p>
-								<h5>Google Sheets with Spreadsheet</h5>
-							</div>
-						</Card> */}
 					</div>
 				) : (
 					<div>
@@ -551,7 +477,7 @@ const Dashboard = () => {
 					reset={reset}
 					openModal={() => setOpenNewDashboardModal()}
 					errors={errors}
-					onSubmit={() => handleSubmit(onSubmitNewDashboard)}
+					onSubmit={() => handleSubmit(submitNewDashboard)}
 					register={register}
 					fields={[
 						{
