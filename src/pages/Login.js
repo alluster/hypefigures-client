@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { device } from '../device';
+import { device } from '../styles/device-braking-points';
 import Button from '../components/Button/Button';
 import Container from '../components/Container/Container';
 import { AppContext } from '../context/Context';
-import LoginForm from '../components/Forms/LoginForm';
+import LoginForm from '../components/Forms/Authentication/LoginForm';
 import { useHistory } from "react-router-dom";
 
 const Content = styled.div`

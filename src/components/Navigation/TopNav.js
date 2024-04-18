@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { device } from '../../device';
+import { device } from '../../styles/device-braking-points';
 import Button from '../Button/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AppContext } from '../../context/Context';

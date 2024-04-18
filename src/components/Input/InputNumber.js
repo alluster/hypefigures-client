@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { device } from '../../device';
+import { device } from '../../styles/device-braking-points';
 
 const Wrapper = styled.div`
     margin-top: ${(props) => props.theme.grid.divider_4};

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { device } from '../../device';
+import { device } from '../../styles/device-braking-points';
 import { Link } from 'react-router-dom';
 
 const Wrapper = styled.div`

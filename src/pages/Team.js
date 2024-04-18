@@ -1,33 +1,12 @@
 import React, { useEffect, useContext, useState } from 'react';
-import styled from 'styled-components';
 import { AppContext } from '../context/Context';
-import Card from '../components/Card/Card';
 import HeaderText from '../components/Text/HeaderText';
 import Container from '../components/Container/Container';
-import ButtonGoBack from '../components/Button/ButtonGoBack';
-import { useForm } from 'react-hook-form';
 import { useParams, useHistory } from 'react-router-dom';
-import TextWithLabel from '../components/Text/TextWithLabel';
 import Button from '../components/Button/Button';
 import SpinnerSmall from '../components/Spinner/SpinnerSmall';
 
-const Value = styled.h3`
-    font-weight: bold;
-`;
-
-const Divider = styled.div`
-    border-bottom: 1px solid ${(props) => props.theme.colors.gray_60};
-    width: 100%;
-    margin-top: 20px;
-    margin-bottom: 20px;
-`;
-const Label = styled.p`
-    color: ${(props) => props.theme.colors.gray_130};
-    font-size: 14px;
-`;
-
 const Team = () => {
-
 	let { id } = useParams();
 	const history = useHistory();
 	const { setNotifyMessage, setPath, Get, Post, setTeam, setLoadingTeams, team, setLoadingTeam, loadingTeam } = useContext(AppContext);
@@ -81,8 +60,10 @@ const Team = () => {
 	const TeamContent = () => {
 		return (
 			<div>
-				<ButtonGoBack text="Go Back" />
-				{
+				<Button
+					ghost
+					layoutType='back'
+				/>				{
 					loadingTeam ? <SpinnerSmall /> :
 						<div>
 							<HeaderText

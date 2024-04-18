@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import Button from '../Button/Button';
-import Container from '../Container/Container';
-import SpinnerSmall from '../Spinner/SpinnerSmall';
-import { AppContext } from '../../context/Context';
+import Button from '../../Button/Button';
+import Container from '../../Container/Container';
+import SpinnerSmall from '../../Spinner/SpinnerSmall';
+import { AppContext } from '../../../context/Context';
 
 const WarningText = styled.p`
     color: red;
@@ -116,12 +116,7 @@ const LoginForm = () => {
 							)}
 						</InputWrapper>
 						<ButtonRow>
-							<Button
-								type='submit'
-								dividerRight
-							>
-								Sign In
-							</Button>
+							<Button primary dividerRight type="submit" title='Sign In' />
 
 						</ButtonRow>
 					</form>

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { device } from '../device';
+import { device } from '../styles/device-braking-points';
 import Button from '../components/Button/Button';
 import Container from '../components/Container/Container';
 import { AppContext } from '../context/Context';
@@ -57,9 +57,7 @@ const ErrorPage = () => {
 			<WelcomeTitle>
 				<Title>Jokin meni pieleen</Title>
 				<Ingress>Selvitämme ongelmaa!</Ingress>
-				<Button to="/" primary>
-					Ota palvelu käyttöön
-				</Button>
+				<Button to="/" primary title='Ota palvelu käyttöön' />
 			</WelcomeTitle>
 		</Container>
 	);

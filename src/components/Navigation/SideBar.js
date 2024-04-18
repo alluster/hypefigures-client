@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { device } from '../../device';
+import { device } from '../../styles/device-braking-points';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AppContext } from '../../context/Context';
 import {

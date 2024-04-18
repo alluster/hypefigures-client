@@ -1,29 +1,14 @@
 import React, { useEffect, useContext, useState } from 'react';
-import styled from 'styled-components';
 import Card from '../components/Card/Card';
 import CardGrid from '../components/Card/CardGrid';
 import HeaderText from '../components/Text/HeaderText';
 import Container from '../components/Container/Container';
-import ButtonGoBack from '../components/Button/ButtonGoBack';
 import { useForm } from 'react-hook-form';
 import Modal from '../components/Modal/Modal';
 import FormCompiler from '../supportFunctions/FormComplier';
 import { AppContext } from '../context/Context';
+import Button from '../components/Button/Button';
 
-const Value = styled.h3`
-    font-weight: bold;
-`;
-
-const Divider = styled.div`
-    border-bottom: 1px solid ${(props) => props.theme.colors.gray_60};
-    width: 100%;
-    margin-top: 20px;
-    margin-bottom: 20px;
-`;
-const Label = styled.p`
-    color: ${(props) => props.theme.colors.gray_130};
-    font-size: 14px;
-`;
 
 const Dashboards = () => {
 	const {
@@ -33,14 +18,10 @@ const Dashboards = () => {
 		loadingDashboards,
 		setDashboards,
 		setLoadingDashboards,
-		GetDashboards
 	} = useContext(AppContext)
-	var currentDate = (dateData) => new window.Date(dateData);
 	const { setNotifyMessage, setPath } = useContext(AppContext);
-	const [loading, setLoading] = useState(false)
 	const [openModal, setOpenModal] = useState(false);
 	const {
-		control,
 		register,
 		handleSubmit,
 		reset,
@@ -106,7 +87,11 @@ const Dashboards = () => {
 	return (
 		<div>
 			<Container>
-				<ButtonGoBack text="Go Back" />
+				<Button
+					ghost
+					layoutType='back'
+					title='Go Back'
+				/>
 				<HeaderText
 					buttonTitle="Create a new Dashboard"
 					onClickFunction={() => setOpenModal(!openModal)}

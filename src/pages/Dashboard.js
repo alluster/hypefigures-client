@@ -1,6 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { AppContext } from '../context/Context';
-import CardGrid from '../components/Card/CardGrid';
 import HeaderText from '../components/Text/HeaderText';
 import Container from '../components/Container/Container';
 import { useForm } from 'react-hook-form';
@@ -11,20 +10,17 @@ import FormCompiler from '../supportFunctions/FormComplier';
 import Accordion from '../components/Accordion/Accordion';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import styled from 'styled-components';
-import ButtonMulti from '../components/Button/ButtonWithOptions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DividerLine from '../components/Container/DividerLine';
 import Card from '../components/Card/Card';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import SideBar from '../components/Navigation/SideBar';
 import Button from '../components/Button/Button';
-import ButtonGoBack from '../components/Button/ButtonGoBack';
 import SpreadsheetGoogle from '../components/Forms/DataPoints/SpreadsheetGoogle';
 import SpinnerSmall from '../components/Spinner/SpinnerSmall';
 import FormGoogleSpreadsheetDataPoint from '../components/Forms/DataPoints/FormGoogleSpreadsheetDataPoint';
 import FormGoogleAnalytics from '../components/Forms/DataPoints/FormGoogleAnalytics';
 import { useHistory } from "react-router-dom";
-import ButtonWithOptions from '../components/Button/ButtonWithOptions';
 
 
 const Logo = styled.div`
@@ -130,14 +126,7 @@ const Dashboard = () => {
 						dashboardsList={(dashboards && dashboards) || []}
 					/>
 				);
-			case 'Google Sheets with Spreadsheet':
-				return (
-					<SpreadsheetGoogle
-						setOpenDataPointModal={setOpenDataPointModal}
-						googleSheetsList={(googleSheets && googleSheets) || []}
-						dashboardsList={(dashboards && dashboards) || []}
-					/>
-				);
+
 			case 'Google Analytics':
 				return (
 					<FormGoogleAnalytics
@@ -246,7 +235,10 @@ const Dashboard = () => {
 	const SideBarContainer = () => {
 		return (
 			<SideBar>
-				<ButtonGoBack text="Go Back" />
+				<Button
+					ghost
+					layoutType='back'
+				/>
 				<HeaderText
 					locationText="Dashboard"
 					title={dashboard.length > 0 ? dashboard[0].title : '-'}
@@ -255,7 +247,7 @@ const Dashboard = () => {
 							'-'
 					}
 				/>
-				<ButtonWithOptions title="Dashboard Options">
+				<Button layoutType='dropdown' title="Dashboard Options">
 					<ActionText
 						onClick={() => {
 							setOpenModal(!openModal);
@@ -281,7 +273,7 @@ const Dashboard = () => {
 					>
 						Delete Dashboard
 					</ActionText>
-				</ButtonWithOptions>
+				</Button>
 
 				<Accordion title="Dashboards">
 					<LinksContainer>

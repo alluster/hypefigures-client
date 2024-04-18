@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { device } from '../../device';
+import { device } from '../../styles/device-braking-points';
 
 const Wrapper = styled.div`
     width: 100%;

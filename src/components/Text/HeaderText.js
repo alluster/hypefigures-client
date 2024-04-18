@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../Button/Button';
-import { device } from '../../device';
+import { device } from '../../styles/device-braking-points';
 
 const HeaderTextWrapper = styled.div`
     display: flex;
@@ -40,12 +40,7 @@ const HeaderText = ({
 			</TextContainer>
 			{buttonTitle != null && (
 				<ButtonContainer>
-					<Button
-						onClick={onClickFunction}
-
-					>
-						{buttonTitle}
-					</Button>
+					<Button onClick={onClickFunction} title={buttonTitle} />
 				</ButtonContainer>
 			)}
 		</HeaderTextWrapper>

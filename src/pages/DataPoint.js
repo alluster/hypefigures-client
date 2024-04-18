@@ -4,7 +4,6 @@ import { AppContext } from '../context/Context';
 import Card from '../components/Card/Card';
 import HeaderText from '../components/Text/HeaderText';
 import Container from '../components/Container/Container';
-import ButtonGoBack from '../components/Button/ButtonGoBack';
 import { useForm } from 'react-hook-form';
 import { useParams, useHistory } from 'react-router-dom';
 import TextWithLabel from '../components/Text/TextWithLabel';
@@ -107,8 +106,10 @@ const DataPoint = () => {
 
 		return (
 			<div>
-				<ButtonGoBack text="Go Back" />
-
+				<Button
+					ghost
+					layoutType='back'
+				/>
 				<div>
 					<HeaderText
 						locationText="Data Point"
@@ -160,9 +161,9 @@ const DataPoint = () => {
 					<Button
 						type="button"
 						onClick={() => DeleteDataPoint()}
-					>
-						<p>Delete Data Point</p>
-					</Button>
+						title='Delete Data Point'
+					/>
+
 				</div>
 			</div>
 		);

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { AppContext } from '../context/Context';
-import { device } from '../device';
+import { device } from '../styles/device-braking-points';
 import Button from '../components/Button/Button';
 import Container from '../components/Container/Container';
 import Modal from '../components/Modal/Modal';

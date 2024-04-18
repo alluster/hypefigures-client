@@ -1,6 +1,6 @@
 import React, { Suspense, useContext } from 'react';
-import { device } from './device';
-import theme from './theme';
+import { device } from './styles/device-braking-points';
+import theme from './styles/theme';
 import { ThemeProvider } from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -25,13 +25,9 @@ const Profile = React.lazy(() => import('./pages/Profile'));
 const Dashboard = React.lazy(() => import('./pages/Dashboard'));
 const Dashboards = React.lazy(() => import('./pages/Dashboards'));
 const ErrorPage = React.lazy(() => import('./pages/ErrorPage'));
-const Home = React.lazy(() => import('./pages/Home'));
 const Login = React.lazy(() => import('./pages/Login'));
 const DataPoint = React.lazy(() => import('./pages/DataPoint'));
-const DataPoints = React.lazy(() => import('./pages/DataPoints'));
 const Team = React.lazy(() => import('./pages/Team'));
-const DataSourceGoogle = React.lazy(() => import('./pages/DataSourceGoogle'));
-const DashboardPublic = React.lazy(() => import('./pages/DashboardPublic'));
 
 import { AppContext } from './context/Context';
 
@@ -149,11 +145,6 @@ const GlobalStyle = createGlobalStyle`
 	button:hover {
 		cursor: pointer !important;
 	}
-
-
-
-
-
     input {
 		all: unset;
 		font-family: 'Open Sans', sans-serif;
@@ -219,12 +210,8 @@ const App = () => {
 					<TopNav />
 					<Notification />
 					<Switch>
-						<PrivateRoute exact path="/" component={() => <Home />} />
-						<PrivateRoute
-							exact
-							path="/publicdashboard/:id"
-							component={() => <DashboardPublic />}
-						/>
+						<Route exact path="/" component={Login} />
+						<Route exact path="/error" component={ErrorPage} />
 						<PrivateRoute exact path="/user" component={Profile} />
 						<PrivateRoute
 							exact
@@ -235,12 +222,6 @@ const App = () => {
 							exact
 							path="/dashboards"
 							component={Dashboards}
-						/>
-						<Route exact path="/error" component={ErrorPage} />
-						<PrivateRoute
-							exact
-							path="/datapoints"
-							component={DataPoints}
 						/>
 						<PrivateRoute
 							exact
@@ -257,13 +238,7 @@ const App = () => {
 							path="/datasources"
 							component={DataSources}
 						/>
-						<PrivateRoute
-							exact
-							path="/datasources/google"
-							component={DataSourceGoogle}
-						/>
 
-						<Route exact path="/login" component={Login} />
 					</Switch>
 					<Footer />
 				</Router>

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { device } from '../../device';
+import { device } from '../../styles/device-braking-points';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import BackgroundOverlay from '../Container/BackgroundOverlay';

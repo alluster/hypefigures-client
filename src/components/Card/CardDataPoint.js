@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { device } from '../../device';
+import { device } from '../../styles/device-braking-points';
 import { Link } from 'react-router-dom';
 import TextWithLabel from '../Text/TextWithLabel';
 import SpinnerSmall from '../Spinner/SpinnerSmall';

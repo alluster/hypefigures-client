@@ -65,9 +65,8 @@ const CardDataGroup = ({ dataPoints, title, description, updated_at }) => {
 				primary
 				small
 				onClick={() => setBarChart(!barChart)}
-			>
-				{barChart ? 'View Values' : 'View Bar Chart'}
-			</Button>
+				title={barChart ? 'Vie wValues' : 'View Bar Chart'}
+			/>
 		</Card>
 	);
 };

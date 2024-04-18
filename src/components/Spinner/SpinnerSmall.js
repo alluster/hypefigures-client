@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ScaleLoader from 'react-spinners/ScaleLoader';
-import { device } from '../../device';
+import { device } from '../../styles/device-braking-points';
 
 const SpinnerContainer = styled.div`
     display: flex;
