@@ -6,7 +6,6 @@ import ButtonGoBack from '../components/Button/ButtonGoBack';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 
-import { useAuth0 } from '@auth0/auth0-react';
 import HeaderText from '../components/Text/HeaderText';
 import Card from '../components/Card/Card';
 import FormGoogleSheet from '../components/Forms/FormGoogleSheet';
@@ -29,7 +28,6 @@ const Label = styled.p`
 
 const DataSourceGoogle = () => {
 	const history = useHistory();
-	const { user } = useAuth0();
 	const { setNotifyMessage, setPath } = useContext(AppContext);
 	const [openModal, setOpenModal] = useState(false);
 

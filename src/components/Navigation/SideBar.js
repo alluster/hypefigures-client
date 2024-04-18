@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { device } from '../../device';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useAuth0 } from '@auth0/auth0-react';
 import { AppContext } from '../../context/Context';
 import {
 	faChevronLeft,
@@ -156,7 +155,6 @@ const SideBar = ({ children }) => {
 	const { sideBarOpen, setSideBarOpen, navigationOpen } =
 		useContext(AppContext);
 
-	const { user } = useAuth0();
 
 	return (
 		<SideNav open={sideBarOpen} navigationOpen={navigationOpen}>

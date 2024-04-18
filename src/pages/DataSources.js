@@ -6,7 +6,6 @@ import Container from '../components/Container/Container';
 import ButtonGoBack from '../components/Button/ButtonGoBack';
 import { useForm } from 'react-hook-form';
 import TextWithLabel from '../components/Text/TextWithLabel';
-import { useAuth0 } from '@auth0/auth0-react';
 import Button from '../components/Button/Button';
 import DividerLine from '../components/Container/DividerLine';
 import { AppContext } from '../context/Context';
@@ -24,7 +23,6 @@ const Wrapper = styled.div`
 `;
 
 const DataSources = () => {
-	const { user } = useAuth0();
 	const { setPath, loadingDataProviders, dataProviders } = useContext(AppContext);
 
 

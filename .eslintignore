@@ -1,0 +1,15 @@
+/public/**
+/coverage/**
+/docs/*
+!/docs/*.js
+!/docs/tools/
+/jsdoc/**
+/templates/**
+/tests/bench/**
+/tests/fixtures/**
+/tests/performance/**
+/tmp/**
+/tools/internal-rules/node_modules/**
+test.js
+!.eslintrc.js
+webpack.config.js

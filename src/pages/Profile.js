@@ -4,7 +4,6 @@ import { AppContext } from '../context/Context';
 import { device } from '../device';
 import Button from '../components/Button/Button';
 import Container from '../components/Container/Container';
-import { useAuth0 } from '@auth0/auth0-react';
 import Modal from '../components/Modal/Modal';
 import FormCompiler from '../supportFunctions/FormComplier';
 import { useForm } from 'react-hook-form';

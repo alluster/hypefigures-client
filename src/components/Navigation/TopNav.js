@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { device } from '../../device';
 import Button from '../Button/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useAuth0 } from '@auth0/auth0-react';
 import { AppContext } from '../../context/Context';
 import SpinnerSmall from '../Spinner/SpinnerSmall';
 import { faCheck, faChevronDown, faPlus } from '@fortawesome/free-solid-svg-icons';

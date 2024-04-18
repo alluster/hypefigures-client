@@ -9,7 +9,6 @@ import { useForm } from 'react-hook-form';
 import Modal from '../components/Modal/Modal';
 import FormCompiler from '../supportFunctions/FormComplier';
 import { AppContext } from '../context/Context';
-import { useAuth0 } from '@auth0/auth0-react';
 
 const Value = styled.h3`
     font-weight: bold;
@@ -36,7 +35,6 @@ const Dashboards = () => {
 		setLoadingDashboards,
 		GetDashboards
 	} = useContext(AppContext)
-	const { user } = useAuth0();
 	var currentDate = (dateData) => new window.Date(dateData);
 	const { setNotifyMessage, setPath } = useContext(AppContext);
 	const [loading, setLoading] = useState(false)

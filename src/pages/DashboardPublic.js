@@ -4,7 +4,6 @@ import HeaderText from '../components/Text/HeaderText';
 import Container from '../components/Container/Container';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
 import CardGrid from '../components/Card/CardGrid';
 import CardPublicDataPoint from '../components/Card/CardPublicDataPoint';
 
@@ -12,7 +11,6 @@ const DashboardPublic = () => {
 	const [dataPoints, setDataPoints] = useState([]);
 	const [openModal] = useState(false);
 	let { id } = useParams();
-	const { user } = useAuth0();
 	const { setAppLocation, setNotifyMessage, setPath } =
 		useContext(AppContext);
 	const { error, loading, data } = useQuery(LOAD_PUBLIC_DASHBOARD, {

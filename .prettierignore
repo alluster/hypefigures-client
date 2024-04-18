@@ -2,3 +2,4 @@
 .babelrc
 .prettierrc.json
 .eslintrc.json
+/public

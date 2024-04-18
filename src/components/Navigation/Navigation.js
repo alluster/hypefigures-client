@@ -10,7 +10,6 @@ import {
 	faBars,
 	faTimes,
 } from '@fortawesome/free-solid-svg-icons';
-import { useAuth0 } from '@auth0/auth0-react';
 import { AppContext } from '../../context/Context';
 
 const SideNav = styled.div`

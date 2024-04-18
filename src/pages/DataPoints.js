@@ -12,7 +12,6 @@ import FormGoogleSpreadsheetDataPoint from '../components/Forms/DataPoints/FormG
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import DividerLine from '../components/Container/DividerLine';
-import { useAuth0 } from '@auth0/auth0-react';
 import { AppContext } from '../context/Context';
 
 const Logo = styled.div`
@@ -49,7 +48,6 @@ const Text = styled.h5`
 `;
 const DataPoints = () => {
 	const { setPath } = useContext(AppContext);
-	const { user } = useAuth0();
 
 
 	const [openDataPointModal, setOpenDataPointModal] = useState(false);

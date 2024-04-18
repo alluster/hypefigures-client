@@ -8,7 +8,6 @@ import ButtonGoBack from '../components/Button/ButtonGoBack';
 import { useForm } from 'react-hook-form';
 import { useParams, useHistory } from 'react-router-dom';
 import TextWithLabel from '../components/Text/TextWithLabel';
-import { useAuth0 } from '@auth0/auth0-react';
 import Button from '../components/Button/Button';
 
 const Value = styled.h3`

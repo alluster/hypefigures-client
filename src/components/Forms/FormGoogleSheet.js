@@ -4,7 +4,6 @@ import { AppContext } from '../../context/Context';
 
 import { useForm } from 'react-hook-form';
 import TextWithLabel from '../Text/TextWithLabel';
-import { useAuth0 } from '@auth0/auth0-react';
 import { device } from '../../device';
 import DividerLine from '../Container/DividerLine';
 import Button from '../Button/Button';
@@ -123,7 +122,6 @@ const FormGoogleSheet = ({ openModal, buttonTitle, setOpenModal }) => {
 		reset,
 		formState: { errors },
 	} = useForm();
-	const { user } = useAuth0();
 
 	const { setNotifyMessage } = useContext(AppContext);
 	const onSubmit = async (data) => {

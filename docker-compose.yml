@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  client:
+    image: hyperfigures-client
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9500:9500"
+    volumes:
+      - .:/app
+      - /app/node_modules
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - app:/usr/share/nginx/html/app # Copy React App's build files to the Nginx directory
+volumes:
+   app:

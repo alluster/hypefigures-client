@@ -1,7 +1,5 @@
-import React, { Suspense, useContext, useState } from 'react';
-import ReactDOM from 'react-dom';
+import React, { Suspense, useContext } from 'react';
 import { device } from './device';
-
 import theme from './theme';
 import { ThemeProvider } from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
@@ -10,6 +8,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 
 
+// components
+
 import Navigation from './components/Navigation/Navigation';
 import Notification from './components/Notification/Notification';
 import SpinnerSmall from './components/Spinner/SpinnerSmall';
@@ -17,23 +17,23 @@ import Footer from './components/Navigation/Footer';
 import DataSources from './pages/DataSources';
 import TopNav from './components/Navigation/TopNav';
 import Spinner from './components/Spinner/Spinner';
+
+
 //pages
+
 const Profile = React.lazy(() => import('./pages/Profile'));
 const Dashboard = React.lazy(() => import('./pages/Dashboard'));
 const Dashboards = React.lazy(() => import('./pages/Dashboards'));
-
 const ErrorPage = React.lazy(() => import('./pages/ErrorPage'));
 const Home = React.lazy(() => import('./pages/Home'));
 const Login = React.lazy(() => import('./pages/Login'));
 const DataPoint = React.lazy(() => import('./pages/DataPoint'));
 const DataPoints = React.lazy(() => import('./pages/DataPoints'));
+const Team = React.lazy(() => import('./pages/Team'));
+const DataSourceGoogle = React.lazy(() => import('./pages/DataSourceGoogle'));
+const DashboardPublic = React.lazy(() => import('./pages/DashboardPublic'));
 
-import DataSourceGoogle from './pages/DataSourceGoogle';
-import DashboardPublic from './pages/DashboardPublic';
-import Container from './components/Container/Container';
 import { AppContext } from './context/Context';
-import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
-import Team from './pages/Team';
 
 library.add(fas);
 
