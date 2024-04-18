@@ -102,9 +102,8 @@ const Profile = () => {
 			<Button
 				onClick={Logout}
 				type='button'
-			>
-				Logout
-			</Button>
+				title='Logout'
+			/>
 
 			<Modal
 				open={openModal}

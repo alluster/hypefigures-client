@@ -237,6 +237,7 @@ const Dashboard = () => {
 				<Button
 					ghost
 					layoutType='back'
+					title='Go Back'
 				/>
 				<HeaderText
 					locationText="Dashboard"
@@ -246,7 +247,7 @@ const Dashboard = () => {
 							'-'
 					}
 				/>
-				<Button layoutType='dropdown' title="Dashboard Options">
+				<Button layoutType='dropdown' title="Dashboard Options" primary>
 					<ActionText
 						onClick={() => {
 							setOpenModal(!openModal);

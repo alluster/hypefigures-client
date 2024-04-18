@@ -196,17 +196,14 @@ const FormCompiler = ({
 					<Button
 						type='submit'
 						dividerRight
-					>
-						{buttonTitle || 'Create'}
+						title={buttonTitle || 'Create'}
 
-					</Button>
+					/>
 					<Button
 						white
 						onClick={() => openModal(false)}
-
-					>
-						Peruuta
-					</Button>
+						title='Peruuta'
+					/>
 				</ButtonRow>
 			)}
 		</form>

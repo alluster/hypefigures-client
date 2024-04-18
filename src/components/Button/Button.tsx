@@ -14,7 +14,6 @@ import { useHistory } from 'react-router-dom';
 const StyledButtonBase = styled.button<ButtonProps>`
     text-align: center;
     border-radius: 8px;
-    height: 100%;
     padding-left: 40px;
     padding-right: 40px;
     font-size: 22.6px;
@@ -94,13 +93,19 @@ const Icon = styled(FontAwesomeIcon)`
     margin-right: ${(props) => props.theme.grid.divider_1};
     align-self: center;
 `;
+const IconDropdown = styled(FontAwesomeIcon)`
+    color: ${(props) => props.theme.colors.white};
+    font-size: 16px;
+    margin-left: ${(props) => props.theme.grid.divider_2};
+    align-self: center;
+`;
+
 const DropdownContent = styled.div`
     background-color: ${(props) => props.theme.colors.gray_20};
     border-radius: 8px;
     padding: 16px;
     position: absolute;
     min-width: 200px;
-    margin-top: -42px;
     z-index: 1;
     border: 1px solid ${(props) => props.theme.colors.gray_60};
 `;
@@ -157,13 +162,14 @@ const Button = ({
                 <div>
                     <StyledButtonBase
                         small
+                        primary
                         onClick={() => setOpenDropdown(!openDropdown)}
                     >
                         {title}
                         {openDropdown ? (
-                            <Icon icon={faChevronDown} />
+                            <IconDropdown icon={faChevronDown} />
                         ) : (
-                            <Icon icon={faChevronUp} />
+                            <IconDropdown icon={faChevronUp} />
                         )}
                     </StyledButtonBase>
 
