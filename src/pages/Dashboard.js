@@ -16,7 +16,6 @@ import Card from '../components/Card/Card';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import SideBar from '../components/Navigation/SideBar';
 import Button from '../components/Button/Button';
-import SpreadsheetGoogle from '../components/Forms/DataPoints/SpreadsheetGoogle';
 import SpinnerSmall from '../components/Spinner/SpinnerSmall';
 import FormGoogleSpreadsheetDataPoint from '../components/Forms/DataPoints/FormGoogleSpreadsheetDataPoint';
 import FormGoogleAnalytics from '../components/Forms/DataPoints/FormGoogleAnalytics';

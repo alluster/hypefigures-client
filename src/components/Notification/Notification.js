@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { AppContext } from '../../context/Context';
 import { ToastContainer, toast } from 'react-toastify';
-import '../../css/ReactToastify.css';
+import '../../styles/css/ReactToastify.css';
 import Emoji from 'a11y-react-emoji';
 
 const Notification = () => {

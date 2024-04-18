@@ -28,7 +28,7 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: "index.html", // to import index.html file inside index.js
+			template: "public/index_template.html", // to import index.html file inside index.js
 		}),
 		new webpack.DefinePlugin(envKeys)
 	],
