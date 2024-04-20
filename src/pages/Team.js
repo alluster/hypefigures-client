@@ -9,7 +9,7 @@ import SpinnerSmall from '../components/Spinner/SpinnerSmall';
 const Team = () => {
 	let { id } = useParams();
 	const history = useHistory();
-	const { setNotifyMessage, setPath, Get, Post, setTeam, setLoadingTeams, team, setLoadingTeam, loadingTeam } = useContext(AppContext);
+	const { user, setNotifyMessage, setPath, Get, Post, setTeam, setLoadingTeams, team, setLoadingTeam, loadingTeam } = useContext(AppContext);
 	const DeleteTeam = async () => {
 		try {
 			const response = await Post({
@@ -40,7 +40,7 @@ const Team = () => {
 	useEffect(() => {
 		setPath('/team');
 		window.scroll(0, 0);
-		Get({ params: { id: id }, path: 'team', dataSetter: setTeam, loader: setLoadingTeam })
+		Get({ params: { id: id, user_id: user[0].id }, path: 'team', dataSetter: setTeam, loader: setLoadingTeam })
 	}, []);
 	useEffect(() => {
 		TeamContent()

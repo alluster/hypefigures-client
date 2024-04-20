@@ -48,7 +48,10 @@ const Provider = ({ children }) => {
 				if (response.status === 200) {
 					setIsAuthenticated(true)
 					Get({ params: { id: response.data.user.id }, path: 'user', dataSetter: setUser, loader: setLoadingUser })
-					Get({ params: { id: response.data.user.team_id }, path: 'team', dataSetter: setActiveTeam, loader: setLoadingTeams })
+					if (response.data.user.team_id !== null) {
+						Get({ params: { user_id: response.data.user.id }, path: 'team', dataSetter: setTeams, loader: setLoadingTeams })
+						Get({ params: { id: response.data.user.team_id, user_id: response.data.user.id }, path: 'team', dataSetter: setActiveTeam, loader: setLoadingTeams })
+					}
 				}
 			} else {
 				setIsAuthenticated(false);
@@ -126,6 +129,7 @@ const Provider = ({ children }) => {
 			)
 			if (response.status === 403) {
 				CheckAuth()
+				return response
 			}
 			if (response && response.data.length > 0) {
 				dataSetter(response.data)
@@ -143,7 +147,6 @@ const Provider = ({ children }) => {
 		CheckAuth();
 		Get({ params: {}, path: 'dashboard', dataSetter: setDashboards, loader: setLoadingDashboards })
 		Get({ params: {}, path: 'data_provider', dataSetter: setDataProviders, loader: setLoadingDataProviders })
-		Get({ params: {}, path: 'team', dataSetter: setTeams, loader: setLoadingTeams })
 	}, [])
 	useEffect(() => {
 		localStorage.setItem('path', path);

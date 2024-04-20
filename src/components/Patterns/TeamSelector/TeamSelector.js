@@ -141,7 +141,6 @@ const ListTeam = styled.div`
 
 const TeamSelector = () => {
 	const {
-		isAuthenticated,
 		teams,
 		loadingUser,
 		dropdownRef,
@@ -168,7 +167,7 @@ const TeamSelector = () => {
 		try {
 			const response = await Post({ params: { id: user[0].id, team_id: team_id }, path: 'user', dataSetter: setUser, loader: setLoadingTeams })
 			if (response.status === 200) {
-				Get({ params: { id: response.data.user.team_id }, path: 'team', dataSetter: setActiveTeam, loader: setLoadingTeams })
+				Get({ params: { id: response.data.user.team_id, user_id: response.data.user.id }, path: 'team', dataSetter: setActiveTeam, loader: setLoadingTeams })
 
 				setNotifyMessage('Active team changed');
 				// location.reload()

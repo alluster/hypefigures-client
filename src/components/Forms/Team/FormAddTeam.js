@@ -17,11 +17,11 @@ const FormAddTeam = ({
 	} = useForm();
 	let { id } = useParams();
 
-	const { setNotifyMessage, Post, setTeams, setLoadingTeams } = useContext(AppContext);
+	const { setNotifyMessage, Post, setTeams, setLoadingTeams, user } = useContext(AppContext);
 
 	const onSubmit = async (data) => {
 		try {
-			const response = await Post({ params: { title: data.teamName, description: data.teamDescription }, path: 'team', dataSetter: setTeams, loader: setLoadingTeams })
+			const response = await Post({ params: { title: data.teamName, description: data.teamDescription, uniq_user_id: user[0].uniq_user_id }, path: 'team', dataSetter: setTeams, loader: setLoadingTeams })
 			if (response.status === 200) {
 				setNotifyMessage(`New team ${data.teamName} added`);
 			}

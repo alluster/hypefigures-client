@@ -18,8 +18,7 @@ const Wrapper = styled.div`
 
 const Profile = () => {
 
-
-	const { setPath, isAuthenticated, setNotifyMessage, Get, Post, setTeams, setLoadingTeams, loadingTeams, teams } = useContext(AppContext);
+	const { setPath, user, setNotifyMessage, Get, Post, setTeams, setLoadingTeams, loadingTeams, teams } = useContext(AppContext);
 	const [openModal, setOpenModal] = useState(false);
 	const {
 		control,
@@ -31,7 +30,7 @@ const Profile = () => {
 
 	const onSubmit = async (data) => {
 		try {
-			const response = await Post({ params: { title: data.teamName, description: data.teamDescription }, path: 'team', dataSetter: setTeams, loader: setLoadingTeams })
+			const response = await Post({ params: { title: data.teamName, description: data.teamDescription, uniq_user_id: user[0].uniq_user_id }, path: 'team', dataSetter: setTeams, loader: setLoadingTeams })
 			if (response.status === 200) {
 				setNotifyMessage(`New team ${data.teamName} added`);
 			}
@@ -79,7 +78,7 @@ const Profile = () => {
 	useEffect(() => {
 		setPath('/profile');
 		window.scroll(0, 0);
-		Get({ params: {}, path: 'team', dataSetter: setTeams, loader: setLoadingTeams })
+		Get({ params: { user_id: user.length > 0 ? user[0].id : null }, path: 'team', dataSetter: setTeams, loader: setLoadingTeams })
 
 	}, []);
 	const Logout = () => {
@@ -96,7 +95,6 @@ const Profile = () => {
 				description="Your teams"
 			/>
 			{TeamsList()}
-
 
 			<Button
 				onClick={Logout}
