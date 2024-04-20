@@ -30,20 +30,35 @@ const HeaderText = ({
 	description,
 	onClickFunction,
 	buttonTitle,
+	small
 }) => {
 	return (
-		<HeaderTextWrapper>
-			<TextContainer>
-				<h6>{locationText || ''}</h6>
-				<h4>{title || ''}</h4>
-				<h5>{description || ''}</h5>
-			</TextContainer>
-			{buttonTitle != null && (
-				<ButtonContainer>
-					<Button onClick={onClickFunction} title={buttonTitle} />
-				</ButtonContainer>
-			)}
-		</HeaderTextWrapper>
+		small ?
+			<HeaderTextWrapper>
+				<TextContainer>
+					<p>{locationText || ''}</p>
+					<h5>{title || ''}</h5>
+					<h6>{description || ''}</h6>
+				</TextContainer>
+				{buttonTitle != null && (
+					<ButtonContainer>
+						<Button onClick={onClickFunction} title={buttonTitle} />
+					</ButtonContainer>
+				)}
+			</HeaderTextWrapper>
+			:
+			<HeaderTextWrapper>
+				<TextContainer>
+					<p>{locationText || ''}</p>
+					<h5>{title || ''}</h5>
+					<h6>{description || ''}</h6>
+				</TextContainer>
+				{buttonTitle != null && (
+					<ButtonContainer>
+						<Button onClick={onClickFunction} title={buttonTitle} />
+					</ButtonContainer>
+				)}
+			</HeaderTextWrapper>
 	);
 };
 

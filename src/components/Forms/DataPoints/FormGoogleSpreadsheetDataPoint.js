@@ -50,7 +50,6 @@ const FormGoogleSpreadsheetDataPoint = ({
 					type: 'google-sheet'
 				}, path: 'data_point', dataSetter: setDataPoints, loader: setLoadingDataPoints
 			})
-			console.log('response from response', response.status)
 			if (response.status === 200) {
 				setNotifyMessage(`New Data Point ${data.dataPointName} added`);
 			}

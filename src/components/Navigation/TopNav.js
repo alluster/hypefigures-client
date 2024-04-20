@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AppContext } from '../../context/Context';
 import SpinnerSmall from '../Spinner/SpinnerSmall';
 import { faCheck, faChevronDown, faPlus } from '@fortawesome/free-solid-svg-icons';
+import TeamSelector from '../Patterns/TeamSelector/TeamSelector';
 
 const Wrapper = styled.div`
     height: 48px;
@@ -14,18 +15,13 @@ const Wrapper = styled.div`
     top: 96px;
     display: flex;
     align-items: center;
+	margin-left: 100px;
     flex-direction: row;
     // padding-left: ${(props) => props.theme.grid.divider_10};
     padding-right: ${(props) => props.theme.grid.divider_4};
     // @media ${device.laptop} {
     // 	display: none;
     // }
-`;
-const Header = styled.h5`
-    line-height: ${(props) => props.theme.grid.divider_8};
-    white-space: nowrap;
-    @media ${device.laptop} {
-    }
 `;
 
 const Links = styled.div`
@@ -37,29 +33,13 @@ const Links = styled.div`
     justify-content: flex-end;
     width: 100%;
 `;
-const Icon = styled(FontAwesomeIcon)`
-    color: ${(props) => props.theme.colors.primary_100};
-    font-size: 40px;
-    margin-right: 40px;
-    margin-left: 20px;
-`;
 
-const LinkContainer = styled(Link)`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-`;
-
-const WithMargin = styled.div`
-    margin-right: ${(props) => props.theme.grid.divider_4};
-`;
 const TeamSelectorContainer = styled.div`
     display: flex;
     height: 48px;
     align-items: center;
 
-    margin-left: 136px;
-	width: 100%;
+	min-width: 200px;
 `;
 const ActiveTeamNameContainer = styled.div`
     display: flex;
@@ -182,82 +162,58 @@ const CheckIcon = styled.div`
     line-height: 18px;
     margin-left: auto;
 `;
-const SideBarMargin = styled.div`
-    ${({ sideBarOpen }) =>
-		sideBarOpen &&
-		`
-			margin-left: 260px;
-	`}
-`;
-const NavigationMargin = styled.div`
-    ${({ navigationOpen }) =>
-		navigationOpen &&
-		`
-			margin-left: 220px;
-
-	`}
+const MarginContainer = styled.div`
+    ${({ sideBarOpen, navigationOpen }) => {
+		if (sideBarOpen && !navigationOpen) {
+			return `
+                margin-left: 160px;
+            `;
+		} else if (!sideBarOpen && navigationOpen) {
+			return `
+                margin-left: 160px;
+            `;
+		} else if (!sideBarOpen && !navigationOpen) {
+			return `
+                margin-left: 10px;
+            `;
+		} else if (sideBarOpen && navigationOpen) {
+			return `
+                margin-left: 340px;
+            `;
+		}
+	}}
 `;
 const TopNav = () => {
-	const { user, isAuthenticated, teams, loadingUser, dropdownRef, activeTeam,
-		openDropdown,
-		setOpenDropdown, sideBarOpen, navigationOpen } = useContext(AppContext);
-	const [openTeamSelector, setOpenTeamSelector] = useState(false);
-	const [addTeam, setAddTeam] = useState(false);
-	const TeamsSelector = () => {
-		const TeamsList = () => {
-			return teams && teams.length > 0 ? (
-				loadingUser ? (
-					<SpinnerSmall />
-				) : (
-					teams
-						// .filter((item) => item.id != activeTeam[0].id)
-						.map((item, i) => {
-							return (
-								<ListTeam key={i}
-								// onClick={() => InsertActiveTeam({ id: item.id })}
-								>
-									<TeamListName>{item.title}</TeamListName>
-								</ListTeam>
-							);
-						})
-				)
-			) : null;
-		};
-		return (
-			<TeamSelectorContainer>
-				<ActiveTeamName>Antler Global</ActiveTeamName>
-				<DropDownIcon>
-					<FontAwesomeIcon icon={faChevronDown} />
-				</DropDownIcon>
-			</TeamSelectorContainer>
-		)
-	};
-	useEffect(() => {
-		TeamsSelector()
-	}, [teams])
+	const {
+		user,
+		isAuthenticated,
+		sideBarOpen,
+		navigationOpen
+	} = useContext(AppContext);
 
+	const TopBarContainer = () => {
+		return (
+			isAuthenticated ?
+				<Wrapper>
+					<MarginContainer sideBarOpen={sideBarOpen} navigationOpen={navigationOpen}>
+						<TeamSelector />
+					</MarginContainer >
+					<Links>
+						<Link to="/user">
+							<p>{user.length > 0 ? user[0].email : ''}</p>
+						</Link>
+					</Links>
+
+				</Wrapper >
+				: <div></div>
+		)
+	}
+	useEffect(() => {
+		TopBarContainer()
+	}, [isAuthenticated])
 	return (
 
-
-		isAuthenticated ?
-			<Wrapper>
-				<SideBarMargin sideBarOpen={sideBarOpen} >
-					<NavigationMargin navigationOpen={navigationOpen}>
-						{TeamsSelector()}
-
-					</NavigationMargin>
-
-				</SideBarMargin >
-				<Links>
-					<Link to="/user">
-						<p>{user.email || ''}</p>
-					</Link>
-				</Links>
-
-			</Wrapper >
-			: <div></div>
-
-
+		<TopBarContainer />
 
 	);
 };

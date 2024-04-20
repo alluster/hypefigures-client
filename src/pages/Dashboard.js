@@ -20,7 +20,9 @@ import SpinnerSmall from '../components/Spinner/SpinnerSmall';
 import FormGoogleSpreadsheetDataPoint from '../components/Forms/DataPoints/FormGoogleSpreadsheetDataPoint';
 import FormGoogleAnalytics from '../components/Forms/DataPoints/FormGoogleAnalytics';
 import { useHistory } from "react-router-dom";
-
+import FormGoogleTable from '../components/Forms/DataTable/FormGoogleTable';
+import CardDataTable from '../components/Card/CardDataTable';
+import Chat from '../components/Chat/Chat';
 
 const Logo = styled.div`
    	max-width: 40px;
@@ -82,9 +84,26 @@ const LinksContainer = styled.div`
     flex-direction: column;
 `;
 
+const SidebarTitleContainer = styled.div`
+	margin-bottom: 20px;
+
+`
+
+const SidebarTitle = styled.p`
+	margin-top: 10px;
+	margin-bottom: 10px;
+`;
+const SidebarDescription = styled.p`
+	font-size: 12px;
+`;
+const SidebarLocation = styled.p`
+	font-size: 12px;
+`;
 const Dashboard = () => {
 	const [openDataPointModal, setOpenDataPointModal] = useState(false);
-	const [openActionsModal, setOpenActionsModal] = useState(false);
+	const [openDataTableModal, setOpenDataTableModal] = useState(false);
+
+	// const [openActionsModal, setOpenActionsModal] = useState(false);
 	const [dataPointSelector, setDataPointSelector] = useState('');
 	const [googleSheets, setGoogleSheets] = useState([]);
 	const [openModal, setOpenModal] = useState(false);
@@ -106,7 +125,11 @@ const Dashboard = () => {
 		analyticsData,
 		loadingDashboards,
 		setLoadingDataPoints,
-		setNotifyMessage
+		setNotifyMessage,
+		setDataTables,
+		setLoadingDataTables,
+		loadingDataTables,
+		dataTables
 	} = useContext(AppContext);
 	const {
 		register,
@@ -145,7 +168,6 @@ const Dashboard = () => {
 			dataPoints.length > 0 ? dataPoints.map((item, i) => {
 				return (
 					<CardDataPoint
-						// loading={item.value.loaderFunction}
 						type={item.type}
 						key={i}
 						to={`/datapoints/${item.id}`}
@@ -162,22 +184,52 @@ const Dashboard = () => {
 		);
 
 	};
+	const DataTables = () => {
+		if (loadingDataTables) {
+			return <SpinnerSmall />;
+		}
+		return (
+			dataTables.length > 0 ? dataTables.map((item, i) => {
+				return (
+					<CardDataTable
+						type={item.type}
+						key={i}
+						to={`/datatable/${item.id}`}
+						cell={item.cell || ''}
+						spreadsheetId={item.spreadsheet_id || ''}
+						sheetId={item.sheet_id || ''}
+						title={item.title}
+						description={item.description}
+						value={item.value}
+					/>
+				);
+			}) :
+				<p>This dashboard does not contain any data yet.</p>
+		);
 
+	};
 	const DashboardContent = () => {
 
 		return (
 			<div>
-				<HeaderText
+				{/* <HeaderText
 					buttonTitle="Add new datapoint"
 					onClickFunction={() => setOpenDataPointModal(!openDataPointModal)}
 					locationText=""
 					title="Datapoints"
 					description="Your dahboard datapoints"
 				/>
-				{DataPoints()}
-
-
+				{DataPoints()} */}
 				<HeaderText
+					buttonTitle="Add Data"
+					onClickFunction={() => setOpenDataTableModal(!openDataTableModal)}
+					locationText=""
+					title="Tables"
+					description="Integrated tables"
+				/>
+				{DataTables()}
+
+				{/* <HeaderText
 					buttonTitle="Add new Action"
 					onClickFunction={() => setOpenActionsModal(!openActionsModal)}
 					locationText=""
@@ -193,7 +245,7 @@ const Dashboard = () => {
 							description='Website user cost 2024'
 							value='1.8€'
 						/>
-				}
+				} */}
 
 			</div >
 		)
@@ -234,20 +286,18 @@ const Dashboard = () => {
 	const SideBarContainer = () => {
 		return (
 			<SideBar>
-				<Button
-					ghost
-					layoutType='back'
-					title='Go Back'
-				/>
-				<HeaderText
-					locationText="Dashboard"
-					title={dashboard.length > 0 ? dashboard[0].title : '-'}
-					description={
+
+				<SidebarTitleContainer>
+					<SidebarLocation>Dashboard</SidebarLocation>
+					<SidebarTitle>{dashboard.length > 0 ? dashboard[0].title : '-'}</SidebarTitle>
+					<SidebarDescription>{
 						dashboard.length > 0 ? dashboard[0].description :
 							'-'
-					}
-				/>
-				<Button layoutType='dropdown' title="Dashboard Options" primary>
+					}</SidebarDescription>
+				</SidebarTitleContainer>
+
+
+				{/* <Button small layoutType='dropdown' title="Options" primary>
 					<ActionText
 						onClick={() => {
 							setOpenModal(!openModal);
@@ -273,9 +323,9 @@ const Dashboard = () => {
 					>
 						Delete Dashboard
 					</ActionText>
-				</Button>
+				</Button> */}
 
-				<Accordion title="Dashboards">
+				{/* <Accordion title="Dashboards">
 					<LinksContainer>
 						{loadingDashboards ? (
 							<p>Loading dashboard data....</p>
@@ -301,7 +351,7 @@ const Dashboard = () => {
 					>
 						Create New
 					</Button>
-				</Accordion>
+				</Accordion> */}
 			</SideBar>
 		);
 	};
@@ -310,7 +360,6 @@ const Dashboard = () => {
 			return <SpinnerSmall />
 		} else {
 			if (analyticsData.length > 0) {
-				console.log(analyticsData)
 				return (
 					<div>
 						<h2>Report Data</h2>
@@ -339,11 +388,45 @@ const Dashboard = () => {
 
 		};
 	}
+	const DataTablesContainer = () => {
+		if (loadingDataTables) {
+			return <SpinnerSmall />
+		} else {
+			if (analyticsData.length > 0) {
+				return (
+					<div>
+						<h2>Report Data</h2>
+						<table>
+							<thead>
+								<tr>
+									{Object.keys(analyticsData[0]).map((key, index) => (
+										<th key={index}>{key}</th>
+									))}
+								</tr>
+							</thead>
+							<tbody>
+								{analyticsData.map((item, index) => (
+									<tr key={index}>
+										{Object.values(item).map((value, index) => (
+											<td key={index}>{value.value}</td>
+										))}
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
+				);
+			}
+			return null
 
+		};
+	}
 	useEffect(() => {
 		setDataPoints([])
 		Get({ params: { id: id }, path: 'dashboard', dataSetter: setDashboard, loader: setLoadingDashboard })
 		Get({ params: { dashboard_id: id }, path: 'data_point', dataSetter: setDataPoints, loader: setLoadingDataPoints })
+		Get({ params: { dashboard_id: id }, path: 'data_table', dataSetter: setDataTables, loader: setLoadingDataTables })
+
 	}, [])
 
 	useEffect(() => {
@@ -360,11 +443,19 @@ const Dashboard = () => {
 
 	return (
 		<Content>
+
 			{SideBarContainer()}
 			<Container>
+				<Button
+					ghost
+					layoutType='back'
+					title='Go Back'
+				/>
+				<Chat />
 
 				{DashboardContent()}
 				<AnalyticsDataContainer />
+				<DataTablesContainer />
 			</Container>
 			<Modal
 				open={openModal}
@@ -459,6 +550,16 @@ const Dashboard = () => {
 				)}
 
 				{DataPointSelectorHandler()}
+			</Modal>
+			<Modal
+				open={openDataTableModal}
+				openModal={() => setOpenDataTableModal()}
+				modalTitle="New Table"
+			>
+				<FormGoogleTable
+					setOpenDataTableModal={setOpenDataTableModal}
+					dashboardsList={(dashboards && dashboards) || []}
+				/>
 			</Modal>
 			<Modal
 				open={openNewDashboardModal}

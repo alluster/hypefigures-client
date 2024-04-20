@@ -6,12 +6,12 @@ import { AppContext } from '../../context/Context';
 const Wrapper = styled.div`
     z-index: 2;
     // max-width: 1200px;
-    // margin-left: auto;
+    margin-left: 100px;
     // margin-right: auto;
     min-height: 100vh;
     padding-bottom: 200px;
     padding-top: ${(props) => props.theme.grid.divider_4};
-    padding-left: 138px;
+    // padding-left: 138px;
     padding-right: ${(props) => props.theme.grid.divider_2};
 
     @media ${device.laptop} {
@@ -19,20 +19,26 @@ const Wrapper = styled.div`
         padding-top: ${(props) => props.theme.grid.divider_12};
     }
 `;
-const SideBarMargin = styled.div`
-    ${({ sideBarOpen }) =>
-		sideBarOpen &&
-		`
-			margin-left: 260px;
-	`}
-`;
-const NavigationMargin = styled.div`
-    ${({ navigationOpen }) =>
-		navigationOpen &&
-		`
-			margin-left: 220px;
-
-	`}
+const MarginContainer = styled.div`
+    ${({ sideBarOpen, navigationOpen }) => {
+		if (sideBarOpen && !navigationOpen) {
+			return `
+                margin-left: 160px;
+            `;
+		} else if (!sideBarOpen && navigationOpen) {
+			return `
+                margin-left: 160px;
+            `;
+		} else if (!sideBarOpen && !navigationOpen) {
+			return `
+                margin-left: 10px;
+            `;
+		} else if (sideBarOpen && navigationOpen) {
+			return `
+                margin-left: 340px;
+            `;
+		}
+	}}
 `;
 
 const Container = ({ children }) => {
@@ -40,11 +46,9 @@ const Container = ({ children }) => {
 
 	return (
 		<Wrapper>
-			<SideBarMargin sideBarOpen={sideBarOpen}>
-				<NavigationMargin navigationOpen={navigationOpen}>
-					{children}
-				</NavigationMargin>
-			</SideBarMargin>
+			<MarginContainer sideBarOpen={sideBarOpen} navigationOpen={navigationOpen}>
+				{children}
+			</MarginContainer>
 		</Wrapper>
 	);
 };

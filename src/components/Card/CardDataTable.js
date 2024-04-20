@@ -4,6 +4,7 @@ import { device } from '../../styles/device-braking-points';
 import { Link } from 'react-router-dom';
 import TextWithLabel from '../Text/TextWithLabel';
 import SpinnerSmall from '../Spinner/SpinnerSmall';
+import DataTable from '../Table/DataTable';
 
 const Wrapper = styled.div`
     padding-top: ${(props) => props.theme.grid.divider_4};
@@ -23,6 +24,7 @@ const Wrapper = styled.div`
 		`
 		flex-direction: row;
 	`};
+	
     ${({ onClick }) =>
 		onClick &&
 		`
@@ -76,7 +78,7 @@ const ImageContainer = styled.div`
 	margin-right: 30px;
 `
 
-const CardDataPoint = ({
+const CardDataTable = ({
 	to,
 	row,
 	small,
@@ -87,7 +89,6 @@ const CardDataPoint = ({
 	loading,
 	type
 }) => {
-
 
 	const ImageSelector = () => {
 		switch (type) {
@@ -110,56 +111,54 @@ const CardDataPoint = ({
 		}
 	};
 	return (
-		<div onClick={onClick}>
-			{to ? (
-				<WrapperLink small={small} row={row} to={to || ''}>
-					{loading ? (
-						<SpinnerSmall />
-					) : (
-						<Container>
-							<ImageContainer>
-								{
-									ImageSelector()
-								}
-							</ImageContainer>
-							<TextWithLabel
-								small
-								title={title || '-'}
-								label="Name"
-								description=''
-							/>
-							<TextWithLabel
-								small
-								title={value || '-'}
-								label="Value"
-								description=''
-							/>
-							<TextWithLabel
-								small
-								title={description || '-'}
-								label="Description"
-								description=''
-							/>
-						</Container>
+		<div onClick={onClick} >
+			{
+				to ? (
+					<WrapperLink small={small} row={row} to={to || ''} >
+						{
+							loading ? (
+								<SpinnerSmall />
+							) : (
+								<Container>
+									<ImageContainer>
+										{
+											ImageSelector()
+										}
+									</ImageContainer>
+									<TextWithLabel
+										small
+										title={title || '-'}
+										label="Name"
+										description=''
+									/>
+
+									<TextWithLabel
+										small
+										title={description || '-'}
+										label="Description"
+										description=''
+									/>
+								</Container>
 
 
-					)}
-				</WrapperLink>
-			) : (
-				<Wrapper small={small} row={row}>
-					{loading ? (
-						<SpinnerSmall />
-					) : (
-						<TextWithLabel
-							title={value || ''}
-							label={title || ''}
-							description={description || ''}
-						/>
-					)}
-				</Wrapper>
-			)}
-		</div>
+							)}
+					</WrapperLink >
+				) : (
+					<Wrapper small={small} row={row}>
+						{loading ? (
+							<SpinnerSmall />
+						) : (
+							<TextWithLabel
+								title={value || ''}
+								label={title || ''}
+								description={description || ''}
+							/>
+						)}
+					</Wrapper>
+				)}
+			<DataTable data={value} />
+		</div >
 	);
 };
 
-export default CardDataPoint;
+export default CardDataTable;

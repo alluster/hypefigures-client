@@ -1,33 +1,26 @@
-import React, { useEffect, useContext, useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useContext } from 'react';
 import { AppContext } from '../../../context/Context';
-
 import { useForm } from 'react-hook-form';
-
 import FormCompiler from '../../../supportFunctions/FormComplier';
 import { useParams } from 'react-router-dom';
 
-const Title = styled.h4`
-    margin-top: ${(props) => props.theme.grid.divider_2};
-    margin-bottom: ${(props) => props.theme.grid.divider_2};
-`;
-const FormGoogleAnalytics = ({
-	setOpenDataPointModal
+
+const FormGoogleTable = ({
+	setOpenDataTableModal
 }) => {
 	const {
-		control,
 		register,
 		handleSubmit,
 		reset,
 		formState: { errors },
 	} = useForm();
-
 	let { id } = useParams();
 
 	const {
 		setNotifyMessage,
-		Post, setDataPoints,
-		setLoadingDataPoints,
+		Post,
+		setDataTables,
+		setLoadingDataTables,
 		dashboards,
 	} = useContext(AppContext);
 
@@ -35,18 +28,18 @@ const FormGoogleAnalytics = ({
 		try {
 			const response = await Post({
 				params: {
-					title: data.dataPointName,
-					description: data.dataPointDescription,
-					property_id: data.propertyId,
+					title: data.dataTableName,
+					description: data.dataTableDescription,
+					spreadsheet_id: data.spreadsheet_id,
+					sheet_id: data.sheet_id,
 					dashboard_id: data.dashboard_id,
-					type: 'google-analytics'
-				}, path: 'data_point', dataSetter: setDataPoints, loader: setLoadingDataPoints
+				}, path: 'data_table', dataSetter: setDataTables, loader: setLoadingDataTables
 			})
 			if (response.status === 200) {
-				setNotifyMessage(`New Data Point ${data.dataPointName} added`);
+				setNotifyMessage(`New Data Table ${data.dataTableName} added`);
 			}
 			else {
-				setNotifyMessage(`New Data Point ${data.dataPointName} could not be added`);
+				setNotifyMessage(`New Data Table ${data.dataTableName} could not be added`);
 			}
 		} catch (error) {
 			console.log(error);
@@ -65,39 +58,47 @@ const FormGoogleAnalytics = ({
 		<div>
 			<FormCompiler
 				reset={reset}
-				openModal={() => setOpenDataPointModal()}
+				openModal={() => setOpenDataTableModal()}
 				errors={errors}
 				onSubmit={() => handleSubmit(onSubmit)}
 				register={register}
 				fields={[
-
 					{
 						type: 'input',
-						name: 'propertyId',
-						label: 'Property Id Analytics',
-						options: '',
-						required: true,
-						errorMessage: 'Required',
-						placeholder: 'Find this from Analytics account',
-					},
-					{
-						type: 'input',
-						name: 'dataPointName',
+						name: 'dataTableName',
 						label: 'Name',
 						options: '',
 						required: true,
-						errorMessage: 'Data Point name is required',
+						errorMessage: 'Data Table name is required',
 						placeholder: 'Budget, Profit, Revenue ... etc.',
 					},
 					{
 						type: 'input',
-						name: 'dataPointDescription',
+						name: 'dataTableDescription',
 						label: 'Description',
 						options: '',
 						required: false,
 						errorMessage: '',
 						placeholder:
 							'Calculated profit for this month ... etc.',
+					},
+					{
+						type: 'input',
+						name: 'spreadsheet_id',
+						label: 'Spreadsheet Id',
+						options: '',
+						required: true,
+						errorMessage: 'Spreadsheet Id is required',
+						placeholder: 'Find this from the sheet URL...',
+					},
+					{
+						type: 'input',
+						name: 'sheet_id',
+						label: 'Sheet Id',
+						options: '',
+						required: true,
+						errorMessage: 'Sheet Id is required',
+						placeholder: 'Find this from the sheet URL...',
 					},
 					{
 						type: 'select',
@@ -115,4 +116,4 @@ const FormGoogleAnalytics = ({
 	);
 };
 
-export default FormGoogleAnalytics;
+export default FormGoogleTable;

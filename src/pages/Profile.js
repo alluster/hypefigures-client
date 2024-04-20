@@ -32,7 +32,6 @@ const Profile = () => {
 	const onSubmit = async (data) => {
 		try {
 			const response = await Post({ params: { title: data.teamName, description: data.teamDescription }, path: 'team', dataSetter: setTeams, loader: setLoadingTeams })
-			console.log('response from response', response.status)
 			if (response.status === 200) {
 				setNotifyMessage(`New team ${data.teamName} added`);
 			}

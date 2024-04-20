@@ -9,7 +9,8 @@ const Provider = ({ children }) => {
 	const [navigationOpen, setNavigationOpen] = useState(false);
 	const [sideBarOpen, setSideBarOpen] = useState(false);
 	const [path, setPath] = useState();
-	const [isAuthenticated, setIsAuthenticated] = useState(false)
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [activeTeam, setActiveTeam] = useState([]);
 
 	const [dashboards, setDashboards] = useState([])
 	const [dashboard, setDashboard] = useState([])
@@ -28,7 +29,12 @@ const Provider = ({ children }) => {
 	const [loadingTeam, setLoadingTeam] = useState(false);
 	const [dataProviders, setDataProviders] = useState([]);
 	const [loadingDataProviders, setLoadingDataProviders] = useState(false);
+	const [dataTables, setDataTables] = useState([]);
+	const [dataTable, setDataTable] = useState([]);
+	const [loadingDataTables, setLoadingDataTables] = useState(false);
 
+	const [loadingChat, setLoadingChat] = useState(false);
+	const [chat, setChat] = useState([])
 
 	const CheckAuth = async () => {
 		try {
@@ -39,7 +45,11 @@ const Provider = ({ children }) => {
 				}
 			})
 			if (response.status === 200) {
-				setIsAuthenticated(true)
+				if (response.status === 200) {
+					setIsAuthenticated(true)
+					Get({ params: { id: response.data.user.id }, path: 'user', dataSetter: setUser, loader: setLoadingUser })
+					Get({ params: { id: response.data.user.team_id }, path: 'team', dataSetter: setActiveTeam, loader: setLoadingTeams })
+				}
 			} else {
 				setIsAuthenticated(false);
 				setNotifyMessage('Please login')
@@ -47,6 +57,7 @@ const Provider = ({ children }) => {
 		}
 		catch (err) { console.log(err), setNotifyMessage('Please login.') }
 	}
+
 	const Login = async ({ password, email }) => {
 		setLoadingUser(true)
 		try {
@@ -57,13 +68,9 @@ const Provider = ({ children }) => {
 			if (response.status === 200) {
 				setIsAuthenticated(true)
 				localStorage.setItem('token', response.data[0].token)
-				setUser({
-					first_name: response.data[0].user.first_name || '',
-					last_name: response.data[0].user.last_name || '',
-					email: response.data[0].user.email || '',
-					last_login: response.data[0].user.last_login || '',
-					id: response.data[0].user.id || ''
-				})
+				localStorage.setItem('id', response.data[0].user.id)
+
+				CheckAuth();
 
 			}
 
@@ -102,10 +109,11 @@ const Provider = ({ children }) => {
 		}
 	};
 
-
 	const Post = async ({ path, params, loader, dataSetter }) => {
 		loader(true)
 		try {
+			CheckAuth()
+
 			const token = localStorage.getItem('token') || ''
 			const response = await axios.post(`${process.env.BASE_URL}${path}`,
 				params,
@@ -117,7 +125,7 @@ const Provider = ({ children }) => {
 				}
 			)
 			if (response.status === 403) {
-				setIsAuthenticated(false)
+				CheckAuth()
 			}
 			if (response && response.data.length > 0) {
 				dataSetter(response.data)
@@ -136,7 +144,6 @@ const Provider = ({ children }) => {
 		Get({ params: {}, path: 'dashboard', dataSetter: setDashboards, loader: setLoadingDashboards })
 		Get({ params: {}, path: 'data_provider', dataSetter: setDataProviders, loader: setLoadingDataProviders })
 		Get({ params: {}, path: 'team', dataSetter: setTeams, loader: setLoadingTeams })
-
 	}, [])
 	useEffect(() => {
 		localStorage.setItem('path', path);
@@ -145,6 +152,7 @@ const Provider = ({ children }) => {
 			setSideBarOpen(true);
 		}
 	}, [path]);
+
 	const dropdownRef = useRef();
 
 	const [openDropdown, setOpenDropdown] = useState(false);
@@ -213,7 +221,14 @@ const Provider = ({ children }) => {
 				setNavigationOpen,
 				setIsAuthenticated,
 				Login,
-				dashboards
+				dashboards,
+				dataTables, setDataTables,
+				dataTable, setDataTable,
+				loadingDataTables, setLoadingDataTables,
+				setLoadingChat,
+				loadingChat,
+				setChat, chat,
+				activeTeam, setActiveTeam
 			}}
 		>
 			{children}

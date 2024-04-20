@@ -12,8 +12,8 @@ const SideNav = styled.div`
     position: fixed;
     background-color: ${(props) => props.theme.colors.white};
     border-right: 1px solid ${(props) => props.theme.colors.gray_60};
-    margin-left: 64px;
-    width: 64px;
+    margin-left: 40px;
+    width: 40px;
     height: 100%;
     top: 0px;
     display: flex;
@@ -28,7 +28,7 @@ const SideNav = styled.div`
     ${({ open }) =>
 		open &&
 		`
-		width: 300px;
+		width: 200px;
 		-webkit-transition: width 0.2s ease-in-out;
 		-moz-transition: width 0.2s ease-in-out;
 		-o-transition: width 0.2s ease-in-out;
@@ -37,7 +37,7 @@ const SideNav = styled.div`
     ${({ navigationOpen }) =>
 		navigationOpen &&
 		`
-		margin-left: 220px;
+		margin-left: 200px;
 		-webkit-transition: width 0.2s ease-in-out;
 		-moz-transition: width 0.2s ease-in-out;
 		-o-transition: width 0.2s ease-in-out;
@@ -74,12 +74,12 @@ const ArrowContainer = styled.div`
 
 const Icon = styled(FontAwesomeIcon)`
     color: ${(props) => props.theme.colors.primary_100};
-    height: 18px;
+    height: 12px;
     min-width: 64px;
 `;
 const IconArrow = styled(FontAwesomeIcon)`
-    height: 18px;
-    min-width: 64px;
+    height: 12px;
+    min-width: 40px;
 `;
 
 // Mobile nav styles

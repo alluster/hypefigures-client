@@ -61,7 +61,6 @@ const Dashboards = () => {
 	const onSubmit = async (data) => {
 		try {
 			const response = await Post({ params: { title: data.dashboardName, description: data.dashboardDescription }, path: 'dashboard', dataSetter: setDashboards, loader: setLoadingDashboards })
-			console.log('response from response', response.status)
 			if (response.status === 200) {
 				setNotifyMessage(`New dashboard ${data.dashboardName} added`);
 			}

@@ -21,7 +21,8 @@
 	  "react/react-in-jsx-scope": "off",
 	  "no-unused-vars": "off",
 	  "react/prop-types": "off",
-	  "endOfLine": "off"
+	  "endOfLine": "off",
+	  "no-multiple-empty-lines": [1, {"max": 1, "maxEOF": 0}]
 	  // Additional rules specific to TypeScript can be added here if needed
 	},
 	"settings": {

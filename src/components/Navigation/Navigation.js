@@ -17,7 +17,7 @@ const SideNav = styled.div`
     background-color: ${(props) => props.theme.colors.white};
     border-right: 1px solid ${(props) => props.theme.colors.gray_60};
     color: .primary_100;
-    width: 64px;
+    width: 40px;
     height: 100vh;
     min-height: 500px;
     left: 0px;
@@ -29,7 +29,7 @@ const SideNav = styled.div`
     ${({ open }) =>
 		open &&
 		`
-		width: 220px;
+		width: 200px;
 		-webkit-transition: width 0.2s ease-in-out;
 		-moz-transition: width 0.2s ease-in-out;
 		-o-transition: width 0.2s ease-in-out;
@@ -93,24 +93,16 @@ const LogoIcon = styled.img`
     fill: white;
 `;
 const Logo = styled.img`
-    height: 18px;
+    height: 12px;
     align-self: flex-start;
     margin-left: 16px;
     fill: white;
 `;
-const ImageContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    height: 40px;
-    margin-top: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-`;
+
 
 const IconContainer = styled.div`
-    height: 40px;
+    height: 20px;
     width: 40px;
-    margin-left: 11px;
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -119,8 +111,8 @@ const IconContainer = styled.div`
 
 const Icon = styled(FontAwesomeIcon)`
     color: ${(props) => props.theme.colors.primary_100};
-    height: 18px;
-    min-width: 64px;
+    height: 16px;
+    width: 40px;
 `;
 // const IconPhone = styled(FontAwesomeIcon)`
 // 	color: ${props => props.theme.colors.gray_100};
@@ -131,8 +123,9 @@ const LinkText = styled.h6`
     color: ${(props) => props.theme.colors.gray_fontDark};
     margin-left: 0px;
     white-space: nowrap;
-    line-height: 40px;
+    line-height: 20px;
     font-weight: 500;
+	font-size: 16px;
 `;
 
 const LinkContainer = styled(Link)`
