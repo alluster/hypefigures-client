@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import FormCompiler from '../../../supportFunctions/FormComplier';
 import { useParams } from 'react-router-dom';
 
-
 const FormGoogleTable = ({
 	setOpenDataTableModal
 }) => {
@@ -24,21 +23,49 @@ const FormGoogleTable = ({
 		dashboards,
 	} = useContext(AppContext);
 
+	const sheetId = async (data) => {
+		try {
+			const regex = /gid=([^&]+)/;
+			const match = data.sheetUrl.match(regex);
+			console.log(match)
+			const sheetId = match ? match[1] : '0';
+			return sheetId;
+		} catch (err) {
+			console.log(err);
+			return 'No Id Found';
+		}
+	};
+
+	const spreadsheetId = async (data) => {
+		try {
+			const regex = /\/spreadsheets\/d\/([^/]+)/;
+			const match = data.sheetUrl.match(regex);
+			const spreadsheetId = match ? match[1] : '0';
+			return spreadsheetId;
+		} catch (err) {
+			console.log(err);
+			return 'No Id Found';
+		}
+	};
+
 	const onSubmit = async (data) => {
 		try {
+			// Extract spreadsheet_id and sheet_id from the URL
+			const spreadsheetIdValue = await spreadsheetId(data);
+			const sheetIdValue = await sheetId(data);
+
 			const response = await Post({
 				params: {
 					title: data.dataTableName,
 					description: data.dataTableDescription,
-					spreadsheet_id: data.spreadsheet_id,
-					sheet_id: data.sheet_id,
+					spreadsheet_id: spreadsheetIdValue,
+					sheet_id: sheetIdValue,
 					dashboard_id: data.dashboard_id,
 				}, path: 'data_table', dataSetter: setDataTables, loader: setLoadingDataTables
-			})
+			});
 			if (response.status === 200) {
 				setNotifyMessage(`New Data Table ${data.dataTableName} added`);
-			}
-			else {
+			} else {
 				setNotifyMessage(`New Data Table ${data.dataTableName} could not be added`);
 			}
 		} catch (error) {
@@ -48,11 +75,12 @@ const FormGoogleTable = ({
 			reset();
 		}
 	};
+
 	useEffect(() => {
 		reset({
 			dashboard_id: id || null
-		})
-	}, [])
+		});
+	}, []);
 
 	return (
 		<div>
@@ -84,21 +112,12 @@ const FormGoogleTable = ({
 					},
 					{
 						type: 'input',
-						name: 'spreadsheet_id',
-						label: 'Spreadsheet Id',
+						name: 'sheetUrl',
+						label: 'Sheet URL',
 						options: '',
 						required: true,
-						errorMessage: 'Spreadsheet Id is required',
-						placeholder: 'Find this from the sheet URL...',
-					},
-					{
-						type: 'input',
-						name: 'sheet_id',
-						label: 'Sheet Id',
-						options: '',
-						required: true,
-						errorMessage: 'Sheet Id is required',
-						placeholder: 'Find this from the sheet URL...',
+						errorMessage: 'Sheet URL is required',
+						placeholder: 'https://docs.google.com/spreadsheets/d/1WLAIkeC55WUo3nahxpIug2uEKBfXH8KtxEBzLPzPs2M/edit#gid=611000715',
 					},
 					{
 						type: 'select',

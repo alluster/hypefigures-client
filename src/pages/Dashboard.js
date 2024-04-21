@@ -121,10 +121,6 @@ const Dashboard = () => {
 		setLoadingDashboard,
 		setDashboard,
 		dashboard,
-		loadingAnalyticsData,
-		analyticsData,
-		loadingDashboards,
-		setLoadingDataPoints,
 		setNotifyMessage,
 		setDataTables,
 		setLoadingDataTables,
@@ -160,30 +156,30 @@ const Dashboard = () => {
 				return;
 		}
 	};
-	const DataPoints = () => {
-		if (loadingDataPoints) {
-			return <SpinnerSmall />;
-		}
-		return (
-			dataPoints.length > 0 ? dataPoints.map((item, i) => {
-				return (
-					<CardDataPoint
-						type={item.type}
-						key={i}
-						to={`/datapoints/${item.id}`}
-						cell={item.cell || ''}
-						spreadsheetId={item.spreadsheet_id || ''}
-						sheetId={item.sheet_id || ''}
-						title={item.title}
-						description={item.description}
-						value={item.value}
-					/>
-				);
-			}) :
-				<p>This dashboard does not contain any data yet.</p>
-		);
+	// const DataPoints = () => {
+	// 	if (loadingDataPoints) {
+	// 		return <SpinnerSmall />;
+	// 	}
+	// 	return (
+	// 		dataPoints.length > 0 ? dataPoints.map((item, i) => {
+	// 			return (
+	// 				<CardDataPoint
+	// 					type={item.type}
+	// 					key={i}
+	// 					to={`/datapoints/${item.id}`}
+	// 					cell={item.cell || ''}
+	// 					spreadsheetId={item.spreadsheet_id || ''}
+	// 					sheetId={item.sheet_id || ''}
+	// 					title={item.title}
+	// 					description={item.description}
+	// 					value={item.value}
+	// 				/>
+	// 			);
+	// 		}) :
+	// 			<p>This dashboard does not contain any data yet.</p>
+	// 	);
 
-	};
+	// };
 	const DataTables = () => {
 		if (loadingDataTables) {
 			return <SpinnerSmall />;
@@ -194,7 +190,7 @@ const Dashboard = () => {
 					<CardDataTable
 						type={item.type}
 						key={i}
-						to={`/datatable/${item.id}`}
+						to={`/datatables/${item.id}`}
 						cell={item.cell || ''}
 						spreadsheetId={item.spreadsheet_id || ''}
 						sheetId={item.sheet_id || ''}
@@ -221,7 +217,7 @@ const Dashboard = () => {
 				/>
 				{DataPoints()} */}
 				<HeaderText
-					buttonTitle="Add Data"
+					buttonTitle="Connect to a new Google Sheet"
 					onClickFunction={() => setOpenDataTableModal(!openDataTableModal)}
 					locationText=""
 					title="Tables"
@@ -249,7 +245,6 @@ const Dashboard = () => {
 
 			</div >
 		)
-
 
 	}
 	const DeleteDashboard = async () => {
@@ -286,7 +281,6 @@ const Dashboard = () => {
 	const SideBarContainer = () => {
 		return (
 			<SideBar>
-
 				<SidebarTitleContainer>
 					<SidebarLocation>Dashboard</SidebarLocation>
 					<SidebarTitle>{dashboard.length > 0 ? dashboard[0].title : '-'}</SidebarTitle>
@@ -296,135 +290,57 @@ const Dashboard = () => {
 					}</SidebarDescription>
 				</SidebarTitleContainer>
 
-
-				{/* <Button small layoutType='dropdown' title="Options" primary>
-					<ActionText
-						onClick={() => {
-							setOpenModal(!openModal);
-						}}
-					>
-						Create New Public Dashboard
-					</ActionText>
-
-					<ActionText
-						onClick={() => {
-							setOpenModal(!openModal);
-						}}
-					>
-						Create New Public Dashboard
-					</ActionText>
+				<Button small layoutType='dropdown' title="Options" primary>
 					<ActionText
 						style={{ color: 'red' }}
 
-						onClick={() =>
-							DeleteDashboard()
-
-						}
+						onClick={() => DeleteDashboard()}
 					>
 						Delete Dashboard
 					</ActionText>
-				</Button> */}
+				</Button>
 
-				{/* <Accordion title="Dashboards">
-					<LinksContainer>
-						{loadingDashboards ? (
-							<p>Loading dashboard data....</p>
-						) : (
-							dashboards.length > 0 &&
-							dashboards.map((item, i) => {
-								return (
-									<StyledLink
-										to={`/dashboards/${item.id}`}
-										key={i}
-									>
-										<LinkText>{item.title}</LinkText>
-									</StyledLink>
-								);
-							})
-						)}
-					</LinksContainer>
-					<Button
-						type="button"
-						onClick={() =>
-							setOpenNewDashboardModal(!openNewDashboardModal)
-						}
-					>
-						Create New
-					</Button>
-				</Accordion> */}
 			</SideBar>
 		);
 	};
-	const AnalyticsDataContainer = () => {
-		if (loadingAnalyticsData) {
-			return <SpinnerSmall />
-		} else {
-			if (analyticsData.length > 0) {
-				return (
-					<div>
-						<h2>Report Data</h2>
-						<table>
-							<thead>
-								<tr>
-									{Object.keys(analyticsData[0]).map((key, index) => (
-										<th key={index}>{key}</th>
-									))}
-								</tr>
-							</thead>
-							<tbody>
-								{analyticsData.map((item, index) => (
-									<tr key={index}>
-										{Object.values(item).map((value, index) => (
-											<td key={index}>{value.value}</td>
-										))}
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
-				);
-			}
-			return null
+	// const AnalyticsDataContainer = () => {
+	// 	if (loadingAnalyticsData) {
+	// 		return <SpinnerSmall />
+	// 	} else {
+	// 		if (analyticsData.length > 0) {
+	// 			return (
+	// 				<div>
+	// 					<h2>Report Data</h2>
+	// 					<table>
+	// 						<thead>
+	// 							<tr>
+	// 								{Object.keys(analyticsData[0]).map((key, index) => (
+	// 									<th key={index}>{key}</th>
+	// 								))}
+	// 							</tr>
+	// 						</thead>
+	// 						<tbody>
+	// 							{analyticsData.map((item, index) => (
+	// 								<tr key={index}>
+	// 									{Object.values(item).map((value, index) => (
+	// 										<td key={index}>{value.value}</td>
+	// 									))}
+	// 								</tr>
+	// 							))}
+	// 						</tbody>
+	// 					</table>
+	// 				</div>
+	// 			);
+	// 		}
+	// 		return null
 
-		};
-	}
-	const DataTablesContainer = () => {
-		if (loadingDataTables) {
-			return <SpinnerSmall />
-		} else {
-			if (analyticsData.length > 0) {
-				return (
-					<div>
-						<h2>Report Data</h2>
-						<table>
-							<thead>
-								<tr>
-									{Object.keys(analyticsData[0]).map((key, index) => (
-										<th key={index}>{key}</th>
-									))}
-								</tr>
-							</thead>
-							<tbody>
-								{analyticsData.map((item, index) => (
-									<tr key={index}>
-										{Object.values(item).map((value, index) => (
-											<td key={index}>{value.value}</td>
-										))}
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
-				);
-			}
-			return null
+	// 	};
+	// }
 
-		};
-	}
 	useEffect(() => {
 		setDataPoints([])
 		Get({ params: { id: id }, path: 'dashboard', dataSetter: setDashboard, loader: setLoadingDashboard })
-		Get({ params: { dashboard_id: id }, path: 'data_point', dataSetter: setDataPoints, loader: setLoadingDataPoints })
+		// Get({ params: { dashboard_id: id }, path: 'data_point', dataSetter: setDataPoints, loader: setLoadingDataPoints })
 		Get({ params: { dashboard_id: id }, path: 'data_table', dataSetter: setDataTables, loader: setLoadingDataTables })
 
 	}, [])
@@ -437,9 +353,9 @@ const Dashboard = () => {
 		setPath('/dashboard');
 
 	}, []);
-	useEffect(() => {
-		DataPoints()
-	}, [dataPoints])
+	// useEffect(() => {
+	// 	DataPoints()
+	// }, [dataPoints])
 
 	return (
 		<Content>
@@ -451,11 +367,10 @@ const Dashboard = () => {
 					layoutType='back'
 					title='Go Back'
 				/>
-				<Chat />
+				{/* <Chat /> */}
 
 				{DashboardContent()}
-				<AnalyticsDataContainer />
-				<DataTablesContainer />
+				{/* <AnalyticsDataContainer /> */}
 			</Container>
 			<Modal
 				open={openModal}
@@ -549,7 +464,7 @@ const Dashboard = () => {
 					</div>
 				)}
 
-				{DataPointSelectorHandler()}
+				{/* {DataPointSelectorHandler()} */}
 			</Modal>
 			<Modal
 				open={openDataTableModal}

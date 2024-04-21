@@ -73,7 +73,6 @@ const Chat = () => {
                 dataSetter: setChat,
                 loader: setLoadingChat,
             });
-            console.log(response);
             setLoadingChat(false);
         } catch (error) {
             console.error(error);

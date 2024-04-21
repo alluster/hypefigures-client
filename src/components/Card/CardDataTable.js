@@ -4,7 +4,6 @@ import { device } from '../../styles/device-braking-points';
 import { Link } from 'react-router-dom';
 import TextWithLabel from '../Text/TextWithLabel';
 import SpinnerSmall from '../Spinner/SpinnerSmall';
-import DataTable from '../Table/DataTable';
 
 const Wrapper = styled.div`
     padding-top: ${(props) => props.theme.grid.divider_4};
@@ -121,9 +120,8 @@ const CardDataTable = ({
 							) : (
 								<Container>
 									<ImageContainer>
-										{
-											ImageSelector()
-										}
+										<img src="/integration-logos/google-sheets.png" alt="Google Sheets" />
+
 									</ImageContainer>
 									<TextWithLabel
 										small
@@ -140,7 +138,6 @@ const CardDataTable = ({
 									/>
 								</Container>
 
-
 							)}
 					</WrapperLink >
 				) : (
@@ -156,7 +153,6 @@ const CardDataTable = ({
 						)}
 					</Wrapper>
 				)}
-			<DataTable data={value} />
 		</div >
 	);
 };

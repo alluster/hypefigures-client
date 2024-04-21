@@ -29,19 +29,19 @@ const SideNav = styled.div`
 		open &&
 		`
 		width: 200px;
-		-webkit-transition: width 0.2s ease-in-out;
-		-moz-transition: width 0.2s ease-in-out;
-		-o-transition: width 0.2s ease-in-out;
-		transition: width 0.2s ease-in-out;
+		// -webkit-transition: width 0.2s ease-in-out;
+		// -moz-transition: width 0.2s ease-in-out;
+		// -o-transition: width 0.2s ease-in-out;
+		// transition: width 0.2s ease-in-out;
 	`}
     ${({ navigationOpen }) =>
 		navigationOpen &&
 		`
 		margin-left: 200px;
-		-webkit-transition: width 0.2s ease-in-out;
-		-moz-transition: width 0.2s ease-in-out;
-		-o-transition: width 0.2s ease-in-out;
-		transition: width 0.2s ease-in-out;
+		// -webkit-transition: width 0.2s ease-in-out;
+		// -moz-transition: width 0.2s ease-in-out;
+		// -o-transition: width 0.2s ease-in-out;
+		// transition: width 0.2s ease-in-out;
 	`}
 	@media ${device.laptop} {
         display: none;
@@ -100,10 +100,10 @@ const MobileNav = styled.div`
 		`
 		display: flex;
 		width: 100%;
-		-webkit-transition: width 0.2s ease-in-out;
-		-moz-transition: width 0.2s ease-in-out;
-		-o-transition: width 0.2s ease-in-out;
-		transition: width 0.2s ease-in-out;
+		// -webkit-transition: width 0.2s ease-in-out;
+		// -moz-transition: width 0.2s ease-in-out;
+		// -o-transition: width 0.2s ease-in-out;
+		// transition: width 0.2s ease-in-out;
 	`}
     @media ${device.laptop} {
     }
@@ -154,7 +154,6 @@ const ToggleIcon = styled(Icon)`
 const SideBar = ({ children }) => {
 	const { sideBarOpen, setSideBarOpen, navigationOpen } =
 		useContext(AppContext);
-
 
 	return (
 		<SideNav open={sideBarOpen} navigationOpen={navigationOpen}>

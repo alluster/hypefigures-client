@@ -7,7 +7,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 
-
 // components
 
 import Navigation from './components/Navigation/Navigation';
@@ -18,7 +17,6 @@ import DataSources from './pages/DataSources';
 import TopNav from './components/Navigation/TopNav';
 import Spinner from './components/Spinner/Spinner';
 
-
 //pages
 
 const Profile = React.lazy(() => import('./pages/Profile'));
@@ -28,6 +26,7 @@ const ErrorPage = React.lazy(() => import('./pages/ErrorPage'));
 const Login = React.lazy(() => import('./pages/Login'));
 const DataPoint = React.lazy(() => import('./pages/DataPoint'));
 const Team = React.lazy(() => import('./pages/Team'));
+const DataTable = React.lazy(() => import('./pages/DataTable'));
 
 import { AppContext } from './context/Context';
 
@@ -227,6 +226,11 @@ const App = () => {
 							exact
 							path="/datapoints/:id"
 							component={DataPoint}
+						/>
+						<PrivateRoute
+							exact
+							path="/datatables/:id"
+							component={DataTable}
 						/>
 						<PrivateRoute
 							exact

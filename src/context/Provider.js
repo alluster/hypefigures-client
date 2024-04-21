@@ -14,8 +14,10 @@ const Provider = ({ children }) => {
 
 	const [dashboards, setDashboards] = useState([])
 	const [dashboard, setDashboard] = useState([])
+
 	const [dataPoints, setDataPoints] = useState([])
 	const [dataPoint, setDataPoint] = useState([]);
+
 	const [loadingDataPoints, setLoadingDataPoints] = useState(false);
 	const [loadingDashboard, setLoadingDashboard] = useState(false);
 	const [loadingDashboards, setLoadingDashboards] = useState(false);
