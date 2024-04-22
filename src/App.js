@@ -29,6 +29,7 @@ const Team = React.lazy(() => import('./pages/Team'));
 const DataTable = React.lazy(() => import('./pages/DataTable'));
 
 import { AppContext } from './context/Context';
+import Invitations from './pages/Invitations';
 
 library.add(fas);
 
@@ -242,7 +243,11 @@ const App = () => {
 							path="/datasources"
 							component={DataSources}
 						/>
-
+						<PrivateRoute
+							exact
+							path="/invitations"
+							component={Invitations}
+						/>
 					</Switch>
 					<Footer />
 				</Router>

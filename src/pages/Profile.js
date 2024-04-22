@@ -87,6 +87,11 @@ const Profile = () => {
 	}
 	return (
 		<Container>
+			<Button
+				ghost
+				layoutType='back'
+				title='Go Back'
+			/>
 			<HeaderText
 				buttonTitle="Create a new Team"
 				onClickFunction={() => setOpenModal(!openModal)}

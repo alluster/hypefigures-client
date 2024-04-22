@@ -34,7 +34,6 @@ const StyledInput = styled.input`
     padding-left: ${(props) => props.theme.grid.divider_1};
     padding-right: ${(props) => props.theme.grid.divider_2};
     margin-bottom: ${(props) => props.theme.grid.divider_1};
-    // padding: 0.4%;
     line-height: 36px;
     -ms-box-sizing: content-box;
     -moz-box-sizing: content-box;
@@ -45,7 +44,6 @@ const StyledInput = styled.input`
 		`
 	border: 1px solid gray;
 	background-color: #dddddd;
-
 `};
     @media ${device.laptop} {
     }
@@ -61,7 +59,6 @@ const StyledSelect = styled.select`
     padding-left: ${(props) => props.theme.grid.divider_1};
     padding-right: ${(props) => props.theme.grid.divider_2};
     margin-bottom: ${(props) => props.theme.grid.divider_1};
-    // padding: 0.4%;
     line-height: 36px;
     -ms-box-sizing: content-box;
     -moz-box-sizing: content-box;
@@ -81,7 +78,6 @@ const StyledTextArea = styled.textarea`
     padding-left: ${(props) => props.theme.grid.divider_1};
     padding-right: ${(props) => props.theme.grid.divider_2};
     margin-bottom: ${(props) => props.theme.grid.divider_1};
-    // padding: 0.4%;
     line-height: 36px;
     -ms-box-sizing: content-box;
     -moz-box-sizing: content-box;
@@ -92,7 +88,6 @@ const StyledTextArea = styled.textarea`
 		`
 		border: 1px solid gray;
 		background-color: #dddddd;
-
 	`};
     @media ${device.laptop} {
     }
@@ -182,6 +177,28 @@ const FormCompiler = ({
 												);
 											})}
 									</StyledSelect>
+									{name in errors ? (
+										<p>{item.errorMessage}</p>
+									) : null}
+								</Wrapper>
+							);
+						case 'email':
+							return (
+								<Wrapper key={i}>
+									<Label>{item.label}</Label>
+									<StyledInput
+										type="email"
+										{...register(item.name, {
+											required: item.required,
+											pattern: {
+												value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+												message: 'Invalid email address',
+											},
+										})}
+										label={item.label}
+										placeholder={item.placeholder}
+										name={item.name}
+									/>
 									{name in errors ? (
 										<p>{item.errorMessage}</p>
 									) : null}

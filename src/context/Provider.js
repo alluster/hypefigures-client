@@ -34,6 +34,8 @@ const Provider = ({ children }) => {
 	const [dataTables, setDataTables] = useState([]);
 	const [dataTable, setDataTable] = useState([]);
 	const [loadingDataTables, setLoadingDataTables] = useState(false);
+	const [loadingInvitations, setLoadingInvitations] = useState(false);
+	const [invitations, setInvitations] = useState([]);
 
 	const [loadingChat, setLoadingChat] = useState(false);
 	const [chat, setChat] = useState([])
@@ -49,10 +51,9 @@ const Provider = ({ children }) => {
 			if (response.status === 200) {
 				if (response.status === 200) {
 					setIsAuthenticated(true)
-					Get({ params: { id: response.data.user.id }, path: 'user', dataSetter: setUser, loader: setLoadingUser })
-					if (response.data.user.team_id !== null) {
-						Get({ params: { user_id: response.data.user.id }, path: 'team', dataSetter: setTeams, loader: setLoadingTeams })
-						Get({ params: { id: response.data.user.team_id, user_id: response.data.user.id }, path: 'team', dataSetter: setActiveTeam, loader: setLoadingTeams })
+					const userResponse = await Get({ params: { id: response.data.user.id }, path: 'user', dataSetter: setUser, loader: setLoadingUser })
+					if (userResponse[0].team.length > 0) {
+						setActiveTeam(userResponse[0].team || [])
 					}
 				}
 			} else {
@@ -149,6 +150,7 @@ const Provider = ({ children }) => {
 		CheckAuth();
 		Get({ params: {}, path: 'dashboard', dataSetter: setDashboards, loader: setLoadingDashboards })
 		Get({ params: {}, path: 'data_provider', dataSetter: setDataProviders, loader: setLoadingDataProviders })
+
 	}, [])
 	useEffect(() => {
 		localStorage.setItem('path', path);
@@ -161,7 +163,10 @@ const Provider = ({ children }) => {
 	const dropdownRef = useRef();
 
 	const [openDropdown, setOpenDropdown] = useState(false);
-
+	useEffect(() => {
+		if (user.length > 0)
+			Get({ params: { user_id: user[0].id }, path: 'team', dataSetter: setTeams, loader: setLoadingTeams })
+	}, [user])
 	useEffect(() => {
 		const checkIfClickedOutside = (e) => {
 			if (openDropdown && dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -233,7 +238,9 @@ const Provider = ({ children }) => {
 				setLoadingChat,
 				loadingChat,
 				setChat, chat,
-				activeTeam, setActiveTeam
+				activeTeam, setActiveTeam,
+				loadingInvitations, setLoadingInvitations,
+				invitations, setInvitations
 			}}
 		>
 			{children}

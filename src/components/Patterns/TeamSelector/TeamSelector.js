@@ -79,7 +79,7 @@ const ActiveTeam = styled.div`
     padding-left: 10px;
     padding-right: 10px;
 	color: white;
-    margin-top: 10px;
+    // margin-top: 10px;
 	white-space: nowrap;
 
 `;
@@ -158,19 +158,27 @@ const TeamSelector = () => {
 	} = useContext(AppContext);
 	const [openTeamModal, setOpenTeamModal] = useState(false)
 	const [openTeamSelector, setOpenTeamSelector] = useState(false);
-
+	const [filteredTeams, setFilteredTeams] = useState([])
 	useEffect(() => {
 		TeamsList()
 	}, [teams])
 
+	const ChangeActiveTeam = async ({ team_id, user_id }) => {
+		try {
+			if (team_id && user_id) {
+				await Get({ params: { id: team_id, user_id: user_id }, path: 'team', dataSetter: setActiveTeam, loader: setLoadingTeams })
+			}
+		} catch (err) { console.log(err) }
+	}
 	const handleTeamChange = async ({ team_id }) => {
 		try {
 			const response = await Post({ params: { id: user[0].id, team_id: team_id }, path: 'user', dataSetter: setUser, loader: setLoadingTeams })
 			if (response.status === 200) {
-				Get({ params: { id: response.data.user.team_id, user_id: response.data.user.id }, path: 'team', dataSetter: setActiveTeam, loader: setLoadingTeams })
-
+				await ChangeActiveTeam({
+					team_id: response.data.user.team_id,
+					user_id: response.data.user.id
+				})
 				setNotifyMessage('Active team changed');
-				// location.reload()
 			}
 			else {
 				setNotifyMessage('Something went wrong');
@@ -178,23 +186,40 @@ const TeamSelector = () => {
 		}
 		catch (err) { console.log(err) }
 	}
+
+	const RemoveActiveTeamFromList = async () => {
+		try {
+			if (activeTeam.length > 0) {
+				setFilteredTeams(teams.filter((item) => item.id != activeTeam[0].id || 0))
+
+			} else {
+				setFilteredTeams(teams)
+
+			}
+		}
+		catch (err) { console.log(err) }
+	}
+	useEffect(() => {
+		RemoveActiveTeamFromList()
+	}, [activeTeam, teams])
+
 	const TeamsList = () => {
 		return teams && teams.length > 0 ? (
 			loadingUser || loadingTeams ? (
 				<SpinnerSmall />
 			) : (
-				teams
-					.filter((item) => item.id != activeTeam.id || 0)
-					.map((item, i) => {
-						return (
-							<ListTeam key={i} onClick={() => { setOpenDropdown(false), handleTeamChange({ team_id: item.id }) }}>
-								<TeamListName>{item.title}</TeamListName>
-							</ListTeam>
-						);
-					})
+
+				filteredTeams.length > 0 && filteredTeams.map((item, i) => {
+					return (
+						<ListTeam key={i} onClick={() => { setOpenDropdown(false), handleTeamChange({ team_id: item.id }) }}>
+							<TeamListName>{item.title}</TeamListName>
+						</ListTeam>
+					);
+				})
 			)
 		) : null;
 	};
+
 	const DropDown = () => {
 		return (
 			openDropdown ?
@@ -210,12 +235,12 @@ const TeamSelector = () => {
 
 						{TeamsList()}
 
-						<AddTeam onClick={() => { setOpenDropdown(false), setOpenTeamModal(!openTeamModal) }}>
+						{/* <AddTeam onClick={() => { HandleModalOpen() }}>
 							<Title>Create an new team</Title>
 							<CheckIcon>
 								<FontAwesomeIcon icon={faPlus} />
 							</CheckIcon>
-						</AddTeam>
+						</AddTeam> */}
 					</DropdownContent>
 				</Dropdown>
 				: null
@@ -228,7 +253,6 @@ const TeamSelector = () => {
 		) : (
 			<div>
 				<TeamSelectorContainer>
-					<FormAddTeam openTeamModal={openTeamModal} toggleOpen={setOpenTeamModal} />
 
 					<ActiveTeamNameContainer
 						onClick={() => {
@@ -261,6 +285,7 @@ const TeamSelector = () => {
 	return (
 		<div>
 			{Selector()}
+			<FormAddTeam openTeamModal={openTeamModal} toggleOpen={setOpenTeamModal} />
 
 		</div>
 	)

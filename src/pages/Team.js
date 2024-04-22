@@ -15,7 +15,8 @@ const Team = () => {
 			const response = await Post({
 				params: {
 					id: id,
-					deleted_at: true
+					deleted_at: true,
+					uniq_user_id: user[0].uniq_user_id
 				}, path: 'team', dataSetter: setTeam, loader: setLoadingTeams
 			})
 			if (response.status === 200) {
@@ -63,6 +64,7 @@ const Team = () => {
 				<Button
 					ghost
 					layoutType='back'
+					title='Go back'
 				/>				{
 					loadingTeam ? <SpinnerSmall /> :
 						<div>
@@ -74,9 +76,9 @@ const Team = () => {
 
 							<Button
 								onClick={DeleteTeam}
-							>
-								Delete Team
-							</Button>
+								title='			Delete Team'
+							/>
+
 						</div>
 				}
 
