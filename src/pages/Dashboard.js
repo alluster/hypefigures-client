@@ -115,8 +115,7 @@ const Dashboard = () => {
 		Post,
 		setDataPoints,
 		setPath,
-		dataPoints,
-		loadingDataPoints,
+
 		dashboards,
 		setLoadingDashboard,
 		setDashboard,
@@ -156,30 +155,7 @@ const Dashboard = () => {
 				return;
 		}
 	};
-	// const DataPoints = () => {
-	// 	if (loadingDataPoints) {
-	// 		return <SpinnerSmall />;
-	// 	}
-	// 	return (
-	// 		dataPoints.length > 0 ? dataPoints.map((item, i) => {
-	// 			return (
-	// 				<CardDataPoint
-	// 					type={item.type}
-	// 					key={i}
-	// 					to={`/datapoints/${item.id}`}
-	// 					cell={item.cell || ''}
-	// 					spreadsheetId={item.spreadsheet_id || ''}
-	// 					sheetId={item.sheet_id || ''}
-	// 					title={item.title}
-	// 					description={item.description}
-	// 					value={item.value}
-	// 				/>
-	// 			);
-	// 		}) :
-	// 			<p>This dashboard does not contain any data yet.</p>
-	// 	);
 
-	// };
 	const DataTables = () => {
 		if (loadingDataTables) {
 			return <SpinnerSmall />;
@@ -208,14 +184,7 @@ const Dashboard = () => {
 
 		return (
 			<div>
-				{/* <HeaderText
-					buttonTitle="Add new datapoint"
-					onClickFunction={() => setOpenDataPointModal(!openDataPointModal)}
-					locationText=""
-					title="Datapoints"
-					description="Your dahboard datapoints"
-				/>
-				{DataPoints()} */}
+
 				<HeaderText
 					buttonTitle="Connect to a new Google Sheet"
 					onClickFunction={() => setOpenDataTableModal(!openDataTableModal)}
@@ -224,24 +193,6 @@ const Dashboard = () => {
 					description="Integrated tables"
 				/>
 				{DataTables()}
-
-				{/* <HeaderText
-					buttonTitle="Add new Action"
-					onClickFunction={() => setOpenActionsModal(!openActionsModal)}
-					locationText=""
-					title="Actions"
-					description="Create New Action"
-				/>
-				{
-					loadingDataPoints ? <SpinnerSmall /> :
-						<CardDataPoint
-							type='hyperfigures'
-							to={`/datapoints`}
-							title='User Cost 2024'
-							description='Website user cost 2024'
-							value='1.8€'
-						/>
-				} */}
 
 			</div >
 		)
@@ -303,47 +254,12 @@ const Dashboard = () => {
 			</SideBar>
 		);
 	};
-	// const AnalyticsDataContainer = () => {
-	// 	if (loadingAnalyticsData) {
-	// 		return <SpinnerSmall />
-	// 	} else {
-	// 		if (analyticsData.length > 0) {
-	// 			return (
-	// 				<div>
-	// 					<h2>Report Data</h2>
-	// 					<table>
-	// 						<thead>
-	// 							<tr>
-	// 								{Object.keys(analyticsData[0]).map((key, index) => (
-	// 									<th key={index}>{key}</th>
-	// 								))}
-	// 							</tr>
-	// 						</thead>
-	// 						<tbody>
-	// 							{analyticsData.map((item, index) => (
-	// 								<tr key={index}>
-	// 									{Object.values(item).map((value, index) => (
-	// 										<td key={index}>{value.value}</td>
-	// 									))}
-	// 								</tr>
-	// 							))}
-	// 						</tbody>
-	// 					</table>
-	// 				</div>
-	// 			);
-	// 		}
-	// 		return null
-
-	// 	};
-	// }
 
 	useEffect(() => {
-		setDataPoints([])
 		Get({ params: { id: id }, path: 'dashboard', dataSetter: setDashboard, loader: setLoadingDashboard })
-		// Get({ params: { dashboard_id: id }, path: 'data_point', dataSetter: setDataPoints, loader: setLoadingDataPoints })
 		Get({ params: { dashboard_id: id }, path: 'data_table', dataSetter: setDataTables, loader: setLoadingDataTables })
 
-	}, [])
+	}, [id])
 
 	useEffect(() => {
 		SideBarContainer()
@@ -353,10 +269,9 @@ const Dashboard = () => {
 		setPath('/dashboard');
 
 	}, []);
-	// useEffect(() => {
-	// 	DataPoints()
-	// }, [dataPoints])
-
+	useEffect(() => {
+		DashboardContent()
+	}, [dataTables])
 	return (
 		<Content>
 
@@ -369,7 +284,7 @@ const Dashboard = () => {
 				/>
 				{/* <Chat /> */}
 
-				{DashboardContent()}
+				<DashboardContent />
 				{/* <AnalyticsDataContainer /> */}
 			</Container>
 			<Modal

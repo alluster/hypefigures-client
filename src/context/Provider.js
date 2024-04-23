@@ -88,30 +88,35 @@ const Provider = ({ children }) => {
 
 	const Get = async ({ path, params, dataSetter, loader }) => {
 		try {
-			loader(true)
+			loader(true);
 
-			const token = localStorage.getItem('token') || ''
+			const token = localStorage.getItem('token') || '';
 			const response = await axios.get(`${process.env.BASE_URL}${path}`, {
-				params: params,
+				params: {
+					...params,
+					user_id: user.length > 0 ? user[0].id : null,
+					team_id: user.length > 0 ? user[0].team_id : null,
+					uniq_team_id: user.length > 0 ? user[0].team[0].uniq_team_id : null
+				},
 				headers: {
 					Authorization: `Bearer ${token}` // Add the Bearer token to the headers
 				}
-			})
+			});
 
-			if (response && response.status === 200) {
-				dataSetter(response.data || [])
+			if (response.status === 200) {
+				const responseData = response.data.length > 0 ? response.data : [];
+				dataSetter(responseData);
+				return responseData;
+			} else if (response.status === 404) {
+				dataSetter([]);
+				return [];
 			}
-			else {
-				dataSetter([])
-			}
-			loader(false)
-			return response.data
-		}
-		catch (err) {
-			console.log(err)
-		}
-		finally {
-			loader(false)
+		} catch (err) {
+			dataSetter([])
+			console.log(err);
+			return [];
+		} finally {
+			loader(false);
 		}
 	};
 
@@ -121,15 +126,16 @@ const Provider = ({ children }) => {
 			CheckAuth()
 
 			const token = localStorage.getItem('token') || ''
-			const response = await axios.post(`${process.env.BASE_URL}${path}`,
-				params,
-				{
-					headers: {
-						Authorization: `Bearer ${token}` // Add the Bearer token to the headers
-
-					}
+			const response = await axios.post(`${process.env.BASE_URL}${path}`, {
+				...params,
+				uniq_team_id: user.length > 0 ? user[0].team[0].uniq_team_id : null,
+				user_id: user.length > 0 ? user[0].id : null,
+				team_id: user.length > 0 ? user[0].team_id : null
+			}, {
+				headers: {
+					Authorization: `Bearer ${token}` // Add the Bearer token to the headers
 				}
-			)
+			});
 			if (response.status === 403) {
 				CheckAuth()
 				return response
