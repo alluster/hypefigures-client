@@ -36,9 +36,12 @@ const Provider = ({ children }) => {
 	const [loadingDataTables, setLoadingDataTables] = useState(false);
 	const [loadingInvitations, setLoadingInvitations] = useState(false);
 	const [invitations, setInvitations] = useState([]);
-
+	const [selectedDataTables, setSelectedDataTables] = useState([]);
 	const [loadingChat, setLoadingChat] = useState(false);
 	const [chat, setChat] = useState([])
+	const [question, setQuestion] = useState('');
+	const [retrievedTables, setRetrievedTables] = useState([])
+	const [loadingRetrievedTables, setLoadingRetrievedTables] = useState(false);
 
 	const CheckAuth = async () => {
 		try {
@@ -86,7 +89,7 @@ const Provider = ({ children }) => {
 		finally { setLoadingUser(false) }
 	}
 
-	const Get = async ({ path, params, dataSetter, loader }) => {
+	const Get = async ({ path, params, dataSetter, loader, addToState }) => {
 		try {
 			loader(true);
 
@@ -94,9 +97,8 @@ const Provider = ({ children }) => {
 			const response = await axios.get(`${process.env.BASE_URL}${path}`, {
 				params: {
 					...params,
+					uniq_team_id: user.length > 0 && user[0].team.length > 0 ? user[0].team[0].uniq_team_id : null,
 					user_id: user.length > 0 ? user[0].id : null,
-					team_id: user.length > 0 ? user[0].team_id : null,
-					uniq_team_id: user.length > 0 ? user[0].team[0].uniq_team_id : null
 				},
 				headers: {
 					Authorization: `Bearer ${token}` // Add the Bearer token to the headers
@@ -105,7 +107,15 @@ const Provider = ({ children }) => {
 
 			if (response.status === 200) {
 				const responseData = response.data.length > 0 ? response.data : [];
+				if (addToState) {
+					// Add to existing state
+					dataSetter(prevState => [...prevState, ...responseData]);
+				} else {
+					// Replace existing state
+					dataSetter(responseData);
+				}
 				dataSetter(responseData);
+
 				return responseData;
 			} else if (response.status === 404) {
 				dataSetter([]);
@@ -120,7 +130,7 @@ const Provider = ({ children }) => {
 		}
 	};
 
-	const Post = async ({ path, params, loader, dataSetter }) => {
+	const Post = async ({ path, params, loader, dataSetter, addToState }) => {
 		loader(true)
 		try {
 			CheckAuth()
@@ -128,9 +138,8 @@ const Provider = ({ children }) => {
 			const token = localStorage.getItem('token') || ''
 			const response = await axios.post(`${process.env.BASE_URL}${path}`, {
 				...params,
-				uniq_team_id: user.length > 0 ? user[0].team[0].uniq_team_id : null,
+				uniq_team_id: user.length > 0 && user[0].team.length > 0 ? user[0].team[0].uniq_team_id : null,
 				user_id: user.length > 0 ? user[0].id : null,
-				team_id: user.length > 0 ? user[0].team_id : null
 			}, {
 				headers: {
 					Authorization: `Bearer ${token}` // Add the Bearer token to the headers
@@ -138,13 +147,23 @@ const Provider = ({ children }) => {
 			});
 			if (response.status === 403) {
 				CheckAuth()
-				return response
+				return response.data
 			}
-			if (response && response.data.length > 0) {
-				dataSetter(response.data)
+			if (response.status === 200) {
+				const responseData = response.data.length > 0 ? response.data : [];
+				if (addToState) {
+					// Add to existing state
+					dataSetter(prevState => [...prevState, ...responseData]);
+				} else {
+					// Replace existing state
+					dataSetter(responseData);
+				}
+				dataSetter(responseData);
+
+				return response;
 			}
 			loader(false);
-			return response
+			return response.data
 		}
 		catch (err) {
 			console.log(err)
@@ -156,7 +175,6 @@ const Provider = ({ children }) => {
 		CheckAuth();
 		Get({ params: {}, path: 'dashboard', dataSetter: setDashboards, loader: setLoadingDashboards })
 		Get({ params: {}, path: 'data_provider', dataSetter: setDataProviders, loader: setLoadingDataProviders })
-
 	}, [])
 	useEffect(() => {
 		localStorage.setItem('path', path);
@@ -167,11 +185,14 @@ const Provider = ({ children }) => {
 	}, [path]);
 
 	const dropdownRef = useRef();
-
+	// useEffect(() => {
+	// 	console.log('user', user)
+	// }, [user])
 	const [openDropdown, setOpenDropdown] = useState(false);
 	useEffect(() => {
 		if (user.length > 0)
 			Get({ params: { user_id: user[0].id }, path: 'team', dataSetter: setTeams, loader: setLoadingTeams })
+		Get({ params: { email: user.length > 0 ? user[0].email : null }, path: 'invite', dataSetter: setInvitations, loader: setLoadingInvitations })
 	}, [user])
 	useEffect(() => {
 		const checkIfClickedOutside = (e) => {
@@ -246,7 +267,11 @@ const Provider = ({ children }) => {
 				setChat, chat,
 				activeTeam, setActiveTeam,
 				loadingInvitations, setLoadingInvitations,
-				invitations, setInvitations
+				invitations, setInvitations,
+				selectedDataTables, setSelectedDataTables,
+				question, setQuestion,
+				retrievedTables, setRetrievedTables,
+				loadingRetrievedTables, setLoadingRetrievedTables
 			}}
 		>
 			{children}

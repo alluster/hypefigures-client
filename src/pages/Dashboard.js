@@ -23,6 +23,7 @@ import { useHistory } from "react-router-dom";
 import FormGoogleTable from '../components/Forms/DataTable/FormGoogleTable';
 import CardDataTable from '../components/Card/CardDataTable';
 import Chat from '../components/Chat/Chat';
+import Checkbox from '../components/Input/Checkbox';
 
 const Logo = styled.div`
    	max-width: 40px;
@@ -115,7 +116,8 @@ const Dashboard = () => {
 		Post,
 		setDataPoints,
 		setPath,
-
+		selectedDataTables,
+		setSelectedDataTables,
 		dashboards,
 		setLoadingDashboard,
 		setDashboard,
@@ -155,30 +157,49 @@ const Dashboard = () => {
 				return;
 		}
 	};
-
 	const DataTables = () => {
+
+		const toggleDataTableSelection = (dataTableId) => {
+			if (selectedDataTables.includes(dataTableId)) {
+				setSelectedDataTables(selectedDataTables.filter(id => id !== dataTableId));
+			} else {
+				setSelectedDataTables([...selectedDataTables, dataTableId]);
+			}
+		};
+
 		if (loadingDataTables) {
 			return <SpinnerSmall />;
 		}
-		return (
-			dataTables.length > 0 ? dataTables.map((item, i) => {
-				return (
-					<CardDataTable
-						type={item.type}
-						key={i}
-						to={`/datatables/${item.id}`}
-						cell={item.cell || ''}
-						spreadsheetId={item.spreadsheet_id || ''}
-						sheetId={item.sheet_id || ''}
-						title={item.title}
-						description={item.description}
-						value={item.value}
-					/>
-				);
-			}) :
-				<p>This dashboard does not contain any data yet.</p>
-		);
 
+		return (
+			dataTables.length > 0 ? (
+
+				dataTables.map((item, i) => (
+					<div key={i} style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+						<Checkbox
+							key={i}
+							label={null}
+							id={`checkbox-${item.id}`}
+							checked={selectedDataTables.includes(item.id)}
+							onChange={() => toggleDataTableSelection(item.id)}
+						/>
+						<CardDataTable
+							type={item.type}
+							to={`/datatables/${item.id}`}
+							cell={item.cell || ''}
+							spreadsheetId={item.spreadsheet_id || ''}
+							sheetId={item.sheet_id || ''}
+							title={item.title}
+							description={item.description}
+							value={item.value}
+						/>
+					</div>
+				))
+
+			) : (
+				<p>This dashboard does not contain any data yet.</p>
+			)
+		);
 	};
 	const DashboardContent = () => {
 
@@ -272,6 +293,7 @@ const Dashboard = () => {
 	useEffect(() => {
 		DashboardContent()
 	}, [dataTables])
+
 	return (
 		<Content>
 
@@ -282,10 +304,8 @@ const Dashboard = () => {
 					layoutType='back'
 					title='Go Back'
 				/>
-				{/* <Chat /> */}
-
+				<Chat />
 				<DashboardContent />
-				{/* <AnalyticsDataContainer /> */}
 			</Container>
 			<Modal
 				open={openModal}

@@ -25,7 +25,7 @@ const Links = styled.div`
 
 const NavItem = styled(Link)`
     margin-left: 20px;
-    // position: relative; /* Added for dot positioning */
+    position: relative; /* Added for dot positioning */
 `;
 
 const Dot = styled.div`

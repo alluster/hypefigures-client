@@ -76,21 +76,13 @@ const FormInvite = ({
 					{
 						type: 'input',
 						name: 'title',
-						label: 'Title',
+						label: 'Invitation message',
 						options: '',
 						required: true,
-						errorMessage: 'Title is required',
-						placeholder: 'Enter title',
-					},
-					{
-						type: 'textarea',
-						name: 'description',
-						label: 'Description',
-						options: '',
-						required: false,
-						errorMessage: '',
-						placeholder: 'Enter description',
-					},
+						errorMessage: 'Message is required',
+						placeholder: 'Enter message',
+					}
+
 				]}
 			></FormCompiler>
 		</Modal>

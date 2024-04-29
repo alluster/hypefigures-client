@@ -166,13 +166,17 @@ const TeamSelector = () => {
 	const ChangeActiveTeam = async ({ team_id, user_id }) => {
 		try {
 			if (team_id && user_id) {
-				await Get({ params: { id: team_id, user_id: user_id }, path: 'team', dataSetter: setActiveTeam, loader: setLoadingTeams })
+				const response = await Get({ params: { id: team_id, user_id: user_id }, path: 'team', dataSetter: setActiveTeam, loader: setLoadingTeams })
+				console.log('team from team selector', response)
 			}
 		} catch (err) { console.log(err) }
 	}
 	const handleTeamChange = async ({ team_id }) => {
 		try {
+			console.log('user_id:', user[0].id, 'team_id', team_id)
 			const response = await Post({ params: { id: user[0].id, team_id: team_id }, path: 'user', dataSetter: setUser, loader: setLoadingTeams })
+			console.log('response from user path', response)
+
 			if (response.status === 200) {
 				await ChangeActiveTeam({
 					team_id: response.data.user.team_id,

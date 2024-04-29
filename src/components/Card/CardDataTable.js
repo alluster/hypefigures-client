@@ -18,6 +18,8 @@ const Wrapper = styled.div`
     border-radius: 8px;
     margin-right: ${(props) => props.theme.grid.divider_2};
     margin-bottom: ${(props) => props.theme.grid.divider_2};
+	flex: 1;
+	width: 100% !important;
     ${({ row }) =>
 		row &&
 		`

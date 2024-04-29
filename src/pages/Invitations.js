@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { AppContext } from '../context/Context';
 import { device } from '../styles/device-braking-points';
@@ -42,12 +42,17 @@ const Invitations = () => {
 		}
 	};
 
-	const declineInvitation = async (invitationId) => {
+	const declineInvitation = async ({ invitation_id, team_id }) => {
 		try {
 			const response = await Post({
-				path: `invite/${invitationId}`,
-				params: { deleted_at: true },
+				path: 'invite/decline',
+				params: {
+					id: invitation_id,
+					user_id: user[0].id,
+					team_id: team_id
+				},
 				dataSetter: setNotifyMessage,
+				loader: setLoadingInvitations
 			});
 			if (response.status === 200) {
 				console.log('Invitation declined successfully.');
@@ -59,7 +64,31 @@ const Invitations = () => {
 			console.error('Error declining invitation:', error);
 		}
 	};
+	const InvitationsList = () => {
+		return (
+			<CardGrid>
+				{user.length > 0 && user[0].invitations && user[0].invitations.length > 0 ? (
+					user[0].invitations.map((invitation, index) => (
+						<Card key={index}>
+							<h4>{invitation.title}</h4>
+							<p>{invitation.description}</p>
+							<p>{invitation.updated_at}</p>
+							<ButtonRow>
+								<Button onClick={() => acceptInvitation({ invitation_id: invitation.id, team_id: invitation.team_id })} dividerRight title="Accept" />
+								<Button onClick={() => declineInvitation({ invitation_id: invitation.id, team_id: invitation.team_id })} white title="Decline" />
+							</ButtonRow>
 
+						</Card>
+					))
+				) : (
+					<p>No invitations</p>
+				)}
+			</CardGrid>
+		)
+	}
+	useEffect(() => {
+		InvitationsList()
+	}, [user])
 	return (
 		<Container>
 			<Button
@@ -71,24 +100,7 @@ const Invitations = () => {
 				title="Invitations"
 				description="Your invitations"
 			/>
-			<CardGrid>
-				{user.length > 0 && user[0].invitations && user[0].invitations.length > 0 ? (
-					user[0].invitations.map((invitation, index) => (
-						<Card key={index}>
-							<h4>{invitation.title}</h4>
-							<p>{invitation.description}</p>
-							<p>{invitation.updated_at}</p>
-							<ButtonRow>
-								<Button onClick={() => acceptInvitation({ invitation_id: invitation.id, team_id: invitation.team_id })} dividerRight title="Accept" />
-								<Button onClick={() => declineInvitation(invitation.id)} white title="Decline" />
-							</ButtonRow>
-
-						</Card>
-					))
-				) : (
-					<p>No invitations</p>
-				)}
-			</CardGrid>
+			{InvitationsList()}
 		</Container>
 	);
 };

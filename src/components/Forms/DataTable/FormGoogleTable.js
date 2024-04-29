@@ -21,13 +21,15 @@ const FormGoogleTable = ({
 		setDataTables,
 		setLoadingDataTables,
 		dashboards,
+		Get,
+		setDashboards,
+		setLoadingDashboards
 	} = useContext(AppContext);
 
 	const sheetId = async (data) => {
 		try {
 			const regex = /gid=([^&]+)/;
 			const match = data.sheetUrl.match(regex);
-			console.log(match)
 			const sheetId = match ? match[1] : '0';
 			return sheetId;
 		} catch (err) {
@@ -77,9 +79,12 @@ const FormGoogleTable = ({
 	};
 
 	useEffect(() => {
+
 		reset({
 			dashboard_id: id || null
 		});
+		Get({ params: {}, path: 'dashboard', dataSetter: setDashboards, loader: setLoadingDashboards })
+
 	}, []);
 
 	return (
