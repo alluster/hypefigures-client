@@ -1,39 +1,42 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import SpinnerSmall from '../Spinner/SpinnerSmall';
 import Button from '../Button/Button';
 import { AppContext } from '../../context/Context';
+import { ChatProps } from '../../interface/ChatProps';
 const iconImage = '/integration-logos/hyperfigures.png'; // Import the icon image
+import Zlib from 'react-zlib-js';
 
 // Styled components for the chat AI question component
+const QuestionContainer = styled.div`
+    border-radius: 15px;
+    margin-bottom: 15px;
+`;
 
-const InputContainer = styled.form`
-    bottom: 0px;	
-    position: fixed;
-	width: calc(100% - 300px);
-    margin-bottom: 50px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center; /* Center the items horizontally */
-    // align-items: center; /* Center the items vertically */
+const InputContainer = styled.div`
+    position: relative;
+
 `;
 
 const InputField = styled.input`
-    flex: 3;
-    margin-right: 10px; /* Add margin to the right to create space between the input field and the button */
+    width: calc(100% - 100px); /* Adjusted for the send button */
+    margin-top: 10px;
     padding: 8px 10px;
     border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: white;
-    padding-left: 40px;
-    background-image: url(${iconImage});
+    border-radius: 25px;
+	background-color: red;
+    padding-left: 40px; /* Adjust the padding to accommodate the icon */
+    background-image: url(${iconImage}); /* Set the icon as background image */
     background-repeat: no-repeat;
-    background-position: 10px center;
-    background-size: 20px;
-	height: 24px;
+    background-position: 10px center; /* Adjust the position of the icon */
+    background-size: 20px; /* Adjust the size of the icon */
 `;
 
 const SendButton = styled(Button)`
-    flex: 1;
+    position: absolute;
+    top: 10px;
+    right: 10px;
     padding: 8px 20px;
     background-color: #007bff;
     color: white;
@@ -42,12 +45,17 @@ const SendButton = styled(Button)`
     cursor: pointer;
 `;
 
-const Chat = () => {
+const ResponseText = styled.p`
+    margin-top: 10px;
+`;
+
+const ChatInput = () => {
 	const {
 		setLoadingChat,
 		setChat,
 		chat,
 		Post,
+		loadingChat,
 		selectedDataTables,
 		question,
 		setQuestion,
@@ -106,8 +114,7 @@ const Chat = () => {
 	};
 
 	const handleSendQuestion = async (e) => {
-		e.preventDefault();
-		setQuestion('');
+		e.preventDefault()
 		try {
 			setLoadingChat(true);
 			const tablesToChat = await GetTables();
@@ -125,30 +132,42 @@ const Chat = () => {
 			setNotifyMessage(error.message)
 
 		} finally {
+			setQuestion('');
 			setLoadingChat(false);
 		}
 	};
 
 	const ChatContainer = () => {
 		return (
+			<QuestionContainer>
+				<InputContainer>
+					<form>
 
-			<InputContainer>
+						<InputField
+							type="text"
+							value={question}
+							onChange={handleQuestionChange}
+							placeholder="Type your question here..."
+						/>
+						<SendButton
+							small
+							title="Ask"
+							type='submit'
+							onClick={(e) => handleSendQuestion(e)}
+						/>
+					</form>
 
-				<InputField
-					type="text"
-					value={question}
-					onChange={handleQuestionChange}
-					placeholder="Select a Sheet and ask me anything about it"
-				/>
-				<SendButton
-					small
-					title="Send a question"
-					type='submit'
-					disabled={!question.length > 0 ? true : false}
-					onClick={(e) => handleSendQuestion(e)}
-				/>
-			</InputContainer>
-
+				</InputContainer>
+				{loadingChat ? (
+					<SpinnerSmall />
+				) : (
+					chat && (
+						<ResponseText>
+							{chat.length > 0 && chat[0].message}
+						</ResponseText>
+					)
+				)}
+			</QuestionContainer>
 		);
 	};
 	useEffect(() => {
@@ -157,4 +176,4 @@ const Chat = () => {
 	return ChatContainer();
 };
 
-export default Chat;
+export default ChatInput;

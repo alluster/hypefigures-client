@@ -249,7 +249,7 @@ const App = () => {
 							component={Invitations}
 						/>
 					</Switch>
-					<Footer />
+					{/* <Footer /> */}
 				</Router>
 				<GlobalStyle />
 			</ThemeProvider>

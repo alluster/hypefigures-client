@@ -25,22 +25,15 @@ const rotate = keyframes`
 `;
 
 const Indicator = styled.div`
-    width: 1.2em;
-    height: 1.2em;
-    background: #ffffff;
+    width: 1em;
+    height: 1em;
+    background: ${(props) => (props.checked ? '#000B42' : '#ffffff')}; /* Change background color based on checked state */
     position: absolute;
     top: 0em;
     left: -1.6em;
-    border: 1px solid ${props => props.theme.colors.gray_40};
+    border: 1px solid ${(props) => props.theme.colors.gray_80};
     border-radius: 0.2em;
 
-    ${Input}:checked & {
-        background: #000B42;
-    }
-
-    ${Label}:hover & {
-        background: #f1f1f1;
-    }
 
     &::after {
         content: '';
@@ -49,16 +42,16 @@ const Indicator = styled.div`
     }
 
     ${Input}:checked + &::after {
-		transform: rotate(45deg);
+        transform: rotate(45deg);
         display: block;
-        top: 0.1em;
-        left: 0.35em;
-        width: 35%;
-        height: 60%;
-        border: solid #263238;
-        border-width: 0 0.2em 0.2em 0;
+        top: 0.25em; /* Adjust top position */
+        left: 0.25em; /* Adjust left position */
+        width: 40%; /* Adjust width to make the check mark smaller */
+        height: 40%; /* Adjust height to make the check mark smaller */
+        border: solid white;
+        border-width: 0 0.15em 0.15em 0;
         animation-name: ${rotate};
-        animation-duration: 0.3s;
+        animation-duration: 0s;
         animation-fill-mode: forwards;
     }
 
@@ -80,7 +73,7 @@ const Checkbox = ({ value, checked, onChange, name, id, label, disabled }) => {
 				checked={checked}
 				onChange={onChange}
 			/>
-			<Indicator />
+			<Indicator checked={checked} />
 		</Label>
 	);
 };

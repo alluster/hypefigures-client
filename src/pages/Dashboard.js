@@ -24,6 +24,7 @@ import FormGoogleTable from '../components/Forms/DataTable/FormGoogleTable';
 import CardDataTable from '../components/Card/CardDataTable';
 import Chat from '../components/Chat/Chat';
 import Checkbox from '../components/Input/Checkbox';
+import Conversation from '../components/Chat/Conversation';
 
 const Logo = styled.div`
    	max-width: 40px;
@@ -197,7 +198,7 @@ const Dashboard = () => {
 				))
 
 			) : (
-				<p>This dashboard does not contain any data yet.</p>
+				<p>Connect to a Google Sheet</p>
 			)
 		);
 	};
@@ -207,11 +208,11 @@ const Dashboard = () => {
 			<div>
 
 				<HeaderText
-					buttonTitle="Connect to a new Google Sheet"
+					buttonTitle="Google Sheet"
 					onClickFunction={() => setOpenDataTableModal(!openDataTableModal)}
 					locationText=""
-					title="Tables"
-					description="Integrated tables"
+					title=""
+					description=""
 				/>
 				{DataTables()}
 
@@ -304,8 +305,10 @@ const Dashboard = () => {
 					layoutType='back'
 					title='Go Back'
 				/>
-				<Chat />
+
 				<DashboardContent />
+				<Conversation />
+				<Chat />
 			</Container>
 			<Modal
 				open={openModal}

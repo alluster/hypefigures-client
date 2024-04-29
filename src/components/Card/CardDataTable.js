@@ -3,66 +3,15 @@ import styled from 'styled-components';
 import { device } from '../../styles/device-braking-points';
 import { Link } from 'react-router-dom';
 import TextWithLabel from '../Text/TextWithLabel';
-import SpinnerSmall from '../Spinner/SpinnerSmall';
 
-const Wrapper = styled.div`
-    padding-top: ${(props) => props.theme.grid.divider_4};
-    padding-bottom: ${(props) => props.theme.grid.divider_4};
-    padding-left: ${(props) => props.theme.grid.divider_4};
-    padding-right: ${(props) => props.theme.grid.divider_4};
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    background-color: ${(props) => props.theme.colors.white};
-    border: solid 1px ${(props) => props.theme.colors.gray_110};
-    border-radius: 8px;
-    margin-right: ${(props) => props.theme.grid.divider_2};
-    margin-bottom: ${(props) => props.theme.grid.divider_2};
-	flex: 1;
-	width: 100% !important;
-    ${({ row }) =>
-		row &&
-		`
-		flex-direction: row;
-	`};
-	
-    ${({ onClick }) =>
-		onClick &&
-		`
-		cursor:pointer
-	`};
-
-    @media ${device.laptop} {
-        margin-right: 0px;
-    }
-`;
 const WrapperLink = styled(Link)`
-    padding-top: ${(props) => props.theme.grid.divider_2};
-    padding-bottom: ${(props) => props.theme.grid.divider_2};
-    padding-left: ${(props) => props.theme.grid.divider_2};
-    padding-right: ${(props) => props.theme.grid.divider_2};
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
+	display: flex;
+	align-items: center;
     background-color: ${(props) => props.theme.colors.white};
     border: solid 1px ${(props) => props.theme.colors.gray_40};
     border-radius: 8px;
-    margin-right: ${(props) => props.theme.grid.divider_2};
-    margin-bottom: ${(props) => props.theme.grid.divider_2};
     cursor: pointer;
-    ${({ row }) =>
-		row &&
-		`
-		flex-direction: row;
-	`};
-    ${({ small }) =>
-		small &&
-		`
-	padding-top: 16px ;
-	padding-bottom: 16px ;
-	padding-left: 16px ;
-	padding-right: 16px ;
-`};
+	width: 100%;
     @media ${device.laptop} {
         margin-right: 0px;
     }
@@ -71,91 +20,57 @@ const WrapperLink = styled(Link)`
 const Container = styled.div`
 	display: flex;
 	flex-direction: row;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	align-items: center;
 `;
 
 const ImageContainer = styled.div`
-	max-height: 30px;
-	max-width: 60px;
-	margin-right: 30px;
-`
+	display: flex;
+	align-items: center; /* Vertically align items */
+	margin-left: 16px;
+	margin-right: 10px; /* Add margin to the right to separate from the title */
+`;
+const Image = styled.img`
+	height: 30px; /* Set the height of the image */
+	width: auto; /* Automatically adjust width to maintain aspect ratio */
+`;
+const Title = styled.p`
+	line-height: 40px;
+	margin-left: 20px;
+`;
+const Description = styled.p`
+	font-size: 14px;
+	line-height: 40px;
+	margin-left: 20px;
 
+`;
 const CardDataTable = ({
 	to,
-	row,
-	small,
-	onClick,
 	title,
-	description,
-	value,
-	loading,
-	type
+	description
 }) => {
 
-	const ImageSelector = () => {
-		switch (type) {
-			case 'google-sheet':
-				return (
-					<img src="/integration-logos/google-sheets.png" alt="Google Sheets" />
-				);
-			case 'google-analytics':
-				return (
-					<img src="/integration-logos/google-analytics.png" alt="Google Analytics" />
-
-				);
-			case 'hyperfigures':
-				return (
-					<img src="/integration-logos/hyperfigures.png" alt="Hyperfigures" />
-
-				);
-			default:
-				return;
-		}
-	};
 	return (
-		<div onClick={onClick} >
-			{
-				to ? (
-					<WrapperLink small={small} row={row} to={to || ''} >
-						{
-							loading ? (
-								<SpinnerSmall />
-							) : (
-								<Container>
-									<ImageContainer>
-										<img src="/integration-logos/google-sheets.png" alt="Google Sheets" />
 
-									</ImageContainer>
-									<TextWithLabel
-										small
-										title={title || '-'}
-										label="Name"
-										description=''
-									/>
+		<WrapperLink to={to || ''} >
 
-									<TextWithLabel
-										small
-										title={description || '-'}
-										label="Description"
-										description=''
-									/>
-								</Container>
+			<Container>
+				<ImageContainer>
+					<Image src="/integration-logos/google-sheets.png" alt="Google Sheets" />
 
-							)}
-					</WrapperLink >
-				) : (
-					<Wrapper small={small} row={row}>
-						{loading ? (
-							<SpinnerSmall />
-						) : (
-							<TextWithLabel
-								title={value || ''}
-								label={title || ''}
-								description={description || ''}
-							/>
-						)}
-					</Wrapper>
-				)}
-		</div >
+				</ImageContainer>
+				<Title>
+					{title || ''}
+				</Title>
+				<Description>
+					{description || ''}
+				</Description>
+
+			</Container>
+
+		</WrapperLink >
+
 	);
 };
 

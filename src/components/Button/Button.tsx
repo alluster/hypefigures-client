@@ -50,7 +50,17 @@ const StyledButtonBase = styled.button<ButtonProps>`
 
 
 	`};
+    ${({ disabled }) =>
+        disabled &&
+        `        
+		box-sizing: border-box; /* Include padding and border in element's width and height */
+		-webkit-text-fill-color: #BDBDBD;
+  		color: #BDBDBD;
+		background-color: #FBFBFB;
+		border: 1px solid #BDBDBD;
+		// font-weight: 400;
 
+	`};
     ${({ ghost }) =>
         ghost &&
         `	
@@ -122,6 +132,7 @@ const Button = ({
     children,
     to = '',
     title = 'Button',
+    disabled = false,
     onClick,
 }: ButtonProps) => {
     const [openDropdown, setOpenDropdown] = useState(false);
@@ -132,7 +143,7 @@ const Button = ({
 
     const StyledButton = (
         <StyledButtonBase
-            onClick={onClick}
+            onClick={!disabled ? onClick : null}
             small={small}
             white={white}
             ghost={ghost}
@@ -142,6 +153,7 @@ const Button = ({
             type={type}
             layoutType={layoutType}
             title={title}
+            disabled={disabled}
         >
             {title}
         </StyledButtonBase>

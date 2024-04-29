@@ -28,7 +28,7 @@ const Title = styled.h3`
 `;
 const TitleSmall = styled.h5`
     // color: ${(props) => props.theme.colors.gray_80};
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     // text-transform: uppercase;
     // margin-bottom: ${(props) => props.theme.grid.divider_1};
@@ -59,7 +59,7 @@ const TextWithLabel = ({ title, label, description, line, small }) => {
 		<Wrapper>
 			{small ? (
 				<Content line={line}>
-					<LabelSmall>{label || ''}</LabelSmall>
+					{/* <LabelSmall>{label || ''}</LabelSmall> */}
 					<TitleSmall>{title || ''}</TitleSmall>
 					<Description>{description || ''}</Description>
 				</Content>

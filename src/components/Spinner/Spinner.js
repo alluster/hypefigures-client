@@ -21,7 +21,7 @@ const Spinner = () => {
 		<SpinnerContainer>
 			<ScaleLoader color="#BDBDBD" />
 			<p style={{ color: '#BDBDBD', marginTop: '24px' }}>
-				Ladataan sisältöä...
+				Loading...
 			</p>
 		</SpinnerContainer>
 	);

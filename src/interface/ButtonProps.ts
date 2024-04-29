@@ -11,4 +11,5 @@ export type ButtonProps = {
     children?: React.ReactNode;
     to?: string;
     layoutType?: 'default' | 'back' | 'link' | 'dropdown';
+    disabled?: boolean;
 };

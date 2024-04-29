@@ -41,36 +41,65 @@ const InviteButton = styled.p`
 	&:hover {
 		cursor:pointer;
 	}
-`
-
+`;
+const MarginContainer = styled.div`
+    ${({ sideBarOpen, navigationOpen }) => {
+		if (sideBarOpen && !navigationOpen) {
+			return `
+                margin-left: 160px;
+            `;
+		} else if (!sideBarOpen && navigationOpen) {
+			return `
+                margin-left: 160px;
+            `;
+		} else if (!sideBarOpen && !navigationOpen) {
+			return `
+                margin-left: 10px;
+            `;
+		} else if (sideBarOpen && navigationOpen) {
+			return `
+                margin-left: 340px;
+            `;
+		}
+	}}
+`;
 const TopNav = () => {
-	const { user } = useContext(AppContext);
+	const { user, sideBarOpen, navigationOpen } = useContext(AppContext);
 	const [inviteFormOpen, setInviteFormOpen] = useState(false);
 
 	return (
-		<Wrapper>
-			<TeamSelector />
-			<Links>
-				{
-					user.length > 0 && user[0].team && user[0].team.length > 0 ?
-						<InviteButton
-							onClick={() => setInviteFormOpen(!inviteFormOpen)}
-						>
-							Invite new team member
-						</InviteButton>
-						:
-						null}
+		<div>
 
-				<NavItem to="/invitations">
-					<FontAwesomeIcon icon={faBell} size="sm" />
-					{user.length > 0 && user[0].invitations.length > 0 && <Dot />}
-				</NavItem>
-				<NavItem to="/user">
-					<p>{user.length > 0 ? user[0].email : ''}</p>
-				</NavItem>
-			</Links>
+			<MarginContainer sideBarOpen={sideBarOpen} navigationOpen={navigationOpen}>
+				<Wrapper>
+
+					<TeamSelector />
+					<Links>
+						{
+							user.length > 0 && user[0].team && user[0].team.length > 0 ?
+								<InviteButton
+									onClick={() => setInviteFormOpen(!inviteFormOpen)}
+								>
+									Invite new team member
+								</InviteButton>
+								:
+								null}
+
+						<NavItem to="/invitations">
+							<FontAwesomeIcon icon={faBell} size="sm" />
+							{user.length > 0 && user[0].invitations.length > 0 && <Dot />}
+						</NavItem>
+						<NavItem to="/user">
+							<p>{user.length > 0 ? user[0].email : ''}</p>
+						</NavItem>
+					</Links>
+				</Wrapper>
+
+			</MarginContainer>
+
 			<FormInvite toggleOpen={setInviteFormOpen} openInviteModal={inviteFormOpen} />
-		</Wrapper>
+		</div >
+
 	);
 };
 
