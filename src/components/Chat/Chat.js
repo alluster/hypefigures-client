@@ -107,12 +107,11 @@ const Chat = () => {
 
 	const handleSendQuestion = async (e) => {
 		e.preventDefault();
-		setQuestion('');
 		try {
 			setLoadingChat(true);
 			const tablesToChat = await GetTables();
 			console.log(tablesToChat);
-			await Post({
+			const response = await Post({
 				params: {
 					prompt: `${question}: ${JSON.stringify(tablesToChat)}`,
 				},
@@ -120,41 +119,37 @@ const Chat = () => {
 				dataSetter: setChat,
 				loader: setLoadingChat,
 			});
+			console.log('response from chatgpt'), response
 		} catch (error) {
-			console.log(error);
-			setNotifyMessage(error.message)
+			setNotifyMessage('Somethimg went wrong')
 
 		} finally {
 			setLoadingChat(false);
+			setQuestion('');
+
 		}
 	};
 
-	const ChatContainer = () => {
-		return (
+	return (
 
-			<InputContainer>
+		<InputContainer>
 
-				<InputField
-					type="text"
-					value={question}
-					onChange={handleQuestionChange}
-					placeholder="Select a Sheet and ask me anything about it"
-				/>
-				<SendButton
-					small
-					title="Send a question"
-					type='submit'
-					disabled={!question.length > 0 ? true : false}
-					onClick={(e) => handleSendQuestion(e)}
-				/>
-			</InputContainer>
+			<InputField
+				type="text"
+				value={question}
+				onChange={handleQuestionChange}
+				placeholder="Select a Sheet and ask me anything about it"
+			/>
+			<SendButton
+				small
+				title="Send a question"
+				type='submit'
+				disabled={!question.length > 0 ? true : false}
+				onClick={(e) => handleSendQuestion(e)}
+			/>
+		</InputContainer>
 
-		);
-	};
-	useEffect(() => {
-		ChatContainer();
-	}, [chat]);
-	return ChatContainer();
-};
+	);
+}
 
 export default Chat;

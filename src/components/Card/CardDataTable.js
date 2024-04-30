@@ -12,6 +12,7 @@ const WrapperLink = styled(Link)`
     border-radius: 8px;
     cursor: pointer;
 	width: 100%;
+	margin-top: 8px;
     @media ${device.laptop} {
         margin-right: 0px;
     }
