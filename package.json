@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "webpack-dev-server .",
 		"build": "webpack .",
-		"postinstall": "webpack -p",
+		"postinstall": "webpack .",
 		"test": "jest"
 	},
 	"author": "",
@@ -38,7 +38,7 @@
 		"ts-loader": "^9.5.1",
 		"typescript": "^5.4.5",
 		"webpack": "^5.68.0",
-		"webpack-cli": "^4.9.2",
+		"webpack-cli": "^4.10.0",
 		"webpack-dev-server": "^4.7.4"
 	},
 	"dependencies": {
