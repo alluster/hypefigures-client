@@ -4,9 +4,10 @@
 	"description": "BI Platform for humans",
 	"main": "index.js",
 	"scripts": {
-		"start": "webpack-dev-server .",
+		"dev": "webpack-dev-server .",
+		"start": "node server.js",
 		"build": "webpack .",
-		"postinstall": "webpack .",
+		"postinstall": "node server.js",
 		"test": "jest"
 	},
 	"author": "",
@@ -50,6 +51,7 @@
 		"@types/react-dom": "^18.2.25",
 		"a11y-react-emoji": "^1.2.0",
 		"axios": "^1.6.7",
+		"express": "^4.19.2",
 		"html-webpack-plugin": "^5.6.0",
 		"path": "^0.12.7",
 		"react": "^17.0.2",
