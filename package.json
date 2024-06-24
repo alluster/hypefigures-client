@@ -4,10 +4,10 @@
 	"description": "BI Platform for humans",
 	"main": "index.js",
 	"scripts": {
-		"start": "node server.mjs",
+		"start": "webpack-dev-server .",
 		"dev": "webpack-dev-server .",
 		"build": "webpack .",
-		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build",
+		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=true npm install && npm run build",
 		"test": "jest"
 	},
 	"author": "",
