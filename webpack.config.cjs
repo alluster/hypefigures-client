@@ -26,6 +26,8 @@ module.exports = {
 		},
 	},
 	plugins: [
+		new webpack.EnvironmentPlugin(['NODE_ENV', 'REACT_APP_BASE_URL']),
+
 		new HtmlWebpackPlugin({
 			template: "public/index_template.html", // to import index.html file inside index.js
 		}),
