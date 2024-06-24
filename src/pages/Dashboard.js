@@ -25,6 +25,7 @@ import CardDataTable from '../components/Card/CardDataTable';
 import Chat from '../components/Chat/Chat';
 import Checkbox from '../components/Input/Checkbox';
 import Conversation from '../components/Chat/Conversation';
+// import { Cell, Jupyter } from "@datalayer/jupyter-react";
 
 const Logo = styled.div`
    	max-width: 40px;
@@ -294,6 +295,9 @@ const Dashboard = () => {
 	useEffect(() => {
 		DashboardContent()
 	}, [dataTables])
+	useEffect(() => {
+		console.log(selectedDataTables)
+	}, [selectedDataTables])
 
 	return (
 		<Content>
@@ -308,6 +312,11 @@ const Dashboard = () => {
 
 				<DashboardContent />
 				<Conversation />
+				{/* <Jupyter>
+
+					<Cell source={source} />
+
+				</Jupyter> */}
 				<Chat />
 			</Container>
 			<Modal

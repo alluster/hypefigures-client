@@ -48,6 +48,7 @@ const RightSide = styled.div`
 	flex: 8;
 	display: flex;
 	flex-direction: column;
+	max-width: 400px;
 	align-items: flex-start; /* Align items to the start (top) */
 	justify-content: flex-start; /* Align content to the start (top) */
 	padding-left: 20px;

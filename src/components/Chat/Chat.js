@@ -110,10 +110,10 @@ const Chat = () => {
 		try {
 			setLoadingChat(true);
 			const tablesToChat = await GetTables();
-			console.log(tablesToChat);
+			console.log(tablesToChat)
 			const response = await Post({
 				params: {
-					prompt: `${question}: ${JSON.stringify(tablesToChat)}`,
+					prompt: !tablesToChat == [] ? `${question}: ${tablesToChat}` : `${question}`,
 				},
 				path: 'chatgpt',
 				dataSetter: setChat,
@@ -121,7 +121,7 @@ const Chat = () => {
 			});
 			console.log('response from chatgpt'), response
 		} catch (error) {
-			setNotifyMessage('Somethimg went wrong')
+			setNotifyMessage('Something went wrong')
 
 		} finally {
 			setLoadingChat(false);

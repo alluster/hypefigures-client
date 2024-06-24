@@ -1,15 +1,16 @@
+import path from 'path';
+import express from 'express';
+import cors from 'cors';
 
-var path = require('path');
-var express = require('express');
-
-var app = express();
-
+const app = express();
+app.use(cors());
 app.use(express.static(path.join(__dirname, '/public/dist')));
-app.set('port', process.env.PORT || 8080);
-app.get("*", function (req, res) {
+app.set('port', process.env.PORT || 9500);
+
+app.get("*", (req, res) => {
 	res.sendFile(path.join(__dirname, "/public/dist", "index.html"));
 });
 
-var server = app.listen(app.get('port'), function () {
+const server = app.listen(app.get('port'), () => {
 	console.log('listening on port ', server.address().port);
 });
