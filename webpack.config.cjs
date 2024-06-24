@@ -3,14 +3,14 @@ const dotenv = require('dotenv');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-var env = dotenv.config().parsed;
-var envKeys = Object.keys(env).reduce(function (prev, next) {
-	prev['process.env.' + next] = JSON.stringify(env[next]);
+const env = dotenv.config().parsed || {};
+const envKeys = Object.keys(env).reduce((prev, next) => {
+	prev[`process.env.${next}`] = JSON.stringify(env[next]);
 	return prev;
 }, {});
 
 module.exports = {
-	mode: 'development',
+	mode: process.env.NODE_ENV || 'development',
 	entry: './index.js',
 
 	output: {
