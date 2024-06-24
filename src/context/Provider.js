@@ -46,7 +46,7 @@ const Provider = ({ children }) => {
 	const CheckAuth = async () => {
 		try {
 			const token = localStorage.getItem('token') || ''
-			const response = await axios.get(`${process.env.BASE_URL}validateuser`, {
+			const response = await axios.get(`${process.env.REACT_APP_BASE_URL}validateuser`, {
 				headers: {
 					Authorization: `Bearer ${token}` // Add the Bearer token to the headers
 				}
@@ -70,7 +70,7 @@ const Provider = ({ children }) => {
 	const Login = async ({ password, email }) => {
 		setLoadingUser(true)
 		try {
-			const response = await axios.post(`${process.env.BASE_URL}auth/signin`, {
+			const response = await axios.post(`${process.env.REACT_APP_BASE_URL}auth/signin`, {
 				email: email,
 				password: password
 			})
@@ -94,7 +94,7 @@ const Provider = ({ children }) => {
 			loader(true);
 
 			const token = localStorage.getItem('token') || '';
-			const response = await axios.get(`${process.env.BASE_URL}${path}`, {
+			const response = await axios.get(`${process.env.REACT_APP_BASE_URL}${path}`, {
 				params: {
 					...params,
 					uniq_team_id: user.length > 0 && user[0].team.length > 0 ? user[0].team[0].uniq_team_id : null,
@@ -136,7 +136,7 @@ const Provider = ({ children }) => {
 			CheckAuth()
 
 			const token = localStorage.getItem('token') || ''
-			const response = await axios.post(`${process.env.BASE_URL}${path}`, {
+			const response = await axios.post(`${process.env.REACT_APP_BASE_URL}${path}`, {
 				...params,
 				uniq_team_id: user.length > 0 && user[0].team.length > 0 ? user[0].team[0].uniq_team_id : null,
 				user_id: user.length > 0 ? user[0].id : null,
