@@ -7,7 +7,7 @@
 		"start": "node server.mjs",
 		"dev": "webpack-dev-server .",
 		"build": "webpack .",
-		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=true npm install && npm run build",
+		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build",
 		"test": "jest"
 	},
 	"author": "",
