@@ -4,8 +4,8 @@
 	"description": "BI Platform for humans",
 	"main": "index.js",
 	"scripts": {
-		"start": "webpack-dev-server .",
-		"dev": "node server.js",
+		"start": "node server.js",
+		"dev": "webpack-dev-server .",
 		"build": "webpack .",
 		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build",
 		"test": "jest"
