@@ -8,7 +8,7 @@ const QuestionContainer = styled.div`
 	margin-bottom: 15px;
 	height: 100%;
 	bottom: 0px;
-	border-top: 1px solid black;
+	// border-top: 1px solid black;
 	padding-top: 20px;
 	margin-top: 20px;
 	width: 600px;
@@ -132,7 +132,7 @@ const Conversation = () => {
 									:
 									<OnBoardingContainer>
 										<OnBoardingContent>
-											<h5>How can I help you? </h5>
+											<h5></h5>
 										</OnBoardingContent>
 									</OnBoardingContainer>
 							}

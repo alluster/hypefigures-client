@@ -107,6 +107,24 @@ const SidebarDescription = styled.p`
 const SidebarLocation = styled.p`
 	font-size: 12px;
 `;
+
+const EmptyState = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	min-height: 300px;
+	height: 100%;
+	text-align: center;
+`; const EmptyStateTitle = styled.h4`
+
+`;
+const EmptyStateDescription = styled.h5`
+	margin-top: 28px;
+	margin-bottom: 28px;
+
+`;
 const Dashboard = () => {
 	const [openDataPointModal, setOpenDataPointModal] = useState(false);
 	const [openDataTableModal, setOpenDataTableModal] = useState(false);
@@ -203,9 +221,8 @@ const Dashboard = () => {
 					</div>
 				))
 
-			) : (
-				<p>Connect to a Google Sheet</p>
-			)
+			) :
+				null
 		);
 	};
 	const DashboardContent = () => {
@@ -220,7 +237,23 @@ const Dashboard = () => {
 					title=""
 					description=""
 				/>
-				{DataTables()}
+				{
+					dataTables.length > 0
+						?
+						DataTables()
+						:
+						<EmptyState>
+							{setNotifyMessage('Your dashboard seems empty Add your first Integration 👋')}
+							<EmptyStateTitle>Your dashboard has no integrations yet!</EmptyStateTitle>
+							<EmptyStateDescription>Crete an integration to fetch data for your data analyzis.</EmptyStateDescription>
+							<Button
+								primary
+								title="Add New Integration"
+								onClick={() => setOpenDataTableModal(!openDataTableModal)}
+							/>
+						</EmptyState>
+
+				}
 
 			</div >
 		)

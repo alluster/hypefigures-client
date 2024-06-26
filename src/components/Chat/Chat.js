@@ -138,7 +138,7 @@ const Chat = () => {
 				type="text"
 				value={question}
 				onChange={handleQuestionChange}
-				placeholder="Select a Sheet and ask me anything about it"
+				placeholder="Select data and ask me anything about it"
 			/>
 			<SendButton
 				small

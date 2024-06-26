@@ -122,8 +122,8 @@ const Dashboards = () => {
 					buttonTitle="Create a new Dashboard"
 					onClickFunction={() => setOpenModal(!openModal)}
 					locationText=""
-					title="Dashboards"
-					description="Your team data dashboards"
+					title=""
+					description=""
 				/>
 				{DashboardsList()}
 			</Container>

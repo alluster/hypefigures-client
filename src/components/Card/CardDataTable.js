@@ -44,6 +44,9 @@ const Description = styled.p`
 	font-size: 14px;
 	line-height: 20px;
 	margin-left: 20px;
+	margin-top: 8px;
+		color: ${props => props.theme.colors.gray_80};
+
 
 `;
 
@@ -78,11 +81,10 @@ const CardDataTable = ({
 					<Title>
 						{title || ''}
 					</Title>
+					<Description>
+						{description || ''}
+					</Description>
 				</Content>
-
-				<Description>
-					{description || ''}
-				</Description>
 
 			</Container>
 
