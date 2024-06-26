@@ -243,7 +243,6 @@ const Dashboard = () => {
 						DataTables()
 						:
 						<EmptyState>
-							{setNotifyMessage('Your dashboard seems empty Add your first Integration 👋')}
 							<EmptyStateTitle>Your dashboard has no integrations yet!</EmptyStateTitle>
 							<EmptyStateDescription>Crete an integration to fetch data for your data analyzis.</EmptyStateDescription>
 							<Button

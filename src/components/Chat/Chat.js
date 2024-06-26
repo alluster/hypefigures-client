@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Button/Button';
 import { AppContext } from '../../context/Context';
@@ -57,7 +57,6 @@ const Chat = () => {
 		setLoadingRetrievedTables,
 		setNotifyMessage
 	} = useContext(AppContext);
-
 	const handleQuestionChange = (e) => {
 		setQuestion(e.target.value);
 	};
@@ -110,7 +109,6 @@ const Chat = () => {
 		try {
 			setLoadingChat(true);
 			const tablesToChat = await GetTables();
-			console.log(tablesToChat)
 			const response = await Post({
 				params: {
 					prompt: !tablesToChat == [] ? `${question}: ${tablesToChat}` : `${question}`,
@@ -119,7 +117,7 @@ const Chat = () => {
 				dataSetter: setChat,
 				loader: setLoadingChat,
 			});
-			console.log('response from chatgpt'), response
+
 		} catch (error) {
 			setNotifyMessage('Something went wrong')
 
