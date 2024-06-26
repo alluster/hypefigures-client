@@ -214,7 +214,7 @@ const Dashboard = () => {
 			<div>
 
 				<HeaderText
-					buttonTitle="Google Sheet"
+					buttonTitle="Integrate to a new Google Sheet"
 					onClickFunction={() => setOpenDataTableModal(!openDataTableModal)}
 					locationText=""
 					title=""

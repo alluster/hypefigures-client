@@ -8,7 +8,26 @@ import Modal from '../components/Modal/Modal';
 import FormCompiler from '../supportFunctions/FormComplier';
 import { AppContext } from '../context/Context';
 import Button from '../components/Button/Button';
+import styled from 'styled-components';
 
+const Label = styled.p`
+	font-size: 16px;
+	color: ${props => props.theme.colors.gray_80};
+	margin-bottom: 8px;
+`;
+const LinkText = styled.p`
+    
+    color: ${(props) => props.theme.colors.brand_100};
+	margin-left: 10px;
+	&:hover {
+        cursor: pointer;
+    }
+`;
+
+const TextRow = styled.div`
+	display: flex;
+	flex-direction: row;
+`;
 
 const Dashboards = () => {
 	const {
@@ -45,8 +64,18 @@ const Dashboards = () => {
 							.map((item, i) => {
 								return (
 									<Card key={i} to={`/dashboards/${item.id}`}>
+										<Label>Dashboard</Label>
 										<h4>{item.title}</h4>
-										<p>{item.description}</p>
+										{
+											item.description ?
+												<p>{item.description} </p>
+												:
+												<TextRow>
+													<p>A company dashboard -</p>
+													<LinkText>Add description</LinkText>
+												</TextRow>
+
+										}
 									</Card>
 								);
 							})
@@ -75,8 +104,6 @@ const Dashboards = () => {
 			reset();
 		}
 	};
-
-
 
 	useEffect(() => {
 		setPath('/dashboards');

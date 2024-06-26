@@ -10,19 +10,16 @@ import TextWithLabel from '../components/Text/TextWithLabel';
 import Button from '../components/Button/Button';
 import Table from '../components/Table/Table';
 
-const Value = styled.h3`
-    font-weight: bold;
-`;
+const Row = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-bottom: 32px;
 
-const Divider = styled.div`
-    border-bottom: 1px solid ${(props) => props.theme.colors.gray_60};
-    width: 100%;
-    margin-top: 20px;
-    margin-bottom: 20px;
 `;
-const Label = styled.p`
-    color: ${(props) => props.theme.colors.gray_130};
-    font-size: 14px;
+const ButtonContainer = styled.div`
+	margin-left: auto;
+	justify-self: flex-end;
 `;
 
 const DataTable = () => {
@@ -63,18 +60,28 @@ const DataTable = () => {
 
 		return (
 			<div>
-				<Button
-					ghost
-					layoutType='back'
-					title='Go Back'
-				/>
-				<Table data={dataTable && dataTable.length > 0 ? dataTable[0].value : []} />
+				<Row>
+					<Button
+						ghost
+						layoutType='back'
+						title='Go Back'
+					/>
+					<ButtonContainer>
+						{
+							dataTable && dataTable.length > 0
+								?
+								<Button
+									type="button"
+									onClick={() => DeleteDataTable()}
+									title='Delete Data Table'
+								/>
+								:
+								null
+						}
+					</ButtonContainer>
+				</Row>
 
-				<Button
-					type="button"
-					onClick={() => DeleteDataTable()}
-					title='Delete Data Table'
-				/>
+				<Table data={dataTable && dataTable.length > 0 ? dataTable[0].value : []} />
 
 			</div>
 		);

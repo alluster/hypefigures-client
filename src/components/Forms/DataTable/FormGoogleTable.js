@@ -28,7 +28,7 @@ const FormGoogleTable = ({
 
 	const sheetId = async (data) => {
 		try {
-			const regex = /gid=([^&]+)/;
+			const regex = /gid=(\d+)/;
 			const match = data.sheetUrl.match(regex);
 			const sheetId = match ? match[1] : '0';
 			return sheetId;

@@ -48,7 +48,7 @@ const RightSide = styled.div`
 	flex: 8;
 	display: flex;
 	flex-direction: column;
-	max-width: 400px;
+	// max-width: 400px;
 	align-items: flex-start; /* Align items to the start (top) */
 	justify-content: flex-start; /* Align content to the start (top) */
 	padding-left: 20px;
@@ -56,6 +56,22 @@ const RightSide = styled.div`
 
 const Text = styled.p`
 	font-size: 16px;
+`;
+
+const TextContainer = styled.div`
+	  padding-top: ${(props) => props.theme.grid.divider_2};
+    padding-bottom: ${(props) => props.theme.grid.divider_2};
+    padding-left: ${(props) => props.theme.grid.divider_2};
+    padding-right: ${(props) => props.theme.grid.divider_2};
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: ${(props) => props.theme.colors.white};
+    border: solid 1px ${(props) => props.theme.colors.gray_110};
+    border-radius: 8px;
+    margin-right: ${(props) => props.theme.grid.divider_2};
+    margin-bottom: ${(props) => props.theme.grid.divider_2};
+
 `;
 
 const OnBoardingContainer = styled.div`
@@ -104,9 +120,12 @@ const Conversation = () => {
 										</LeftSide>
 
 										<RightSide>
-											<Text>
-												{chat.length > 0 && chat[0].message}
-											</Text>
+											<TextContainer>
+												<Text>
+													{chat.length > 0 && chat[0].message}
+												</Text>
+											</TextContainer>
+
 										</RightSide>
 									</ResponseContainer>
 

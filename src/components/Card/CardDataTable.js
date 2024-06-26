@@ -37,15 +37,27 @@ const Image = styled.img`
 	width: auto; /* Automatically adjust width to maintain aspect ratio */
 `;
 const Title = styled.p`
-	line-height: 40px;
+	line-height: 20px;
 	margin-left: 20px;
 `;
 const Description = styled.p`
 	font-size: 14px;
-	line-height: 40px;
+	line-height: 20px;
 	margin-left: 20px;
 
 `;
+
+const Label = styled.p`
+	margin-left: 20px;
+	font-size: 14px;
+	color: ${props => props.theme.colors.gray_80};
+`;
+
+const Content = styled.div`
+	display: flex;
+	flex-direction: column;
+`;
+
 const CardDataTable = ({
 	to,
 	title,
@@ -61,9 +73,13 @@ const CardDataTable = ({
 					<Image src="/integration-logos/google-sheets.png" alt="Google Sheets" />
 
 				</ImageContainer>
-				<Title>
-					{title || ''}
-				</Title>
+				<Content>
+					<Label>Google Sheet</Label>
+					<Title>
+						{title || ''}
+					</Title>
+				</Content>
+
 				<Description>
 					{description || ''}
 				</Description>
