@@ -55,8 +55,9 @@ const FormInvite = ({
 		<Modal
 			open={openInviteModal}
 			openModal={() => toggleOpen()}
-			modalTitle="Send Invitation"
+			modalTitle="Invite a new team member"
 		>
+			<p>Note: The invented user has to register. After they have registered they will be asked to join your team.</p>
 			<FormCompiler
 				reset={reset}
 				openModal={() => toggleOpen()}

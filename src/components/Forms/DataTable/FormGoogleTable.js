@@ -98,8 +98,17 @@ const FormGoogleTable = ({
 				fields={[
 					{
 						type: 'input',
+						name: 'sheetUrl',
+						label: 'Google Sheet URL',
+						options: '',
+						required: true,
+						errorMessage: 'Sheet URL is required',
+						placeholder: 'https://docs.google.com/spreadsheets/d/1WLAIkeC55WUo3nahxpIug2uEKBfXH8KtxEBzLPzPs2M/edit#gid=611000715',
+					},
+					{
+						type: 'input',
 						name: 'dataTableName',
-						label: 'Name',
+						label: 'Sheet name',
 						options: '',
 						required: true,
 						errorMessage: 'Data Table name is required',
@@ -115,15 +124,7 @@ const FormGoogleTable = ({
 						placeholder:
 							'Calculated profit for this month ... etc.',
 					},
-					{
-						type: 'input',
-						name: 'sheetUrl',
-						label: 'Sheet URL',
-						options: '',
-						required: true,
-						errorMessage: 'Sheet URL is required',
-						placeholder: 'https://docs.google.com/spreadsheets/d/1WLAIkeC55WUo3nahxpIug2uEKBfXH8KtxEBzLPzPs2M/edit#gid=611000715',
-					},
+
 					{
 						type: 'select',
 						name: 'dashboard_id',

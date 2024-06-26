@@ -66,7 +66,6 @@ const ModalTitle = styled.h5`
 
 const Modal = ({ children, open, openModal, modalTitle }) => {
 
-
 	return (
 		<ModalWrapper open={open}>
 			<ModalBox>

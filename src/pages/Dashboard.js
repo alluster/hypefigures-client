@@ -13,7 +13,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DividerLine from '../components/Container/DividerLine';
 import Card from '../components/Card/Card';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCopy } from '@fortawesome/free-solid-svg-icons';
 import SideBar from '../components/Navigation/SideBar';
 import Button from '../components/Button/Button';
 import SpinnerSmall from '../components/Spinner/SpinnerSmall';
@@ -68,8 +68,13 @@ const Text = styled.h5`
 const StyledLink = styled(Link)``;
 
 const LinkText = styled.p`
-    font-size: 12px;
+    font-size: 16px;
     color: ${(props) => props.theme.colors.brand_100};
+	text-decoration: underline;
+	margin-top: 20px;
+	&:hover {
+        cursor: pointer;
+    }
 `;
 const ActionText = styled.p`
     font-size: 16px;
@@ -416,8 +421,16 @@ const Dashboard = () => {
 			<Modal
 				open={openDataTableModal}
 				openModal={() => setOpenDataTableModal()}
-				modalTitle="New Table"
+				modalTitle="Integrate to new Google Sheet"
 			>
+				<p>Grant viewer access to the Hyperfigures in your Google Sheet.</p>
+
+				<LinkText
+					onClick={() => {
+						navigator.clipboard.writeText('hyperfigures-bot@hyperfigures-app.iam.gserviceaccount.com');
+						setNotifyMessage('Copied to clipboard')
+					}}><FontAwesomeIcon icon={faCopy} />  hyperfigures-bot@hyperfigures-app.iam.gserviceaccount.com
+				</LinkText>
 				<FormGoogleTable
 					setOpenDataTableModal={setOpenDataTableModal}
 					dashboardsList={(dashboards && dashboards) || []}
