@@ -66,10 +66,13 @@ const StyledButtonBase = styled.button<ButtonProps>`
         `	
 		font-weight: 600;
 		font-size: 18px;
-		padding-left: 0px; important;	
+		padding-left: 0px !important;	
 		text-align: left;
 		border: none !important;
-		background-color: none;
+		background-color: transparent;
+		color: #000B42 !important;
+		-webkit-text-fill-color: #000B42;
+
 	`};
 
     ${({ success }) =>

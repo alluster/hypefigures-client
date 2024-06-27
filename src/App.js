@@ -27,6 +27,7 @@ const Login = React.lazy(() => import('./pages/Login'));
 const DataPoint = React.lazy(() => import('./pages/DataPoint'));
 const Team = React.lazy(() => import('./pages/Team'));
 const DataTable = React.lazy(() => import('./pages/DataTable'));
+const Register = React.lazy(() => import('./pages/Register'));
 
 import { AppContext } from './context/Context';
 import Invitations from './pages/Invitations';
@@ -211,6 +212,8 @@ const App = () => {
 					<Notification />
 					<Switch>
 						<Route exact path="/" component={Login} />
+						<Route exact path="/register" component={Register} />
+
 						<Route exact path="/error" component={ErrorPage} />
 						<PrivateRoute exact path="/user" component={Profile} />
 						<PrivateRoute

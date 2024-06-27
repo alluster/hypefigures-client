@@ -4,7 +4,8 @@ import { device } from '../../styles/device-braking-points';
 import { AppContext } from '../../context/Context';
 
 const Wrapper = styled.div`
-    z-index: 2;
+    z-index: 4;
+	position: relative;
     margin-left: 100px;
     min-height: 100vh;
     padding-bottom: 200px;

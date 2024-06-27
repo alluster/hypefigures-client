@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import Button from '../../Button/Button';
-import Container from '../../Container/Container';
 import SpinnerSmall from '../../Spinner/SpinnerSmall';
 import { AppContext } from '../../../context/Context';
+import ReCAPTCHA from "react-google-recaptcha";
 
 const WarningText = styled.p`
     color: red;
@@ -58,26 +58,31 @@ const Label = styled.label`
     display: inline-block;
 `;
 const FormContainer = styled.div`
-	margin-left: auto;
-	margin-right: auto;
+	// margin-left: auto;
+	// margin-right: auto;
 	max-width: 400px;
 `;
 
-const LoginForm = () => {
+const RegisterForm = () => {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
 
-	const { Login, loadingUser } = useContext(AppContext);
+	const { Register, loadingUser } = useContext(AppContext);
 
 	const onSubmit = (data) => {
-		Login({
+		Register({
+			first_name: data.firstName,
+			last_name: data.lastName,
 			email: data.email,
 			password: data.password
 		})
 	};
+	function onChange(value) {
+		console.log("Captcha value:", value);
+	}
 	return (
 		<FormContainer>
 			{
@@ -85,6 +90,33 @@ const LoginForm = () => {
 					<SpinnerSmall />
 					:
 					<form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+
+						<InputWrapper>
+							<Label>First name</Label>
+							<StyledInput
+								type="text"
+								{...register('firstName', { required: true })}
+								label="First name"
+								placeholder=""
+								name="firstName"
+							/>
+							{errors.firstName && (
+								<WarningText>First name is required.</WarningText>
+							)}
+						</InputWrapper>
+						<InputWrapper>
+							<Label>Last name</Label>
+							<StyledInput
+								type="text"
+								{...register('lastName', { required: true })}
+								label="Last name"
+								placeholder=""
+								name="lastName"
+							/>
+							{errors.lastName && (
+								<WarningText>Last name is required.</WarningText>
+							)}
+						</InputWrapper>
 						<InputWrapper>
 							<Label>Email</Label>
 							<StyledInput
@@ -101,7 +133,7 @@ const LoginForm = () => {
 						<InputWrapper>
 							<Label>Password</Label>
 							<StyledInput
-								type="password"
+								type="input"
 								{...register('password', { required: true })}
 								label="Password"
 								placeholder=""
@@ -111,9 +143,13 @@ const LoginForm = () => {
 								<WarningText>Password is required.</WarningText>
 							)}
 						</InputWrapper>
+						<ReCAPTCHA
+							sitekey='6LcUjgIqAAAAAFDVbebMdGhEbQU4bNoZWiGZcVQu'
+							onChange={onChange}
+						/>
 						<ButtonRow>
-							<Button primary dividerRight type="submit" title='Sign In' />
-							<Button layoutType='link' to='/register' ghost={true} dividerRight type="button" title='Register' />
+							<Button primary dividerRight type="submit" title='Register' />
+							<Button layoutType='link' to='/' ghost={true} dividerRight type="button" title='I already have an account' />
 
 						</ButtonRow>
 					</form>
@@ -125,4 +161,4 @@ const LoginForm = () => {
 	);
 };
 
-export default LoginForm;
+export default RegisterForm;

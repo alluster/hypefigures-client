@@ -64,40 +64,46 @@ const MarginContainer = styled.div`
 	}}
 `;
 const TopNav = () => {
-	const { user, sideBarOpen, navigationOpen } = useContext(AppContext);
+	const { user, sideBarOpen, navigationOpen, isAuthenticated } = useContext(AppContext);
 	const [inviteFormOpen, setInviteFormOpen] = useState(false);
 
 	return (
 		<div>
 
-			<MarginContainer sideBarOpen={sideBarOpen} navigationOpen={navigationOpen}>
-				<Wrapper>
+			{
+				isAuthenticated
+					?
+					<MarginContainer sideBarOpen={sideBarOpen} navigationOpen={navigationOpen}>
+						<Wrapper>
 
-					<TeamSelector />
-					<Links>
-						{
-							user.length > 0 && user[0].team && user[0].team.length > 0 ?
-								<InviteButton
-									onClick={() => setInviteFormOpen(!inviteFormOpen)}
-								>
-									Invite new team member
-								</InviteButton>
-								:
-								null}
+							<TeamSelector />
+							<Links>
+								{
+									user.length > 0 && user[0].team && user[0].team.length > 0 ?
+										<InviteButton
+											onClick={() => setInviteFormOpen(!inviteFormOpen)}
+										>
+											Invite new team member
+										</InviteButton>
+										:
+										null}
 
-						<NavItem to="/invitations">
-							<FontAwesomeIcon icon={faBell} size="sm" />
-							{user.length > 0 && user[0].invitations.length > 0 && <Dot />}
-						</NavItem>
-						<NavItem to="/user">
-							<p>{user.length > 0 ? user[0].email : ''}</p>
-						</NavItem>
-					</Links>
-				</Wrapper>
+								<NavItem to="/invitations">
+									<FontAwesomeIcon icon={faBell} size="sm" />
+									{user.length > 0 && user[0].invitations.length > 0 && <Dot />}
+								</NavItem>
+								<NavItem to="/user">
+									<p>{user.length > 0 ? user[0].email : ''}</p>
+								</NavItem>
+							</Links>
+						</Wrapper>
 
-			</MarginContainer>
+					</MarginContainer>
+					:
+					null
+			}
 
-			<FormInvite toggleOpen={setInviteFormOpen} openInviteModal={inviteFormOpen} />
+			< FormInvite toggleOpen={setInviteFormOpen} openInviteModal={inviteFormOpen} />
 		</div >
 
 	);

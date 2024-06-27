@@ -64,7 +64,7 @@ const Provider = ({ children }) => {
 				setNotifyMessage('Please login')
 			}
 		}
-		catch (err) { console.log(err), setNotifyMessage('Please login.') }
+		catch (err) { console.log(err) }
 	}
 
 	const Login = async ({ password, email }) => {
@@ -88,7 +88,29 @@ const Provider = ({ children }) => {
 
 		finally { setLoadingUser(false) }
 	}
+	const Register = async ({ first_name, last_name, password, email }) => {
+		setLoadingUser(true)
+		try {
+			const response = await axios.post(`${process.env.REACT_APP_BASE_URL}auth/signup`, {
+				first_name: first_name,
+				last_name: last_name,
+				email: email,
+				password: password
+			})
+			if (response.status === 200) {
+				console.log(response)
+				setIsAuthenticated(true)
+				localStorage.setItem('token', response.data.token)
+				localStorage.setItem('id', response.data.user.id)
+				setPath('/dashboards');
+				CheckAuth();
+			}
 
+		}
+		catch (err) { console.log(err), setNotifyMessage(`${err.response && err.response.data ? err.response.data.error : ''}`) }
+
+		finally { setLoadingUser(false) }
+	}
 	const Get = async ({ path, params, dataSetter, loader, addToState }) => {
 		try {
 			loader(true);
@@ -258,6 +280,7 @@ const Provider = ({ children }) => {
 				setNavigationOpen,
 				setIsAuthenticated,
 				Login,
+				Register,
 				dashboards,
 				dataTables, setDataTables,
 				dataTable, setDataTable,
