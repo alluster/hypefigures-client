@@ -10,6 +10,6 @@ export type ButtonProps = {
     dividerRight?: boolean;
     children?: React.ReactNode;
     to?: string;
-    layoutType?: 'default' | 'back' | 'link' | 'dropdown';
+    layoutType?: 'default' | 'back' | 'link' | 'dropdown' | 'linkOutside';
     disabled?: boolean;
 };

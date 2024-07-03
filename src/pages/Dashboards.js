@@ -126,6 +126,10 @@ const Dashboards = () => {
 					description=""
 				/>
 				{DashboardsList()}
+				<script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+				<stripe-pricing-table pricing-table-id="prctbl_1PWJXDDbLsTEfXvIiRD399Cp"
+					publishable-key="pk_live_51HnK7FDbLsTEfXvInG1t30quJaLEJvFpetf46Owv15j1U3QnNbn1V1LF6ZExEeUR8pNsdZuHvG35goIzKqb3PfCx003cctBfgH">
+				</stripe-pricing-table>
 			</Container>
 			<Modal
 				open={openModal}

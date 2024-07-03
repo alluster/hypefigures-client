@@ -28,6 +28,7 @@ const DataPoint = React.lazy(() => import('./pages/DataPoint'));
 const Team = React.lazy(() => import('./pages/Team'));
 const DataTable = React.lazy(() => import('./pages/DataTable'));
 const Register = React.lazy(() => import('./pages/Register'));
+const Welcome = React.lazy(() => import('./pages/Welcome'));
 
 import { AppContext } from './context/Context';
 import Invitations from './pages/Invitations';
@@ -216,6 +217,8 @@ const App = () => {
 
 						<Route exact path="/error" component={ErrorPage} />
 						<PrivateRoute exact path="/user" component={Profile} />
+						<PrivateRoute exact path="/welcome" component={Welcome} />
+
 						<PrivateRoute
 							exact
 							path="/dashboards/:id"

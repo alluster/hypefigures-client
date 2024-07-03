@@ -172,6 +172,13 @@ const Button = ({
             );
         case 'link':
             return <Link to={to}>{StyledButton}</Link>;
+        case 'linkOutside':
+            return (
+                <a href={to} target="_blank" rel="noreferrer">
+                    {StyledButton}
+                </a>
+            );
+
         case 'dropdown':
             return (
                 <div>

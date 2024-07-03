@@ -111,6 +111,7 @@ const Provider = ({ children }) => {
 
 		finally { setLoadingUser(false) }
 	}
+
 	const Get = async ({ path, params, dataSetter, loader, addToState }) => {
 		try {
 			loader(true);
