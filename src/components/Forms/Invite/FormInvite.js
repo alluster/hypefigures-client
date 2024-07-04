@@ -40,7 +40,7 @@ const FormInvite = ({
 			if (response.status === 200) {
 				setNotifyMessage(`Invitation sent to ${data.email}`);
 			} else {
-				setNotifyMessage(`Failed to send invitation to ${data.email}`);
+				setNotifyMessage(`Failed to send invitation to ${data.email}. ${response?.message}`);
 			}
 		} catch (error) {
 			console.error(error);

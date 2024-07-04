@@ -98,8 +98,6 @@ const Provider = ({ children }) => {
 				password: password
 			})
 			if (response.status === 200) {
-				console.log(response)
-				setIsAuthenticated(true)
 				localStorage.setItem('token', response.data.token)
 				localStorage.setItem('id', response.data.user.id)
 				setPath('/dashboards');

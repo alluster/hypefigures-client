@@ -64,7 +64,7 @@ const MarginContainer = styled.div`
 	}}
 `;
 const TopNav = () => {
-	const { user, sideBarOpen, navigationOpen, isAuthenticated } = useContext(AppContext);
+	const { user, sideBarOpen, navigationOpen, isAuthenticated, activeTeam } = useContext(AppContext);
 	const [inviteFormOpen, setInviteFormOpen] = useState(false);
 
 	return (
@@ -87,11 +87,17 @@ const TopNav = () => {
 										</InviteButton>
 										:
 										null}
+								{
+									activeTeam != null
+										?
+										<NavItem to="/invitations">
+											<FontAwesomeIcon icon={faBell} size="sm" />
+											{user.length > 0 && user[0].invitations.length > 0 && <Dot />}
+										</NavItem>
+										:
+										null
+								}
 
-								<NavItem to="/invitations">
-									<FontAwesomeIcon icon={faBell} size="sm" />
-									{user.length > 0 && user[0].invitations.length > 0 && <Dot />}
-								</NavItem>
 								<NavItem to="/user">
 									<p>{user.length > 0 ? user[0].email : ''}</p>
 								</NavItem>

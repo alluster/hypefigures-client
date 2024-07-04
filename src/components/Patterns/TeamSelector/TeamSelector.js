@@ -6,6 +6,7 @@ import { AppContext } from '../../../context/Context';
 import SpinnerSmall from '../../Spinner/SpinnerSmall';
 import { faCheck, faChevronDown, faPlus } from '@fortawesome/free-solid-svg-icons';
 import FormAddTeam from '../../Forms/Team/FormAddTeam';
+import Button from '../../Button/Button';
 
 const TeamSelectorContainer = styled.div`
     display: flex;
@@ -212,7 +213,6 @@ const TeamSelector = () => {
 			loadingUser || loadingTeams ? (
 				<SpinnerSmall />
 			) : (
-
 				filteredTeams.length > 0 && filteredTeams.map((item, i) => {
 					return (
 						<ListTeam key={i} onClick={() => { setOpenDropdown(false), handleTeamChange({ team_id: item.id }) }}>
@@ -221,7 +221,7 @@ const TeamSelector = () => {
 					);
 				})
 			)
-		) : null;
+		) : null
 	};
 
 	const DropDown = () => {
@@ -230,6 +230,7 @@ const TeamSelector = () => {
 
 				<Dropdown ref={dropdownRef}>
 					<DropdownContent>
+
 						<ActiveTeam>
 							<Title>{activeTeam.length > 0 ? activeTeam[0].title : 'No team'}</Title>
 							<CheckIcon>
@@ -255,26 +256,36 @@ const TeamSelector = () => {
 			loadingUser || loadingTeams ? (
 			<SpinnerSmall />
 		) : (
-			<div>
-				<TeamSelectorContainer>
+			teams?.length > 0
+				?
 
-					<ActiveTeamNameContainer
-						onClick={() => {
-							setOpenTeamSelector(!openTeamSelector), setOpenDropdown(true);
-						}}>
-						<ActiveTeamName>
-							{activeTeam.length > 0 ? activeTeam[0].title : 'No team'}
-						</ActiveTeamName>
-						<DropDownIcon>
-							<FontAwesomeIcon icon={faChevronDown} />
-						</DropDownIcon>
-					</ActiveTeamNameContainer>
+				<div>
+					<TeamSelectorContainer>
 
-					{DropDown()}
+						<ActiveTeamNameContainer
+							onClick={() => {
+								setOpenTeamSelector(!openTeamSelector), setOpenDropdown(true);
+							}}>
+							<ActiveTeamName>
+								{activeTeam.length > 0 ? activeTeam[0].title : 'No team'}
+							</ActiveTeamName>
+							<DropDownIcon>
+								<FontAwesomeIcon icon={faChevronDown} />
+							</DropDownIcon>
+						</ActiveTeamNameContainer>
 
-				</TeamSelectorContainer>
+						{DropDown()}
 
-			</ div>
+					</TeamSelectorContainer>
+
+				</ div>
+				:
+				<Button
+					ghost
+					small
+					title="Create a new team"
+				/>
+
 		)
 	}
 	useEffect(() => {

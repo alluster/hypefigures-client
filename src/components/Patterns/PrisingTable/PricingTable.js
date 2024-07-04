@@ -7,7 +7,7 @@ import Button from "../../Button/Button";
 
 const PricingTable = () => {
 
-	const { user } = useContext(AppContext);
+	const { user, activeTeam } = useContext(AppContext);
 	return (
 
 		<section className="bg-white dark:bg-gray-900">
@@ -34,7 +34,7 @@ const PricingTable = () => {
 											primary={true}
 											title='Choose plan'
 											layoutType="linkOutside"
-											to={item.link + '?prefilled_email=' + user[0].email}
+											to={`${item.link}?client_reference_id=${activeTeam[0]?.uniq_team_id}&prefilled_email=${user[0]?.email}`}
 
 										/>
 									</div>

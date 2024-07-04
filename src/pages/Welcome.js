@@ -4,7 +4,8 @@ import { device } from '../styles/device-braking-points';
 import { AppContext } from '../context/Context';
 import LoginForm from '../components/Forms/Authentication/LoginForm';
 import { useHistory } from "react-router-dom";
-import PrisingTable from '../components/Patterns/PrisingTable/PrisingTable';
+import PrisingTable from '../components/Patterns/PrisingTable/PricingTable';
+import PricingTable from '../components/Patterns/PrisingTable/PricingTable';
 
 const Content = styled.div`
 	margin-bottom: 100px;
@@ -73,25 +74,27 @@ const Ingress = styled.h4`
 const Welcome = () => {
 	const history = useHistory();
 
-	const { setPath, isAuthenticated } = useContext(AppContext);
+	const { setPath, isAuthenticated, user } = useContext(AppContext);
 
-	// useEffect(() => {
-	// 	if (isAuthenticated === true) {
-	// 		history.push("/dashboards");
-	// 	}
-	// }, [isAuthenticated])
+	useEffect(() => {
+		if (user?.stripe_subscription === true && user?.stripe_price_id != null) {
+			history.push("/dashboards");
+		}
+	}, [user])
 
-	// useEffect(() => {
-	// 	setPath('/login');
-	// 	window.scroll(0, 0);
-	// 	if (isAuthenticated === true) {
-	// 		history.push("/dashboards");
-	// 	}
-	// }, []);
+	useEffect(() => {
+		window.scroll(0, 0);
+		if (isAuthenticated != true) {
+			history.push("/");
+		}
+		if (user[0]?.stripe_subscription === true && user[0]?.stripe_price_id != null) {
+			history.push("/dashboards");
+		}
+	}, []);
 	return (
 
 		<Content>
-			<PrisingTable />
+			<PricingTable />
 		</Content >
 
 	);

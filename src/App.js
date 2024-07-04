@@ -183,7 +183,8 @@ const App = () => {
 	const PrivateRoute = ({ component: Component, ...rest }) => {
 		const {
 			loadingUser,
-			isAuthenticated
+			isAuthenticated,
+			user
 		} = useContext(AppContext);
 
 		if (loadingUser) {
@@ -196,7 +197,7 @@ const App = () => {
 						isAuthenticated ? (
 							<Component {...props} />
 						) : (
-							<Login />
+							<Register />
 						)
 					}
 				/>
