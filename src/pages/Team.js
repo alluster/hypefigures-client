@@ -5,11 +5,13 @@ import Container from '../components/Container/Container';
 import { useParams, useHistory } from 'react-router-dom';
 import Button from '../components/Button/Button';
 import SpinnerSmall from '../components/Spinner/SpinnerSmall';
+import PricingTable from '../components/Patterns/PrisingTable/PricingTable';
+import Card from '../components/Card/Card';
 
 const Team = () => {
 	let { id } = useParams();
 	const history = useHistory();
-	const { user, setNotifyMessage, setPath, Get, Post, setTeam, setLoadingTeams, team, setLoadingTeam, loadingTeam } = useContext(AppContext);
+	const { user, setNotifyMessage, teamUsers, setTeamUsers, setLoadingTeamUsers, loadingTeamUsers, setPath, Get, Post, setTeam, setLoadingTeams, team, setLoadingTeam, loadingTeam } = useContext(AppContext);
 	const DeleteTeam = async () => {
 		try {
 			const response = await Post({
@@ -42,6 +44,8 @@ const Team = () => {
 		setPath('/team');
 		window.scroll(0, 0);
 		Get({ params: { id: id, user_id: user[0].id }, path: 'team', dataSetter: setTeam, loader: setLoadingTeam })
+		Get({ params: { id: id, }, path: 'team/team_users', dataSetter: setTeamUsers, loader: setLoadingTeamUsers })
+
 	}, []);
 	useEffect(() => {
 		TeamContent()
@@ -51,9 +55,13 @@ const Team = () => {
 			setData({
 				created_at: team[0].created_at || 'No data',
 				title: team[0].title || 'No data',
-				description: team[0].description || 'No data',
+				description: team[0].description || '',
 				updated_at: team[0].updated_at || 'No data',
 				deleted_at: team[0].deleted_at || 'No data',
+				current_plan: team[0].stripe_price_id || 'No data',
+				active_subscription: team[0].stripe_subscription || false,
+				creator: team[0].creator || null
+
 			})
 		}
 	}, [team])
@@ -65,19 +73,42 @@ const Team = () => {
 					ghost
 					layoutType='back'
 					title='Go back'
-				/>				{
+				/>
+				{
 					loadingTeam ? <SpinnerSmall /> :
 						<div>
 							<HeaderText
 								locationText="Team"
 								title={data.title || '-'}
-								description={data.description || '-'}
+								description={data.description || ''}
 							/>
+							{
+								loadingTeamUsers
+									?
+									<SpinnerSmall />
+									:
+									teamUsers?.map((item, i) => {
+										return (
+											<Card small key={i}>
+												<p>{item.first_name} {item.last_name}</p>
+												<h6>{item.email}</h6>
 
-							<Button
-								onClick={DeleteTeam}
-								title='			Delete Team'
-							/>
+											</Card>
+										)
+
+									})
+							}
+							<PricingTable currentPlan={data.current_plan} activeSubscription={data.active_subscription} />
+							{
+								user[0]?.uniq_user_id === data.creator
+									?
+									<Button
+										onClick={DeleteTeam}
+										title='			Delete Team'
+									/>
+									:
+									null
+							}
 
 						</div>
 				}

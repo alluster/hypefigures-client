@@ -55,7 +55,8 @@ const Chat = () => {
 		dashboard,
 		Get,
 		setLoadingRetrievedTables,
-		setNotifyMessage
+		setNotifyMessage,
+		activeTeam
 	} = useContext(AppContext);
 	const handleQuestionChange = (e) => {
 		setQuestion(e.target.value);
@@ -136,13 +137,21 @@ const Chat = () => {
 				type="text"
 				value={question}
 				onChange={handleQuestionChange}
-				placeholder="Select data and ask me anything about it"
+				disabled={activeTeam[0]?.stripe_subscription != true && activeTeam[0]?.ai_requests > 3
+					? true : false} placeholder={activeTeam[0]?.stripe_subscription != true && activeTeam[0]?.ai_requests > 3
+						?
+						"Your plan seems to be too small for using the AI"
+						:
+						"Select data and ask me anything about it"
+
+					}
 			/>
 			<SendButton
 				small
 				title="Send a question"
 				type='submit'
-				disabled={!question.length > 0 ? true : false}
+				disabled={!question.length > 0 || activeTeam[0]?.stripe_subscription != true && activeTeam[0]?.ai_requests > 3
+					? true : false}
 				onClick={(e) => handleSendQuestion(e)}
 			/>
 		</InputContainer>

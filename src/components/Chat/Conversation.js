@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import SpinnerSmall from '../Spinner/SpinnerSmall';
 import { AppContext } from '../../context/Context';
+import Button from '../Button/Button';
 
 // Styled components for the chat AI question component
 const QuestionContainer = styled.div`
@@ -97,13 +98,51 @@ const Conversation = () => {
 	const {
 		chat,
 		loadingChat,
-		question
+		question,
+		activeTeam
 	} = useContext(AppContext);
+	const Banner = () => {
+		return (
+
+			activeTeam[0]?.stripe_subscription != true && activeTeam[0]?.ai_requests > 3
+				?
+				<div className="relative isolate flex justify-center items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
+
+					<div className="flex flex-wrap justify-center text-center ml-auto mr-auto items-center gap-x-4 gap-y-2">
+						<h4 className="text-smleading-6 text-gray-900">
+							<strong className="font-semibold">Your team seems to be running on too small tier</strong>
+							<br />
+							<svg viewBox="0 0 2 2" aria-hidden="true" className="mx-2 inline h-0.5 w-0.5 fill-current">
+								<circle r={1} cx={1} cy={1} />
+							</svg>
+							<br />
+
+							Join us and update your subscription.
+						</h4>
+						<Button
+							title='View plans'
+							small
+							type='button'
+							layoutType='link'
+							primary
+							to={`/teams/${activeTeam[0]?.id}`}
+						/>
+					</div>
+
+				</div>
+				:
+				null
+		)
+	}
+	useEffect(() => {
+		Banner
+
+	}, [activeTeam])
 
 	const ChatContainer = () => {
 		return (
 			<QuestionContainer>
-
+				<Banner />
 				{
 					loadingChat ?
 						<SpinnerSmall />

@@ -43,6 +43,16 @@ const Provider = ({ children }) => {
 	const [retrievedTables, setRetrievedTables] = useState([])
 	const [loadingRetrievedTables, setLoadingRetrievedTables] = useState(false);
 
+	const [teamUsers, setTeamUsers] = useState([]);
+	const [loadingTeamUsers, setLoadingTeamUsers] = useState(false);
+	const [restrictions, setRestrictions] = useState([
+		{
+			title: '',
+			message: '',
+			rule: '',
+
+		}
+	])
 	const CheckAuth = async () => {
 		try {
 			const token = localStorage.getItem('token') || ''
@@ -293,7 +303,9 @@ const Provider = ({ children }) => {
 				selectedDataTables, setSelectedDataTables,
 				question, setQuestion,
 				retrievedTables, setRetrievedTables,
-				loadingRetrievedTables, setLoadingRetrievedTables
+				loadingRetrievedTables, setLoadingRetrievedTables,
+				teamUsers, setTeamUsers,
+				loadingTeamUsers, setLoadingTeamUsers
 			}}
 		>
 			{children}

@@ -32,6 +32,7 @@ const TextRow = styled.div`
 const Dashboards = () => {
 	const {
 		dashboards,
+		activeTeam,
 		Get,
 		Post,
 		loadingDashboards,
@@ -65,7 +66,7 @@ const Dashboards = () => {
 								return (
 									<Card key={i} to={`/dashboards/${item.id}`}>
 										<Label>Dashboard</Label>
-										<h4>{item.title}</h4>
+										<h4>{item?.title}</h4>
 										{
 											item.description ?
 												<p>{item.description} </p>
@@ -122,14 +123,11 @@ const Dashboards = () => {
 					buttonTitle="Create a new Dashboard"
 					onClickFunction={() => setOpenModal(!openModal)}
 					locationText=""
-					title=""
-					description=""
+					title="Dashboards"
+					description={`${activeTeam[0]?.title}'s Dashboards`}
 				/>
 				{DashboardsList()}
-				<script async src="https://js.stripe.com/v3/pricing-table.js"></script>
-				<stripe-pricing-table pricing-table-id="prctbl_1PWJXDDbLsTEfXvIiRD399Cp"
-					publishable-key="pk_live_51HnK7FDbLsTEfXvInG1t30quJaLEJvFpetf46Owv15j1U3QnNbn1V1LF6ZExEeUR8pNsdZuHvG35goIzKqb3PfCx003cctBfgH">
-				</stripe-pricing-table>
+
 			</Container>
 			<Modal
 				open={openModal}

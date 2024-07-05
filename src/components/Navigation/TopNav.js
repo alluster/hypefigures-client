@@ -37,11 +37,26 @@ const Dot = styled.div`
     background-color: red;
     border-radius: 50%;
 `;
+const AddTeamButton = styled.button`
+    text-align: center;
+    border-radius: 8px;
+    padding-left: 40px;
+    padding-right: 40px;
+    font-size: 22.6px;
+    line-height: 64px;
+    font-weight: 700;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+const MarginContainer = styled.div`
+	;
+
 const InviteButton = styled.p`
 	&:hover {
 		cursor:pointer;
 	}
 `;
+
 const MarginContainer = styled.div`
     ${({ sideBarOpen, navigationOpen }) => {
 		if (sideBarOpen && !navigationOpen) {

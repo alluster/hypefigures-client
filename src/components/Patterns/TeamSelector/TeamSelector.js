@@ -139,6 +139,22 @@ const ListTeam = styled.div`
         cursor: pointer;
     }
 `;
+const AddTeamButton = styled.button`
+    text-align: center;
+	height: 32px;
+    border-radius: 8px;
+    padding-left: 40px;
+    padding-right: 40px;
+    font-size: 14px;
+    line-height: 32px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+	-webkit-text-fill-color: #ffffff;
+	color: #ffffff;
+	background-color: #000B42;	
+	`;
 
 const TeamSelector = () => {
 	const {
@@ -280,11 +296,9 @@ const TeamSelector = () => {
 
 				</ div>
 				:
-				<Button
-					ghost
-					small
-					title="Create a new team"
-				/>
+				<AddTeamButton
+
+				>Create a new team</AddTeamButton>
 
 		)
 	}

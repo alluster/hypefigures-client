@@ -99,7 +99,6 @@ const Logo = styled.img`
     fill: white;
 `;
 
-
 const IconContainer = styled.div`
     height: 20px;
     width: 40px;
@@ -222,7 +221,6 @@ const ToggleIcon = styled(Icon)`
 const Navigation = () => {
 	const { setNavigationOpen, navigationOpen, isAuthenticated } = useContext(AppContext);
 
-
 	const routeList = [
 		// {
 		// 	link: '/datapoints',
@@ -238,13 +236,13 @@ const Navigation = () => {
 			ingress: 'All data in one view!',
 			description: 'Connect data points from various sources',
 		},
-		{
-			link: '/datasources',
-			icon: faDatabase,
-			title: 'Data Sources',
-			ingress: 'Your Business Data in One View!',
-			description: 'Combined view to your business data',
-		},
+		// {
+		// 	link: '/datasources',
+		// 	icon: faDatabase,
+		// 	title: 'Data Sources',
+		// 	ingress: 'Your Business Data in One View!',
+		// 	description: 'Combined view to your business data',
+		// },
 		{
 			link: '/user',
 			icon: faUser,

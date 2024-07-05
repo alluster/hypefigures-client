@@ -45,7 +45,9 @@ const Background = styled.div`
 `;
 const WelcomeTitleContainer = styled.div`
 	flex: 1;
-	width: 100%;
+	// width: 100%;
+	margin-left: auto;
+	margin-right: auto;
 `;
 
 const WelcomeTitle = styled.div`
@@ -55,7 +57,8 @@ const WelcomeTitle = styled.div`
     display: flex;
     flex-direction: column;
     max-width: 500px;
-
+	margin-left: auto;
+	margin-right: auto;
 	padding-right: 32px;
 
     @media ${device.laptop} {
@@ -72,7 +75,7 @@ const Ingress = styled.h4`
 `;
 const VideoContainer = styled.div`
 	padding: 16px;
-	flex: 2;
+	flex: 1;
 	z-index: 5;
     width: 100%;
 	min-height: 800px;
@@ -82,7 +85,7 @@ const VideoContainer = styled.div`
     // align-items: flex-start; // Align items to the start (top) of the container
     justify-content: center; // Optional: Center horizontally if needed
 
-	  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
     opacity: 1;
@@ -137,11 +140,12 @@ const Register = () => {
 						</WelcomeTitle>
 					</WelcomeTitleContainer>
 
-					<VideoContainer>
-						<Video src="https://demo.arcade.software/YGOVPgtYtFWemivsiuFA?embed&show_copy_link=true" title="Hyperfigures" frameBorder="0" loading="lazy" webkitallowfullscreen mozallowfullscreen allowfullscreen allow="clipboard-write" ></Video>
-						{/* <Background /> */}
+					{/* <VideoContainer>
+						< src="https://demo.arcade.software/YGOVPgtYtFWemivsiuFA?embed&show_copy_link=true" title="Hyperfigures" frameBorder="0" loading="lazy" webkitallowfullscreen mozallowfullscreen allowfullscreen allow="clipboard-write" />
 
 					</VideoContainer>
+
+					 */}
 				</Content>
 			</Container>
 

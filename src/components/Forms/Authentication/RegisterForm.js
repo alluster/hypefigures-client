@@ -14,7 +14,7 @@ const WarningText = styled.p`
 const ButtonRow = styled.div`
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: no-wrap;
     width: 100%;
     margin-top: ${(props) => props.theme.grid.divider_4};
 `;
@@ -143,13 +143,10 @@ const RegisterForm = () => {
 								<WarningText>Password is required.</WarningText>
 							)}
 						</InputWrapper>
-						<ReCAPTCHA
-							sitekey='6LcUjgIqAAAAAFDVbebMdGhEbQU4bNoZWiGZcVQu'
-							onChange={onChange}
-						/>
+
 						<ButtonRow>
 							<Button primary dividerRight type="submit" title='Register' />
-							<Button layoutType='link' to='/' ghost={true} dividerRight type="button" title='I already have an account' />
+							<Button layoutType='link' to='/' ghost={true} dividerRight type="button" title='Sign In' />
 
 						</ButtonRow>
 					</form>

@@ -5,39 +5,54 @@ import { AppContext } from "../../../context/Context";
 import PriceCard from "../../Card/PriceCard";
 import Button from "../../Button/Button";
 
-const PricingTable = () => {
+const PricingTable = ({ currentPlan, activeSubscription }) => {
 
 	const { user, activeTeam } = useContext(AppContext);
 	return (
 
-		<section className="bg-white dark:bg-gray-900">
+		<section className="">
 			<div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
 				<div className="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
 					<h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Designed for business teams like yours</h2>
 					<p className="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">Here at Hyperfigures we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p>
 				</div>
-				<div className="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
+				<div className="space-y-8 lg:grid lg:grid-cols-2 sm:gap-6 xl:gap-10 lg:space-y-0">
 					{
 						stripePricingPlans.map((item, i) => {
 							return (
 								<div key={i} className="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
+
 									<h3 className="mb-4 text-2xl font-semibold">{item.priceTitle}</h3>
-									<p className="font-light text-gray-500 sm:text-lg dark:text-gray-400">{item.priceDescription}</p>
+									{
+										activeSubscription === true && currentPlan === item.priceId
+											?
+											<p className="font-light text-green-500 sm:text-lg dark:text-gray-400">This is your teams active plan</p>
+											:
+											<p className="font-light text-gray-500 sm:text-lg dark:text-gray-400">{item.priceDescription}</p>
+
+									}
 									<div className="flex justify-center items-baseline mt-8">
 										<span className="mr-2 text-5xl font-extrabold">{item.price} €</span>
 										<span className="text-gray-500 dark:text-gray-400">{item.duration}</span>
 									</div>
 									<p className="text-s mb-10 text-gray-blue ">Includes VAT</p>
-									<div className="ml-auto mr-auto mb-10">
-										<Button
-											small={false}
-											primary={true}
-											title='Choose plan'
-											layoutType="linkOutside"
-											to={`${item.link}?client_reference_id=${activeTeam[0]?.uniq_team_id}&prefilled_email=${user[0]?.email}`}
+									{
+										activeSubscription === true && currentPlan === item.priceId
+											?
+											null :
+											<div className="ml-auto mr-auto mb-10">
+												<Button
+													style={{ zIndex: 100000 }}
+													small={false}
+													primary={true}
+													title='Choose plan'
+													layoutType="linkOutside"
+													to={`${item.link}?client_reference_id=${activeTeam[0]?.uniq_team_id}&prefilled_email=${user[0]?.email}`}
 
-										/>
-									</div>
+												/>
+
+											</div>
+									}
 									<ul role="list" className="mb-8 space-y-4 text-left">
 										{
 											item.pricePerks.length > 0 ? item.pricePerks.map((item, i) => {

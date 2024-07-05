@@ -42,12 +42,14 @@ const Indicator = styled.div`
     }
 
     ${Input}:checked + &::after {
-        transform: rotate(45deg);
+        transform: rotate(30deg);
+		    // transform: scale(1, 1);
+
         display: block;
-        top: 0.25em; /* Adjust top position */
-        left: 0.25em; /* Adjust left position */
-        width: 40%; /* Adjust width to make the check mark smaller */
-        height: 40%; /* Adjust height to make the check mark smaller */
+        top: 0.15em; /* Adjust top position */
+        left: 0.35em; /* Adjust left position */
+        width: 20%; /* Adjust width to make the check mark smaller */
+        height: 50%; /* Adjust height to make the check mark smaller */
         border: solid white;
         border-width: 0 0.15em 0.15em 0;
         animation-name: ${rotate};

@@ -57,7 +57,7 @@ const FormInvite = ({
 			openModal={() => toggleOpen()}
 			modalTitle="Invite a new team member"
 		>
-			<p>Note: The invented user has to register. After they have registered they will be asked to join your team.</p>
+			<p>Note: The invited user has to register before they can accept your invitation. After they have registered to Hyperfigures using the same email provided in the invitation, they will be asked to join your team.</p>
 			<FormCompiler
 				reset={reset}
 				openModal={() => toggleOpen()}
