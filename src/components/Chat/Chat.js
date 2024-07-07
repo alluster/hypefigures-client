@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '../Button/Button';
 import { AppContext } from '../../context/Context';
 const iconImage = '/integration-logos/hyperfigures.png'; // Import the icon image
+import { device } from '../../styles/device-braking-points';
 
 // Styled components for the chat AI question component
 
@@ -15,6 +16,12 @@ const InputContainer = styled.form`
     flex-direction: row;
     justify-content: center; /* Center the items horizontally */
     // align-items: center; /* Center the items vertically */
+		@media ${device.laptop} {
+	    margin-left: 16px;
+		margin-right: 16px;
+		width: calc(100vw - 68px);
+
+  }
 `;
 
 const InputField = styled.input`

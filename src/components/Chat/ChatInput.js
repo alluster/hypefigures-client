@@ -1,12 +1,9 @@
 import React, { useContext, useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import SpinnerSmall from '../Spinner/SpinnerSmall';
 import Button from '../Button/Button';
 import { AppContext } from '../../context/Context';
-import { ChatProps } from '../../interface/ChatProps';
 const iconImage = '/integration-logos/hyperfigures.png'; // Import the icon image
-import Zlib from 'react-zlib-js';
 
 // Styled components for the chat AI question component
 const QuestionContainer = styled.div`

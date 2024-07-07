@@ -152,14 +152,14 @@ const LinkContainer = styled(Link)`
 // Mobile nav styles
 
 const MobileNav = styled.div`
-    position: absolute;
+    position: relative;
     width: 100%;
     min-height: 100vh;
     left: 0px;
     top: 0px;
     display: none;
     flex-direction: column;
-    z-index: 10000000;
+    // z-index: 10000000;
     background-color: ${(props) => props.theme.colors.white};
 
     ${({ mobileNavOpen }) =>

@@ -11,8 +11,9 @@ const Wrapper = styled.div`
     padding-bottom: 200px;
     padding-right: ${(props) => props.theme.grid.divider_2};
     @media ${device.laptop} {
+	    margin-left: 0px;
+
         padding-left: ${(props) => props.theme.grid.divider_2};
-        padding-top: ${(props) => props.theme.grid.divider_12};
     }
 `;
 const MarginContainer = styled.div`
@@ -20,18 +21,30 @@ const MarginContainer = styled.div`
 		if (sideBarOpen && !navigationOpen) {
 			return `
                 margin-left: 160px;
+				 @media ${device.laptop} {
+	    			margin-left: 0px;
+				}
             `;
 		} else if (!sideBarOpen && navigationOpen) {
 			return `
                 margin-left: 160px;
+				 @media ${device.laptop} {
+	    			margin-left: 0px;
+				}
             `;
 		} else if (!sideBarOpen && !navigationOpen) {
 			return `
                 margin-left: 10px;
+				 @media ${device.laptop} {
+	    			margin-left: 0px;
+				}
             `;
 		} else if (sideBarOpen && navigationOpen) {
 			return `
                 margin-left: 340px;
+				 @media ${device.laptop} {
+	    			margin-left: 0px;
+				}
             `;
 		}
 	}}

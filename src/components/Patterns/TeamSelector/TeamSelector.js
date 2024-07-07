@@ -14,6 +14,7 @@ const TeamSelectorContainer = styled.div`
     align-items: center;
     // margin-left: 16px;
 	min-width: 250px;
+	position: relative;
 `;
 
 const ActiveTeamNameContainer = styled.div`

@@ -208,12 +208,13 @@ const App = () => {
 	};
 	const NoSubscriptionBanner = () => {
 		const {
-			activeTeam
+			activeTeam,
+			isAuthenticated
 		} = useContext(AppContext);
 		const Banner = () => {
 			return (
 
-				activeTeam[0]?.stripe_subscription != true
+				isAuthenticated && activeTeam[0]?.stripe_subscription != true
 					?
 					<div className="relative isolate flex justify-center items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
 						<div

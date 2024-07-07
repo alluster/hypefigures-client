@@ -2,16 +2,20 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { AppContext } from '../../context/Context';
 import FormInvite from '../Forms/Invite/FormInvite'; // Assuming FormInvite component is imported
 import TeamSelector from '../Patterns/TeamSelector/TeamSelector'; // Assuming TeamSelector component is imported
+import { device } from '../../styles/device-braking-points';
 
 const Wrapper = styled.div`
     display: flex;
     align-items: center;
     margin-left: 100px;
-	
+	@media ${device.laptop} {
+	    margin-left: 50px;
+
+  }
 `;
 
 const Links = styled.div`
@@ -19,8 +23,14 @@ const Links = styled.div`
     align-items: center;
     margin-left: auto;
     flex-direction: row;
+	height: 100%;
     justify-content: space-between; /* Space evenly between items */
 	margin-right: 20px;
+	@media ${device.laptop} {
+	    margin-left: 0px;
+		margin-top: 10px;
+
+  }
 `;
 
 const NavItem = styled(Link)`
@@ -37,24 +47,13 @@ const Dot = styled.div`
     background-color: red;
     border-radius: 50%;
 `;
-const AddTeamButton = styled.button`
-    text-align: center;
-    border-radius: 8px;
-    padding-left: 40px;
-    padding-right: 40px;
-    font-size: 22.6px;
-    line-height: 64px;
-    font-weight: 700;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-const MarginContainer = styled.div`
-	;
 
 const InviteButton = styled.p`
+	position: relative;
 	&:hover {
 		cursor:pointer;
 	}
+		
 `;
 
 const MarginContainer = styled.div`
@@ -62,18 +61,30 @@ const MarginContainer = styled.div`
 		if (sideBarOpen && !navigationOpen) {
 			return `
                 margin-left: 160px;
+				 @media ${device.laptop} {
+	    			margin-left: 0px;
+				}
             `;
 		} else if (!sideBarOpen && navigationOpen) {
 			return `
                 margin-left: 160px;
+				@media ${device.laptop} {
+					margin-left: 0px;
+				}
             `;
 		} else if (!sideBarOpen && !navigationOpen) {
 			return `
                 margin-left: 10px;
+				@media ${device.laptop} {
+					margin-left: 0px;
+				}
             `;
 		} else if (sideBarOpen && navigationOpen) {
 			return `
                 margin-left: 340px;
+				@media ${device.laptop} {
+	    			margin-left: 0px;
+				}
             `;
 		}
 	}}
@@ -95,11 +106,14 @@ const TopNav = () => {
 							<Links>
 								{
 									user.length > 0 && user[0].team && user[0].team.length > 0 ?
-										<InviteButton
-											onClick={() => setInviteFormOpen(!inviteFormOpen)}
-										>
-											Invite new team member
-										</InviteButton>
+										<div>
+
+											<InviteButton
+												onClick={() => setInviteFormOpen(!inviteFormOpen)}
+											>
+												<FontAwesomeIcon icon={faUserPlus} size="sm" />
+											</InviteButton>
+										</div>
 										:
 										null}
 								{
