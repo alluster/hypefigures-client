@@ -151,7 +151,10 @@ const Dashboard = () => {
 		setDataTables,
 		setLoadingDataTables,
 		loadingDataTables,
-		dataTables
+		dataTables,
+		chat,
+		setChat,
+		setLoadingChat
 	} = useContext(AppContext);
 	const {
 		register,
@@ -332,9 +335,6 @@ const Dashboard = () => {
 	useEffect(() => {
 		DashboardContent()
 	}, [dataTables])
-	useEffect(() => {
-		console.log(selectedDataTables)
-	}, [selectedDataTables])
 
 	return (
 		<Content>
@@ -349,11 +349,7 @@ const Dashboard = () => {
 
 				<DashboardContent />
 				<Conversation />
-				{/* <Jupyter>
 
-					<Cell source={source} />
-
-				</Jupyter> */}
 				<Chat />
 			</Container>
 			<Modal
@@ -501,7 +497,7 @@ const Dashboard = () => {
 					]}
 				></FormCompiler>
 			</Modal>
-		</Content>
+		</Content >
 	);
 };
 

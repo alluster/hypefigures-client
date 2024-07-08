@@ -181,9 +181,7 @@ const Conversation = () => {
 			</QuestionContainer >
 		);
 	};
-	useEffect(() => {
-		ChatContainer();
-	}, [chat]);
+
 	return ChatContainer();
 };
 

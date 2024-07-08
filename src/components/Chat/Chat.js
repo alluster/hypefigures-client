@@ -115,7 +115,6 @@ const Chat = () => {
 	const handleSendQuestion = async (e) => {
 		e.preventDefault();
 		try {
-			setLoadingChat(true);
 			const tablesToChat = await GetTables();
 			const response = await Post({
 				params: {
@@ -130,11 +129,30 @@ const Chat = () => {
 			setNotifyMessage('Something went wrong')
 
 		} finally {
-			setLoadingChat(false);
 			setQuestion('');
 
 		}
 	};
+	const firstQuestion = async () => {
+		try {
+			const response = await Post({
+				params: {
+					prompt: 'Hello',
+				},
+				path: 'chatgpt',
+				dataSetter: setChat,
+				loader: setLoadingChat,
+			});
+			return response;
+		} catch (error) {
+			setNotifyMessage('Something went wrong');
+		}
+	};
+
+	useEffect(() => {
+		firstQuestion();
+
+	}, [])
 
 	return (
 

@@ -164,7 +164,6 @@ const Provider = ({ children }) => {
 	const Post = async ({ path, params, loader, dataSetter, addToState }) => {
 		loader(true)
 		try {
-			CheckAuth()
 
 			const token = localStorage.getItem('token') || ''
 			const response = await axios.post(`${process.env.REACT_APP_BASE_URL}${path}`, {
