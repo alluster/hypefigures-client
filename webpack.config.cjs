@@ -26,7 +26,7 @@ module.exports = {
 		},
 	},
 	plugins: [
-		new webpack.EnvironmentPlugin(['NODE_ENV', 'REACT_APP_BASE_URL', 'ENVIRONMENT']),
+		new webpack.EnvironmentPlugin(['NODE_ENV', 'REACT_APP_BASE_URL', 'ENVIRONMENT', 'RECAPTCHA_SITE_KEY', 'RECAPTCHA_SECRET_KEY']),
 
 		new HtmlWebpackPlugin({
 			template: "public/index_template.html", // to import index.html file inside index.js
