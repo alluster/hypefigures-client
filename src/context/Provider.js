@@ -98,14 +98,15 @@ const Provider = ({ children }) => {
 
 		finally { setLoadingUser(false) }
 	}
-	const Register = async ({ first_name, last_name, password, email }) => {
+	const Register = async ({ first_name, last_name, password, email, recaptcha_token }) => {
 		setLoadingUser(true)
 		try {
 			const response = await axios.post(`${process.env.REACT_APP_BASE_URL}auth/signup`, {
 				first_name: first_name,
 				last_name: last_name,
 				email: email,
-				password: password
+				password: password,
+				recaptcha_token: recaptcha_token
 			})
 			if (response.status === 200) {
 				localStorage.setItem('token', response.data.token)

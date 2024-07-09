@@ -34,7 +34,6 @@ const Indicator = styled.div`
     border: 1px solid ${(props) => props.theme.colors.gray_80};
     border-radius: 0.2em;
 
-
     &::after {
         content: '';
         position: absolute;
@@ -43,8 +42,6 @@ const Indicator = styled.div`
 
     ${Input}:checked + &::after {
         transform: rotate(30deg);
-		    // transform: scale(1, 1);
-
         display: block;
         top: 0.15em; /* Adjust top position */
         left: 0.35em; /* Adjust left position */
@@ -62,7 +59,7 @@ const Indicator = styled.div`
     }
 `;
 
-const Checkbox = ({ value, checked, onChange, name, id, label, disabled }) => {
+const Checkbox = ({ checked, onChange, name, id, label, disabled }) => {
 	return (
 		<Label htmlFor={id} disabled={disabled}>
 			{label}
@@ -70,7 +67,6 @@ const Checkbox = ({ value, checked, onChange, name, id, label, disabled }) => {
 				id={id}
 				type="checkbox"
 				name={name}
-				value={value}
 				disabled={disabled}
 				checked={checked}
 				onChange={onChange}

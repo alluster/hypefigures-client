@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import Button from '../../Button/Button';
@@ -73,22 +73,22 @@ const RegisterForm = () => {
 
 	const { Register, loadingUser } = useContext(AppContext);
 	const [agreed, setAgreed] = useState(false);
+	const [capVal, setCapVal] = useState(null);
 	const onSubmit = async (data) => {
 		try {
-			const recaptcha_token = await captchaRef.current.getValue();
-			captchaRef.current.reset();
+			// const recaptcha_token = await captchaRef.current.getValue();
+			// captchaRef.current.reset();
 			await Register({
 				first_name: data.firstName,
 				last_name: data.lastName,
 				email: data.email,
 				password: data.password,
-				recaptcha_token: recaptcha_token
+				recaptcha_token: capVal
 			});
 		} catch (error) {
 			console.error('Error during registration:', error);
 		}
 	};
-	const captchaRef = useRef(null)
 
 	return (
 		<FormContainer>
@@ -150,25 +150,26 @@ const RegisterForm = () => {
 								<WarningText>Password is required.</WarningText>
 							)}
 						</InputWrapper>
-						<InputWrapper>
+						{/* <InputWrapper>
 							<Checkbox
 								label='By registering, you agree to Hyperfigures Terms of Use.'
-								required={true}
 								{...register('agreed', { required: true })}
 								name='agreed'
 								id={`checkbox-agreed`}
 								checked={agreed}
 								onChange={() => setAgreed(!agreed)} />
-							{errors.password && (
+							{errors.agreed && (
 								<WarningText>Please agree to the terms.</WarningText>
 							)}
-						</InputWrapper>
+						</InputWrapper> */}
 						<ReCAPTCHA
-							sitekey={process.env.RECAPTCHA_SITE_KEY}
-							ref={captchaRef}
+							sitekey="6Ld11wsqAAAAAJzVlxEHX8CjQ4zYe25W1SYK5SyO"
+							onChange={(val) => setCapVal(val)}
 						/>
+						<p className='text-xs'>By registering, you agree to Hyperfigures Terms of Use.</p>
+
 						<ButtonRow>
-							<Button primary dividerRight type="submit" title='Register' />
+							<Button disabled={!capVal} primary dividerRight type="submit" title='Register' />
 							<Button layoutType='link' to='/' ghost={true} dividerRight type="button" title='Sign In' />
 
 						</ButtonRow>
