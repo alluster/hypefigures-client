@@ -166,7 +166,7 @@ const RegisterForm = () => {
 							sitekey="6Ld11wsqAAAAAJzVlxEHX8CjQ4zYe25W1SYK5SyO"
 							onChange={(val) => setCapVal(val)}
 						/>
-						<p className='text-xs'>By registering, you agree to Hyperfigures Terms of Use.</p>
+						<p className='mt-3 text-xs'>By registering you agree to Hyperfigures Terms of Use.</p>
 
 						<ButtonRow>
 							<Button disabled={!capVal} primary dividerRight type="submit" title='Register' />

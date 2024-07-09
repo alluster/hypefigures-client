@@ -98,7 +98,7 @@ const Login = () => {
 					Please sign in to your account.
 				</Ingress>
 				<p>
-					If you do not have an account - you can register by clicking register.
+					If you do not have an account - register now - it is free.
 				</p>
 			</WelcomeTitle>
 			<LoginForm />
