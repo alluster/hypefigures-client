@@ -164,7 +164,7 @@ const RegisterForm = () => {
 							)}
 						</InputWrapper>
 						<ReCAPTCHA
-							sitekey='6LcUjgIqAAAAAFDVbebMdGhEbQU4bNoZWiGZcVQu'
+							sitekey={process.env.RECAPTCHA_SITE_KEY}
 							ref={captchaRef}
 						/>
 						<ButtonRow>
