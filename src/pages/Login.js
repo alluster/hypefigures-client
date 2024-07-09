@@ -93,10 +93,13 @@ const Login = () => {
 
 		<Content>
 			<WelcomeTitle>
-				<Title>Welcome to Hyperfigures</Title>
+				<Title>Welcome to Hyperfigures 🚀</Title>
 				<Ingress>
-					Please sign in!
+					Please sign in to your account.
 				</Ingress>
+				<p>
+					If you do not have an account - you can register by clicking register.
+				</p>
 			</WelcomeTitle>
 			<LoginForm />
 

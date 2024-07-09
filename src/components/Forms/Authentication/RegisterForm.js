@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import Button from '../../Button/Button';
 import SpinnerSmall from '../../Spinner/SpinnerSmall';
 import { AppContext } from '../../../context/Context';
 import ReCAPTCHA from "react-google-recaptcha";
+import Checkbox from '../../Input/Checkbox';
 
 const WarningText = styled.p`
     color: red;
@@ -71,18 +72,24 @@ const RegisterForm = () => {
 	} = useForm();
 
 	const { Register, loadingUser } = useContext(AppContext);
-
-	const onSubmit = (data) => {
-		Register({
-			first_name: data.firstName,
-			last_name: data.lastName,
-			email: data.email,
-			password: data.password
-		})
+	const [agreed, setAgreed] = useState(false);
+	const onSubmit = async (data) => {
+		try {
+			const recaptcha_token = await captchaRef.current.getValue();
+			captchaRef.current.reset();
+			await Register({
+				first_name: data.firstName,
+				last_name: data.lastName,
+				email: data.email,
+				password: data.password,
+				recaptcha_token: recaptcha_token
+			});
+		} catch (error) {
+			console.error('Error during registration:', error);
+		}
 	};
-	function onChange(value) {
-		console.log("Captcha value:", value);
-	}
+	const captchaRef = useRef(null)
+
 	return (
 		<FormContainer>
 			{
@@ -90,7 +97,19 @@ const RegisterForm = () => {
 					<SpinnerSmall />
 					:
 					<form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-
+						<InputWrapper>
+							<Label>Your email address</Label>
+							<StyledInput
+								type="text"
+								{...register('email', { required: true })}
+								label="Email"
+								placeholder=""
+								name="email"
+							/>
+							{errors.email && (
+								<WarningText>Email is required.</WarningText>
+							)}
+						</InputWrapper>
 						<InputWrapper>
 							<Label>First name</Label>
 							<StyledInput
@@ -105,7 +124,7 @@ const RegisterForm = () => {
 							)}
 						</InputWrapper>
 						<InputWrapper>
-							<Label>Last name</Label>
+							<Label>Family name</Label>
 							<StyledInput
 								type="text"
 								{...register('lastName', { required: true })}
@@ -117,25 +136,13 @@ const RegisterForm = () => {
 								<WarningText>Last name is required.</WarningText>
 							)}
 						</InputWrapper>
+
 						<InputWrapper>
-							<Label>Email</Label>
-							<StyledInput
-								type="text"
-								{...register('email', { required: true })}
-								label="Email"
-								placeholder=""
-								name="email"
-							/>
-							{errors.email && (
-								<WarningText>Email is required.</WarningText>
-							)}
-						</InputWrapper>
-						<InputWrapper>
-							<Label>Password</Label>
+							<Label>Create a new Password</Label>
 							<StyledInput
 								type="input"
 								{...register('password', { required: true })}
-								label="Password"
+								label="Create a new Password"
 								placeholder=""
 								name="password"
 							/>
@@ -143,7 +150,23 @@ const RegisterForm = () => {
 								<WarningText>Password is required.</WarningText>
 							)}
 						</InputWrapper>
-
+						<InputWrapper>
+							<Checkbox
+								label='By registering, you agree to Hyperfigures Terms of Use.'
+								required={true}
+								{...register('agreed', { required: true })}
+								name='agreed'
+								id={`checkbox-agreed`}
+								checked={agreed}
+								onChange={() => setAgreed(!agreed)} />
+							{errors.password && (
+								<WarningText>Please agree to the terms.</WarningText>
+							)}
+						</InputWrapper>
+						<ReCAPTCHA
+							sitekey={process.env.RECAPTCHA_SITE_KEY}
+							ref={captchaRef}
+						/>
 						<ButtonRow>
 							<Button primary dividerRight type="submit" title='Register' />
 							<Button layoutType='link' to='/' ghost={true} dividerRight type="button" title='Sign In' />

@@ -9,8 +9,7 @@ import { useHistory } from "react-router-dom";
 import RegisterForm from '../components/Forms/Authentication/RegisterForm';
 
 const Content = styled.div`
-	display: flex;
-	flex-direction: row;
+
 	margin-bottom: 100px;
 	min-height: 100vh;
 	max-width: 1600px;
@@ -21,28 +20,6 @@ const Content = styled.div`
 	z-index: 2000;
 `;
 
-const Grid = styled.div`
-    margin-top: ${(props) => props.theme.grid.divider_12};
-    display: flex;
-    flex-flow: row wrap;
-    align-content: flex-start;
-    row-gap: 48px;
-    column-gap: 48px;
-    width: 100%;
-
-    @media ${device.laptop} {
-    }
-`;
-const Background = styled.div`
-	position: absolute;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    // top: 0px;
-    // left: 0px;
-  
-    }
-`;
 const WelcomeTitleContainer = styled.div`
 	flex: 1;
 	// width: 100%;
@@ -129,14 +106,21 @@ const Register = () => {
 	return (
 		<div>
 			<Container>
+
 				<Content>
 					<WelcomeTitleContainer>
 						<WelcomeTitle>
-							<Title>Welcome to Hyperfigures</Title>
+
+							<Title>Welcome to Hyperfigures! 🤗</Title>
+
 							<Ingress>
-								Please register to start using Hyperfigures!
+								Please fill all required fields to add AI to your Sheets.
 							</Ingress>
+							<span className=" max-w-max items-center rounded-md bg-green-50 px-4 py-4 text-s font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+								Free Account for limited time 💰
+							</span>
 							<RegisterForm />
+
 						</WelcomeTitle>
 					</WelcomeTitleContainer>
 
