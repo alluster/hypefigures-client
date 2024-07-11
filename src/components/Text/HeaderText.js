@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Button/Button';
 import { device } from '../../styles/device-braking-points';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog, faPen } from '@fortawesome/free-solid-svg-icons';
+import Settings from '../Forms/Settings/Settings';
 
 const HeaderTextWrapper = styled.div`
     display: flex;
@@ -19,8 +22,22 @@ const TextContainer = styled.div`
 `;
 const ButtonContainer = styled.div`
     margin-left: auto;
-    @media ${device.laptop} {
-        margin-left: 0px;
+    // @media ${device.laptop} {
+    //     margin-left: 0px;
+    // }
+`;
+const Title = styled.div`
+	display: flex;
+	flex-direction: row;
+	
+`;
+const Icon = styled(FontAwesomeIcon)`
+	align-self: center;
+	justify-content: center;
+	font-size: 12px;
+	margin-left: 20px;
+	&:hover {
+        cursor: pointer;
     }
 `;
 
@@ -30,19 +47,36 @@ const HeaderText = ({
 	description,
 	onClickFunction,
 	buttonTitle,
-	small
+	small,
+	feature,
+	id
 }) => {
+	const [openSettingsModal, setOpenSettingsModal] = useState(false);
+
 	return (
 		small ?
 			<HeaderTextWrapper>
 				<TextContainer>
 					<p>{locationText || ''}</p>
-					<h5>{title || ''}</h5>
+					<h5>
+						{title || ''}
+						{feature
+							?
+							<Icon
+								icon={faPen}
+								onClick={() => setOpenSettingsModal(!openSettingsModal)}
+
+							/>
+							:
+							null
+						}
+					</h5>
 					<h6>{description || ''}</h6>
+
 				</TextContainer>
 				{buttonTitle != null && (
 					<ButtonContainer>
-						<Button onClick={onClickFunction} title={buttonTitle} />
+						<Button small onClick={onClickFunction} title={buttonTitle} />
 					</ButtonContainer>
 				)}
 			</HeaderTextWrapper>
@@ -50,15 +84,36 @@ const HeaderText = ({
 			<HeaderTextWrapper>
 				<TextContainer>
 					<p>{locationText || ''}</p>
-					<h5>{title || ''}</h5>
+					<Title>
+						<h5>
+							{title || ''}
+							{feature
+								?
+								<Icon
+									icon={faPen}
+									onClick={() => setOpenSettingsModal(!openSettingsModal)}
+
+								/>
+								:
+								null
+							}
+						</h5>					</Title>
 					<h6>{description || ''}</h6>
 				</TextContainer>
 				{buttonTitle != null && (
 					<ButtonContainer>
-						<Button onClick={onClickFunction} title={buttonTitle} />
+						<Button small onClick={onClickFunction} title={buttonTitle} />
 					</ButtonContainer>
 				)}
-			</HeaderTextWrapper>
+				<Settings
+					id={id}
+					feature='team'
+					openModal={openSettingsModal}
+					toggleOpen={() => setOpenSettingsModal(!openSettingsModal)}
+					title={title || null}
+					description={description || null}
+
+				/>			</HeaderTextWrapper>
 	);
 };
 

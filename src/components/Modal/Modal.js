@@ -49,19 +49,24 @@ const Content = styled.div`
     flex-direction: column;
     position: relative;
 `;
+const HeaderContent = styled.div`
+	display: flex;
+	flex-direction: row;
+
+`;
 
 const Icon = styled(FontAwesomeIcon)`
     color: ${(props) => props.theme.colors.fontDark};
     font-size: 20px;
-    margin-right: ${(props) => props.theme.grid.divider_1};
-    align-self: flex-end;
-    margin-bottom: ${(props) => props.theme.grid.divider_4};
+	flex: 1;
+    // margin-right: ${(props) => props.theme.grid.divider_1};
+    align-self: center;
 `;
 
 const ModalTitle = styled.h5`
     // margin-top: -55px;
     font-weight: 700;
-    margin-bottom: ${(props) => props.theme.grid.divider_1};
+	flex: 6;
 `;
 
 const Modal = ({ children, open, openModal, modalTitle }) => {
@@ -70,8 +75,12 @@ const Modal = ({ children, open, openModal, modalTitle }) => {
 		<ModalWrapper open={open}>
 			<ModalBox>
 				<Content>
-					<Icon onClick={() => openModal(false)} icon={faTimes} />
-					<ModalTitle>{modalTitle || ''}</ModalTitle>
+					<HeaderContent>
+						<ModalTitle>{modalTitle || ''}</ModalTitle>
+
+						<Icon onClick={() => openModal(false)} icon={faTimes} />
+					</HeaderContent>
+
 					{children}
 				</Content>
 			</ModalBox>

@@ -246,7 +246,7 @@ const Navigation = () => {
 		{
 			link: '/user',
 			icon: faUser,
-			title: 'User',
+			title: 'Account & Teams',
 			ingress: 'Your Business Data in One View!',
 			description: 'Combined view to your business data',
 		},

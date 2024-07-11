@@ -19,14 +19,15 @@ const ButtonRow = styled.div`
 const Invitations = () => {
 	const { invitations, Post, setNotifyMessage, user, setInvitations, setLoadingInvitations } = useContext(AppContext);
 
-	const acceptInvitation = async ({ invitation_id, team_id }) => {
+	const acceptInvitation = async ({ invitation_id, team_id, uniq_team_id }) => {
 		try {
 			const response = await Post({
 				path: 'invite/accept',
 				params: {
 					id: invitation_id,
 					user_id: user[0].id,
-					team_id: team_id
+					team_id: team_id,
+					uniq_team_id: uniq_team_id
 				},
 				dataSetter: setInvitations,
 				loader: setLoadingInvitations
@@ -42,14 +43,15 @@ const Invitations = () => {
 		}
 	};
 
-	const declineInvitation = async ({ invitation_id, team_id }) => {
+	const declineInvitation = async ({ invitation_id, team_id, uniq_team_id }) => {
 		try {
 			const response = await Post({
 				path: 'invite/decline',
 				params: {
 					id: invitation_id,
 					user_id: user[0].id,
-					team_id: team_id
+					team_id: team_id,
+					uniq_team_id: uniq_team_id
 				},
 				dataSetter: setNotifyMessage,
 				loader: setLoadingInvitations
@@ -74,8 +76,8 @@ const Invitations = () => {
 							<p>{invitation.description}</p>
 							<p>{invitation.updated_at}</p>
 							<ButtonRow>
-								<Button onClick={() => acceptInvitation({ invitation_id: invitation.id, team_id: invitation.team_id })} dividerRight title="Accept" />
-								<Button onClick={() => declineInvitation({ invitation_id: invitation.id, team_id: invitation.team_id })} white title="Decline" />
+								<Button onClick={() => acceptInvitation({ invitation_id: invitation.id, team_id: invitation.team_id, uniq_team_id: invitation.uniq_team_id })} dividerRight title="Accept" />
+								<Button onClick={() => declineInvitation({ invitation_id: invitation.id, team_id: invitation.team_id, uniq_team_id: invitation.uniq_team_id })} white title="Decline" />
 							</ButtonRow>
 
 						</Card>
@@ -92,9 +94,9 @@ const Invitations = () => {
 	return (
 		<Container>
 			<Button
-				ghost
+				back
 				layoutType='back'
-				title='Go Back'
+				title='Back'
 			/>
 			<HeaderText
 				title="Invitations"

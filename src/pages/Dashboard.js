@@ -13,7 +13,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DividerLine from '../components/Container/DividerLine';
 import Card from '../components/Card/Card';
-import { faArrowLeft, faCopy } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCog, faCopy } from '@fortawesome/free-solid-svg-icons';
 import SideBar from '../components/Navigation/SideBar';
 import Button from '../components/Button/Button';
 import SpinnerSmall from '../components/Spinner/SpinnerSmall';
@@ -25,6 +25,7 @@ import CardDataTable from '../components/Card/CardDataTable';
 import Chat from '../components/Chat/Chat';
 import Checkbox from '../components/Input/Checkbox';
 import Conversation from '../components/Chat/Conversation';
+import Settings from '../components/Forms/Settings/Settings';
 // import { Cell, Jupyter } from "@datalayer/jupyter-react";
 
 const Logo = styled.div`
@@ -128,6 +129,7 @@ const EmptyStateDescription = styled.h5`
 const Dashboard = () => {
 	const [openDataPointModal, setOpenDataPointModal] = useState(false);
 	const [openDataTableModal, setOpenDataTableModal] = useState(false);
+	const [openSettingsModal, setOpenSettingsModal] = useState(false);
 
 	// const [openActionsModal, setOpenActionsModal] = useState(false);
 	const [dataPointSelector, setDataPointSelector] = useState('');
@@ -153,8 +155,10 @@ const Dashboard = () => {
 		loadingDataTables,
 		dataTables,
 		chat,
+		activeTeam,
 		setChat,
-		setLoadingChat
+		setLoadingChat,
+		isAuthenticated
 	} = useContext(AppContext);
 	const {
 		register,
@@ -263,6 +267,10 @@ const Dashboard = () => {
 	}
 	const DeleteDashboard = async () => {
 		try {
+			const userConfirmed = window.confirm('Are you sure you want to delete this dashboard?');
+			if (!userConfirmed) {
+				return;
+			}
 			const response = await Post({
 				params: {
 					id: id,
@@ -306,7 +314,12 @@ const Dashboard = () => {
 
 				<Button small layoutType='dropdown' title="Options" primary>
 					<ActionText
-						style={{ color: 'red' }}
+
+						onClick={() => setOpenSettingsModal(!openSettingsModal)}
+					>
+						Rename
+					</ActionText>
+					<ActionText
 
 						onClick={() => DeleteDashboard()}
 					>
@@ -333,7 +346,20 @@ const Dashboard = () => {
 
 	}, []);
 	useEffect(() => {
-		DashboardContent()
+		DashboardContent();
+		isAuthenticated && activeTeam[0]?.stripe_subscription != true ?
+			setChat([{
+				message: `It seems that your team does not have any active subscriptions. Please subscribe first. ❤️`
+
+			}])
+			:
+			setChat([{
+				message:
+					dataTables.length > 0
+						? `Hello! It looks like you have Sheets integrated! Great! ❤️ You can ask me anything about them or add more. I'm particularly good at answering complex questions about multiple sheets at once, which would take you a long time to do manually.`
+						: 'Hello! Create an integration to a Google Sheet and ask me anything about it!'
+
+			}])
 	}, [dataTables])
 
 	return (
@@ -342,9 +368,9 @@ const Dashboard = () => {
 			{SideBarContainer()}
 			<Container>
 				<Button
-					ghost
+					back
 					layoutType='back'
-					title='Go Back'
+					title='Back'
 				/>
 
 				<DashboardContent />
@@ -352,6 +378,15 @@ const Dashboard = () => {
 
 				<Chat />
 			</Container>
+			<Settings
+				id={id}
+				feature='dashboard'
+				openModal={openSettingsModal}
+				toggleOpen={() => setOpenSettingsModal(!openSettingsModal)}
+				title={dashboard.length > 0 ? dashboard[0].title : null}
+				description={dashboard.length > 0 ? dashboard[0].description : null}
+
+			/>
 			<Modal
 				open={openModal}
 				openModal={() => setOpenModal()}

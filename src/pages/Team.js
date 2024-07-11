@@ -11,7 +11,7 @@ import Card from '../components/Card/Card';
 const Team = () => {
 	let { id } = useParams();
 	const history = useHistory();
-	const { user, setNotifyMessage, teamUsers, setTeamUsers, setLoadingTeamUsers, loadingTeamUsers, setPath, Get, Post, setTeam, setLoadingTeams, team, setLoadingTeam, loadingTeam } = useContext(AppContext);
+	const { user, activeTeam, setNotifyMessage, teamUsers, setTeamUsers, setLoadingTeamUsers, loadingTeamUsers, setPath, Get, Post, setTeam, setLoadingTeams, team, setLoadingTeam, loadingTeam } = useContext(AppContext);
 	const DeleteTeam = async () => {
 		try {
 			const response = await Post({
@@ -41,15 +41,15 @@ const Team = () => {
 	});
 
 	useEffect(() => {
-		setPath('/team');
+		setPath('/teams');
 		window.scroll(0, 0);
 		Get({ params: { id: id, user_id: user[0].id }, path: 'team', dataSetter: setTeam, loader: setLoadingTeam })
 		Get({ params: { id: id, }, path: 'team/team_users', dataSetter: setTeamUsers, loader: setLoadingTeamUsers })
 
-	}, []);
+	}, [id]);
 	useEffect(() => {
 		TeamContent()
-	}, [data])
+	}, [data, activeTeam])
 	useEffect(() => {
 		if (team.length > 0) {
 			setData({
@@ -70,9 +70,9 @@ const Team = () => {
 		return (
 			<div>
 				<Button
-					ghost
+					back
 					layoutType='back'
-					title='Go back'
+					title='Back'
 				/>
 				{
 					loadingTeam ? <SpinnerSmall /> :
@@ -81,22 +81,32 @@ const Team = () => {
 								locationText="Team"
 								title={data.title || '-'}
 								description={data.description || ''}
+								feature='team'
+								id={id}
 							/>
 							{
 								loadingTeamUsers
 									?
 									<SpinnerSmall />
 									:
-									teamUsers?.map((item, i) => {
-										return (
-											<Card small key={i}>
-												<p>{item.first_name} {item.last_name}</p>
-												<h6>{item.email}</h6>
+									<ul role="list" className="divide-y divide-gray-100">
+										{teamUsers?.map((person) => (
+											<li key={person.email} className="flex justify-between gap-x-6 py-5 border-b border-gray-300">
+												<div className="flex min-w-0 gap-x-4">
+													{/* <img alt="" src={person.imageUrl} className="h-12 w-12 flex-none rounded-full bg-gray-50" /> */}
+													<div className="min-w-0 flex-auto">
+														<p className="text-sm font-semibold leading-6 text-gray-900">{person.first_name} {person.last_name}</p>
+														<p className="mt-1 truncate text-xs leading-5 text-gray-500">{person.email}</p>
+													</div>
+												</div>
+												<div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+													<p className="text-sm leading-6 text-gray-900">{activeTeam[0]?.creator === person.uniq_user_id ? 'Team Owner' : 'Team Member'}</p>
 
-											</Card>
-										)
+												</div>
+											</li>
+										))}
+									</ul>
 
-									})
 							}
 							<PricingTable currentPlan={data.current_plan} activeSubscription={data.active_subscription} />
 							{

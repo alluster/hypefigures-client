@@ -38,7 +38,9 @@ const Provider = ({ children }) => {
 	const [invitations, setInvitations] = useState([]);
 	const [selectedDataTables, setSelectedDataTables] = useState([]);
 	const [loadingChat, setLoadingChat] = useState(false);
-	const [chat, setChat] = useState([])
+	const [chat, setChat] = useState([
+
+	])
 	const [question, setQuestion] = useState('');
 	const [retrievedTables, setRetrievedTables] = useState([])
 	const [loadingRetrievedTables, setLoadingRetrievedTables] = useState(false);
@@ -126,6 +128,7 @@ const Provider = ({ children }) => {
 			loader(true);
 
 			const token = localStorage.getItem('token') || '';
+			// Assuming user is defined somewhere in your code
 			const response = await axios.get(`${process.env.REACT_APP_BASE_URL}${path}`, {
 				params: {
 					...params,
@@ -146,16 +149,20 @@ const Provider = ({ children }) => {
 					// Replace existing state
 					dataSetter(responseData);
 				}
-				dataSetter(responseData);
-
 				return responseData;
-			} else if (response.status === 404) {
+			} else if (response.status === 403) {
+				dataSetter([]);
+				return [];
+			} else {
+				// Handle other HTTP status codes as needed
 				dataSetter([]);
 				return [];
 			}
 		} catch (err) {
-			dataSetter([])
+			// Log the error for debugging purposes
 			console.log(err);
+			// Handle the error state
+			dataSetter([]);
 			return [];
 		} finally {
 			loader(false);
@@ -171,33 +178,37 @@ const Provider = ({ children }) => {
 				...params,
 				uniq_team_id: user.length > 0 && user[0].team.length > 0 ? user[0].team[0].uniq_team_id : null,
 				user_id: user.length > 0 ? user[0].id : null,
+				uniq_user_id: user.length > 0 ? user[0].uniq_user_id : null,
 			}, {
 				headers: {
 					Authorization: `Bearer ${token}` // Add the Bearer token to the headers
 				}
 			});
 			if (response.status === 403) {
-				CheckAuth()
+				CheckAuth();
+				setNotifyMessage(response.data.message);
 				return response.data
 			}
 			if (response.status === 200) {
 				const responseData = response.data.length > 0 ? response.data : [];
 				if (addToState) {
 					// Add to existing state
-					dataSetter(prevState => [...prevState, ...responseData]);
+					dataSetter ? dataSetter(prevState => [...prevState, ...responseData]) : null;
 				} else {
 					// Replace existing state
-					dataSetter(responseData);
+					dataSetter ? dataSetter(responseData) : null;
 				}
-				dataSetter(responseData);
+				dataSetter ? dataSetter(responseData) : null;
 
 				return response;
 			}
 			loader(false);
-			return response.data
+			return response
 		}
 		catch (err) {
 			console.log(err)
+			return err
+
 		}
 		finally { loader(false) }
 

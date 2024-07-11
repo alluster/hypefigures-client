@@ -18,6 +18,7 @@ const StyledButtonBase = styled.button<ButtonProps>`
     padding-right: 40px;
     font-size: 22.6px;
     line-height: 64px;
+    max-height: 42px;
     font-weight: 700;
     display: flex;
     flex-direction: row;
@@ -74,7 +75,19 @@ const StyledButtonBase = styled.button<ButtonProps>`
 		-webkit-text-fill-color: #000B42;
 
 	`};
+    ${({ back }) =>
+        back &&
+        `	
+		font-weight: 600;
+		font-size: 14px;
+		padding-left: 0px !important;	
+		text-align: left;
+		border: none !important;
+		background-color: transparent;
+		color: #000B42 !important;
+		-webkit-text-fill-color: #000B42;
 
+	`};
     ${({ success }) =>
         success &&
         `
@@ -83,7 +96,14 @@ const StyledButtonBase = styled.button<ButtonProps>`
 		background-color: #0F6F00;
 
 	`};
+    ${({ orange }) =>
+        orange &&
+        `
+		-webkit-text-fill-color: #ffffff;
+		color: #ffffff;
+		background-color: #FF6361;
 
+	`};
     ${({ dividerRight }) =>
         dividerRight &&
         `
@@ -102,7 +122,7 @@ const StyledButtonBase = styled.button<ButtonProps>`
 
 const Icon = styled(FontAwesomeIcon)`
     color: ${(props) => props.theme.colors.fontDark};
-    font-size: 16px;
+    font-size: 12px;
     margin-right: ${(props) => props.theme.grid.divider_1};
     align-self: center;
 `;
@@ -129,8 +149,10 @@ const Button = ({
     ghost = false,
     primary = true,
     small = true,
+    back = false,
     white = false,
     success = false,
+    orange = false,
     dividerRight = false,
     children,
     to = '',
@@ -149,6 +171,7 @@ const Button = ({
             onClick={!disabled ? onClick : null}
             small={small}
             white={white}
+            back={back}
             ghost={ghost}
             success={success}
             primary={primary}
@@ -157,6 +180,7 @@ const Button = ({
             layoutType={layoutType}
             title={title}
             disabled={disabled}
+            orange={orange}
         >
             {title}
         </StyledButtonBase>
@@ -165,7 +189,7 @@ const Button = ({
     switch (layoutType) {
         case 'back':
             return (
-                <StyledButtonBase ghost={ghost} onClick={handleGoBack}>
+                <StyledButtonBase back={back} onClick={handleGoBack}>
                     <Icon icon={faArrowLeft} />
                     {title}
                 </StyledButtonBase>

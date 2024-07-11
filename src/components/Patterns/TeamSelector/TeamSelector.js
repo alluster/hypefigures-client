@@ -7,6 +7,7 @@ import SpinnerSmall from '../../Spinner/SpinnerSmall';
 import { faCheck, faChevronDown, faPlus } from '@fortawesome/free-solid-svg-icons';
 import FormAddTeam from '../../Forms/Team/FormAddTeam';
 import Button from '../../Button/Button';
+import { useHistory } from 'react-router-dom';
 
 const TeamSelectorContainer = styled.div`
     display: flex;
@@ -180,26 +181,27 @@ const TeamSelector = () => {
 	useEffect(() => {
 		TeamsList()
 	}, [teams])
+	const history = useHistory();
 
 	const ChangeActiveTeam = async ({ team_id, user_id }) => {
 		try {
 			if (team_id && user_id) {
-				const response = await Get({ params: { id: team_id, user_id: user_id }, path: 'team', dataSetter: setActiveTeam, loader: setLoadingTeams })
-				console.log('team from team selector', response)
+				await Get({ params: { id: team_id, user_id: user_id }, path: 'team', dataSetter: setActiveTeam, loader: setLoadingTeams })
+				history.push(`/teams/${team_id}`);
+
 			}
 		} catch (err) { console.log(err) }
 	}
 	const handleTeamChange = async ({ team_id }) => {
 		try {
-			console.log('user_id:', user[0].id, 'team_id', team_id)
-			const response = await Post({ params: { id: user[0].id, team_id: team_id }, path: 'user', dataSetter: setUser, loader: setLoadingTeams })
-			console.log('response from user path', response)
 
+			const response = await Post({ params: { id: user[0].id, team_id: team_id }, path: 'user', loader: setLoadingTeams })
 			if (response.status === 200) {
 				await ChangeActiveTeam({
 					team_id: response.data.user.team_id,
 					user_id: response.data.user.id
 				})
+
 				setNotifyMessage('Active team changed');
 			}
 			else {
@@ -249,7 +251,9 @@ const TeamSelector = () => {
 					<DropdownContent>
 
 						<ActiveTeam>
-							<Title>{activeTeam.length > 0 ? activeTeam[0].title : 'No team'}</Title>
+							<Title>{activeTeam.length > 0 ? activeTeam[0].title : 'No team'}
+
+							</Title>
 							<CheckIcon>
 								<FontAwesomeIcon icon={faCheck} />
 							</CheckIcon>
@@ -277,29 +281,50 @@ const TeamSelector = () => {
 				?
 
 				<div>
-					<TeamSelectorContainer>
+					<TeamSelectorContainer
+						onMouseEnter={() => {
+							setOpenTeamSelector(!openTeamSelector), setOpenDropdown(!openDropdown);
+						}}
+						onMouseLeave={() => {
+							setOpenTeamSelector(!openTeamSelector), setOpenDropdown(!openDropdown);
+						}}
+						onClick={() => {
+							setOpenTeamSelector(!openTeamSelector), setOpenDropdown(!openDropdown);
+						}}
+					>
 
 						<ActiveTeamNameContainer
-							onClick={() => {
-								setOpenTeamSelector(!openTeamSelector), setOpenDropdown(true);
-							}}>
+						>
 							<ActiveTeamName>
 								{activeTeam.length > 0 ? activeTeam[0].title : 'No team'}
+
 							</ActiveTeamName>
 							<DropDownIcon>
 								<FontAwesomeIcon icon={faChevronDown} />
 							</DropDownIcon>
-						</ActiveTeamNameContainer>
 
+						</ActiveTeamNameContainer>
+						{activeTeam.length > 0 && activeTeam[0]?.stripe_subscription != true ?
+							<span className="inline-flex ml-4 items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
+								No subscription
+							</span>
+							:
+							null
+						}
+						{activeTeam.length > 0 && activeTeam[0]?.stripe_subscription === true ?
+							<span className="inline-flex ml-4 items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-800 ring-1 ring-inset ring-green-600/20">
+								Active subscription
+							</span>
+							:
+							null
+						}
 						{DropDown()}
 
 					</TeamSelectorContainer>
 
 				</ div>
 				:
-				<AddTeamButton
-
-				>Create a new team</AddTeamButton>
+				null
 
 		)
 	}

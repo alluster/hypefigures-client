@@ -31,7 +31,7 @@ const Circle = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin-right: 10px; /* Add margin for separation */
+	// margin-right: 10px; /* Add margin for separation */
 `;
 
 const Image = styled.img`
@@ -56,7 +56,7 @@ const RightSide = styled.div`
 `;
 
 const Text = styled.p`
-	font-size: 16px;
+	font-size: 14px;
 `;
 
 const TextContainer = styled.div`

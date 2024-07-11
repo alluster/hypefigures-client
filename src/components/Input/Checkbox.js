@@ -25,37 +25,39 @@ const rotate = keyframes`
 `;
 
 const Indicator = styled.div`
-    width: 1em;
-    height: 1em;
+    width: 20px;
+    height: 20px;
     background: ${(props) => (props.checked ? '#000B42' : '#ffffff')}; /* Change background color based on checked state */
     position: absolute;
     top: 0em;
     left: -1.6em;
     border: 1px solid ${(props) => props.theme.colors.gray_80};
     border-radius: 0.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &::after {
         content: '';
         position: absolute;
         display: none;
+        width: 0.3em; /* Adjust width to make the check mark smaller */
+        height: 0.6em; /* Adjust height to make the check mark smaller */
+        border: solid white;
+        border-width: 0 0.15em 0.15em 0;
+        transform: rotate(45deg);
     }
 
     ${Input}:checked + &::after {
-        transform: rotate(30deg);
         display: block;
-        top: 0.15em; /* Adjust top position */
-        left: 0.35em; /* Adjust left position */
-        width: 20%; /* Adjust width to make the check mark smaller */
-        height: 50%; /* Adjust height to make the check mark smaller */
-        border: solid white;
-        border-width: 0 0.15em 0.15em 0;
         animation-name: ${rotate};
-        animation-duration: 0s;
+        animation-duration: 0.2s;
         animation-fill-mode: forwards;
     }
 
-    &::disabled {
+    ${Input}:disabled + & {
         cursor: not-allowed;
+        background: ${(props) => props.theme.colors.gray_40}; /* Optional: Change background color for disabled state */
     }
 `;
 

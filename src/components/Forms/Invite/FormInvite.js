@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { AppContext } from '../../../context/Context';
 import FormCompiler from '../../../supportFunctions/FormComplier';
 import Modal from '../../Modal/Modal';
+import SubscriptionWarning from '../../Patterns/SubscriptionWarning/SubscriptionWarning';
 
 const FormInvite = ({
 	toggleOpen,
@@ -57,35 +58,43 @@ const FormInvite = ({
 			openModal={() => toggleOpen()}
 			modalTitle="Invite a new team member"
 		>
-			<p>Note: The invited user has to register before they can accept your invitation. After they have registered to Hyperfigures using the same email provided in the invitation, they will be asked to join your team.</p>
-			<FormCompiler
-				reset={reset}
-				openModal={() => toggleOpen()}
-				errors={errors}
-				onSubmit={() => handleSubmit(onSubmit)}
-				register={register}
-				fields={[
-					{
-						type: 'email',
-						name: 'email',
-						label: 'Email',
-						options: '',
-						required: true,
-						errorMessage: 'Email is required',
-						placeholder: 'Enter email address',
-					},
-					{
-						type: 'input',
-						name: 'title',
-						label: 'Invitation message',
-						options: '',
-						required: true,
-						errorMessage: 'Message is required',
-						placeholder: 'Enter message',
-					}
+			<SubscriptionWarning
+			>
+				<span className="inline-flex items-center rounded-md bg-red-50 mt-10 px-3 py-3 text-m font-large text-red-800 ring-1 ring-inset ring-red-600/20">
+					👋 for security reasons the invited person has to register using the same email provided in the invitation before they can accept your invitation. Send the invitation and email them the register link. https://app.hyperfigures.com/register
+				</span>
 
-				]}
-			></FormCompiler>
+				<FormCompiler
+					reset={reset}
+					openModal={() => toggleOpen()}
+					errors={errors}
+					onSubmit={() => handleSubmit(onSubmit)}
+					register={register}
+					fields={[
+						{
+							type: 'email',
+							name: 'email',
+							label: 'Email',
+							options: '',
+							required: true,
+							errorMessage: 'Email is required',
+							placeholder: 'Enter email address',
+						},
+						{
+							type: 'input',
+							name: 'title',
+							label: 'Invitation message',
+							options: '',
+							required: true,
+							errorMessage: 'Message is required',
+							placeholder: 'Enter message',
+						}
+
+					]}
+				/>
+
+			</SubscriptionWarning>
+
 		</Modal>
 	);
 };

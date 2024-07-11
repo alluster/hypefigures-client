@@ -23,7 +23,6 @@ const Wrapper = styled.div`
 const DataSources = () => {
 	const { setPath, loadingDataProviders, dataProviders } = useContext(AppContext);
 
-
 	useEffect(() => {
 		setPath('/dataSources');
 		window.scroll(0, 0);
@@ -38,7 +37,6 @@ const DataSources = () => {
 				dataProviders.length > 0 ? dataProviders.map((item, i) => {
 					return (
 						<Card key={i}>
-
 
 							<TextWithLabel
 								small
@@ -74,9 +72,9 @@ const DataSources = () => {
 	return (
 		<Container>
 			<Button
-				ghost
+				back
 				layoutType='back'
-				title='Go Back'
+				title='Back'
 			/>
 			<HeaderText
 				locationText=""

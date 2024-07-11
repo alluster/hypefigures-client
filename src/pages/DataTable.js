@@ -62,9 +62,9 @@ const DataTable = () => {
 			<div>
 				<Row>
 					<Button
-						ghost
+						back
 						layoutType='back'
-						title='Go Back'
+						title='Back'
 					/>
 					<ButtonContainer>
 						{

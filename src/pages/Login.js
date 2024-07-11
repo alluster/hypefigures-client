@@ -91,7 +91,7 @@ const Login = () => {
 	}, []);
 	return (
 
-		<Content>
+		<Container>
 			<WelcomeTitle>
 				<Title>Welcome to Hyperfigures 🚀</Title>
 				<Ingress>
@@ -103,7 +103,7 @@ const Login = () => {
 			</WelcomeTitle>
 			<LoginForm />
 
-		</Content>
+		</Container>
 
 	);
 };

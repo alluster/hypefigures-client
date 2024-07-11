@@ -5,7 +5,9 @@ export type ButtonProps = {
     ghost?: false;
     primary?: boolean;
     small?: boolean;
+    orange?: boolean;
     white?: boolean;
+    back?: boolean;
     success?: boolean;
     dividerRight?: boolean;
     children?: React.ReactNode;

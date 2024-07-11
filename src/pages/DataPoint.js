@@ -107,9 +107,9 @@ const DataPoint = () => {
 		return (
 			<div>
 				<Button
-					ghost
+					back
 					layoutType='back'
-					title='Go Back'
+					title='Back'
 				/>
 				<div>
 					<HeaderText

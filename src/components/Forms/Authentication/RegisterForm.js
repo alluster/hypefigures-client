@@ -98,7 +98,7 @@ const RegisterForm = () => {
 					:
 					<form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
 						<InputWrapper>
-							<Label>Your email address</Label>
+							<Label>Your email address *</Label>
 							<StyledInput
 								type="text"
 								{...register('email', { required: true })}
@@ -111,7 +111,7 @@ const RegisterForm = () => {
 							)}
 						</InputWrapper>
 						<InputWrapper>
-							<Label>First name</Label>
+							<Label>First name *</Label>
 							<StyledInput
 								type="text"
 								{...register('firstName', { required: true })}
@@ -124,7 +124,7 @@ const RegisterForm = () => {
 							)}
 						</InputWrapper>
 						<InputWrapper>
-							<Label>Family name</Label>
+							<Label>Family name *</Label>
 							<StyledInput
 								type="text"
 								{...register('lastName', { required: true })}
@@ -138,7 +138,7 @@ const RegisterForm = () => {
 						</InputWrapper>
 
 						<InputWrapper>
-							<Label>Create a new Password</Label>
+							<Label>Create a new Password *</Label>
 							<StyledInput
 								type="input"
 								{...register('password', { required: true })}

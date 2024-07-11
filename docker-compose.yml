@@ -10,14 +10,6 @@ services:
     volumes:
       - .:/app:delegated # Use delegated for better performance on macOS
       # - /app/node_modules # Ensure this line is not present to avoid conflicts with node_modules
-  nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    ports:
-      - "80:80"
-    volumes:
-      - app:/usr/share/nginx/html/app # Copy React App's build files to the Nginx directory
 
 volumes:
    app: 

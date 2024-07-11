@@ -9,6 +9,7 @@ import FormCompiler from '../supportFunctions/FormComplier';
 import { AppContext } from '../context/Context';
 import Button from '../components/Button/Button';
 import styled from 'styled-components';
+import SubscriptionWarning from '../components/Patterns/SubscriptionWarning/SubscriptionWarning';
 
 const Label = styled.p`
 	font-size: 16px;
@@ -91,33 +92,41 @@ const Dashboards = () => {
 	const onSubmit = async (data) => {
 		try {
 			const response = await Post({ params: { title: data.dashboardName, description: data.dashboardDescription }, path: 'dashboard', dataSetter: setDashboards, loader: setLoadingDashboards })
-			if (response.status === 200) {
+			console.log(response)
+			if (response?.status === 200) {
 				setNotifyMessage(`New dashboard ${data.dashboardName} added`);
 			}
 			else {
-				setNotifyMessage(`New dashboard ${data.dashboardName} could not be added`);
+				setNotifyMessage(`New dashboard ${data.dashboardName} could not be added, ${response?.message}`);
 			}
 		} catch (error) {
 			console.log(error);
 			setNotifyMessage('Something went wrong');
 		} finally {
 			setOpenModal(false);
+			Get({ params: {}, path: 'dashboard', dataSetter: setDashboards, loader: setLoadingDashboards })
 			reset();
 		}
 	};
 
 	useEffect(() => {
 		setPath('/dashboards');
-		Get({ params: {}, path: 'dashboard', dataSetter: setDashboards, loader: setLoadingDashboards })
-
+		Get({ params: {}, path: 'dashboard', dataSetter: setDashboards, loader: setLoadingDashboards });
 	}, []);
+	useEffect(() => {
+		DashboardsList()
+	}, [dashboards, activeTeam])
+	useEffect(() => {
+		Get({ params: {}, path: 'dashboard', dataSetter: setDashboards, loader: setLoadingDashboards });
+	}, [activeTeam])
+
 	return (
 		<div>
 			<Container>
 				<Button
-					ghost
+					back
 					layoutType='back'
-					title='Go Back'
+					title='Back'
 				/>
 				<HeaderText
 					buttonTitle="Create a new Dashboard"
@@ -134,33 +143,37 @@ const Dashboards = () => {
 				openModal={() => setOpenModal()}
 				modalTitle="Create a new Dashboard"
 			>
-				<FormCompiler
-					reset={reset}
-					openModal={() => setOpenModal()}
-					errors={errors}
-					onSubmit={() => handleSubmit(onSubmit)}
-					register={register}
-					fields={[
-						{
-							type: 'input',
-							name: 'dashboardName',
-							label: 'Dashboard name',
-							options: '',
-							required: true,
-							errorMessage: 'Dashboard name is required',
-							placeholder: 'Give your dashboard a name',
-						},
-						{
-							type: 'textarea',
-							name: 'dashboardDescription',
-							label: 'Dashboard Description',
-							options: '',
-							required: false,
-							errorMessage: '',
-							placeholder: 'Describe your dashboard',
-						},
-					]}
-				></FormCompiler>
+				<SubscriptionWarning>
+					<FormCompiler
+						reset={reset}
+						openModal={() => setOpenModal()}
+						errors={errors}
+						onSubmit={() => handleSubmit(onSubmit)}
+						register={register}
+						fields={[
+							{
+								type: 'input',
+								name: 'dashboardName',
+								label: 'Dashboard name',
+								options: '',
+								required: true,
+								errorMessage: 'Dashboard name is required',
+								placeholder: 'Give your dashboard a name',
+							},
+							{
+								type: 'textarea',
+								name: 'dashboardDescription',
+								label: 'Dashboard Description',
+								options: '',
+								required: false,
+								errorMessage: '',
+								placeholder: 'Describe your dashboard',
+							},
+						]}
+					></FormCompiler>
+
+				</SubscriptionWarning>
+
 			</Modal>
 		</div>
 	);

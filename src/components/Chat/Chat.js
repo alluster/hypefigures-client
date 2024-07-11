@@ -149,10 +149,10 @@ const Chat = () => {
 		}
 	};
 
-	useEffect(() => {
-		firstQuestion();
+	// useEffect(() => {
+	// 	firstQuestion();
 
-	}, [])
+	// }, [])
 
 	return (
 

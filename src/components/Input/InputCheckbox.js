@@ -21,7 +21,7 @@ const StyledInput = styled.input`
     border: 1px solid ${(props) => props.theme.colors.gray_80};
     border-radius: 4px;
     color: ${(props) => props.theme.colors.fontDark};
-    :&hover {
+    &:hover {
         cursor: pointer;
     }
     @media ${device.laptop} {
@@ -44,7 +44,7 @@ const StyledInputChecked = styled.div`
     border: 1px solid ${(props) => props.theme.colors.white};
 
     color: ${(props) => props.theme.colors.fontDark};
-    :&hover {
+    &:hover {
         cursor: pointer;
     }
     @media ${device.laptop} {

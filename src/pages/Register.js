@@ -104,36 +104,33 @@ const Register = () => {
 		}
 	}, []);
 	return (
-		<div>
-			<Container>
+		<Container>
 
-				<Content>
-					<WelcomeTitleContainer>
-						<WelcomeTitle>
+			<Content>
+				<WelcomeTitleContainer>
+					<WelcomeTitle>
 
-							<Title>Welcome to Hyperfigures! 🤗</Title>
+						<Title>Welcome to Hyperfigures! 🤗</Title>
 
-							<Ingress>
-								Please fill all required fields to add AI to your Sheets.
-							</Ingress>
-							<span className=" max-w-max items-center rounded-md bg-green-50 px-4 py-4 text-s font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-								Free Account for limited time 💰
-							</span>
-							<RegisterForm />
+						<Ingress>
+							Please fill all required fields to add AI to your Sheets.
+						</Ingress>
+						<span className=" max-w-max items-center rounded-md bg-green-50 px-4 py-4 text-s font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+							Free Account for limited time 💰
+						</span>
+						<RegisterForm />
 
-						</WelcomeTitle>
-					</WelcomeTitleContainer>
+					</WelcomeTitle>
+				</WelcomeTitleContainer>
 
-					{/* <VideoContainer>
+				{/* <VideoContainer>
 						< src="https://demo.arcade.software/YGOVPgtYtFWemivsiuFA?embed&show_copy_link=true" title="Hyperfigures" frameBorder="0" loading="lazy" webkitallowfullscreen mozallowfullscreen allowfullscreen allow="clipboard-write" />
 
 					</VideoContainer>
 
 					 */}
-				</Content>
-			</Container>
-
-		</div>
+			</Content>
+		</Container>
 
 	);
 };

@@ -12,6 +12,7 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     margin-left: 100px;
+	background-color: white;
 	@media ${device.laptop} {
 	    margin-left: 50px;
 
@@ -99,7 +100,7 @@ const TopNav = () => {
 			{
 				isAuthenticated
 					?
-					<MarginContainer sideBarOpen={sideBarOpen} navigationOpen={navigationOpen}>
+					<MarginContainer style={{ backgroundColor: '#ffffff' }} sideBarOpen={sideBarOpen} navigationOpen={navigationOpen}>
 						<Wrapper>
 
 							<TeamSelector />

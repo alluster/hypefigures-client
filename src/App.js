@@ -80,7 +80,7 @@ const GlobalStyle = createGlobalStyle`
 		line-height: 48px;
 		margin: 0px;
 		@media ${device.laptop} {
-			font-size: 	22.78px;
+			font-size: 	32.78px;
 			line-height: 32px
 		}
     }
@@ -265,7 +265,7 @@ const App = () => {
 			)
 		}
 		useEffect(() => {
-			Banner
+			Banner()
 
 		}, [activeTeam])
 
