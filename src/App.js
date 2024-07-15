@@ -91,7 +91,7 @@ const GlobalStyle = createGlobalStyle`
 		margin: 0px;
 		@media ${device.laptop} {
 			font-size: 	20.25px;
-			line-height: 24px
+			line-height: 34px
 		}
     }
     h5 {
