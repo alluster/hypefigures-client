@@ -119,7 +119,7 @@ const Register = () => {
 							<Title>Create a free Account</Title>
 
 							<Ingress className='text-gray-300'>
-								Completelly free. No credit card needed.
+								Completely free. No credit card needed.
 							</Ingress>
 							{/* <span className=" max-w-max items-center rounded-md bg-green-50 px-4 py-4 text-s font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
 							Free Account for limited time 💰
