@@ -6,6 +6,7 @@ import SpinnerSmall from '../../Spinner/SpinnerSmall';
 import { AppContext } from '../../../context/Context';
 import ReCAPTCHA from "react-google-recaptcha";
 import Checkbox from '../../Input/Checkbox';
+import { Link } from 'react-router-dom';
 
 const WarningText = styled.p`
     color: red;
@@ -18,11 +19,15 @@ const ButtonRow = styled.div`
     flex-wrap: no-wrap;
     width: 100%;
     margin-top: ${(props) => props.theme.grid.divider_4};
+	align-items: center;
 `;
 const StyledInput = styled.input`
     background-color: ${(props) => props.theme.colors.white};
     height: 36px;
-    width: calc(100% - ${(props) => props.theme.grid.divider_6});
+	
+    width: 100%;
+
+    // width: calc(100% - ${(props) => props.theme.grid.divider_6});
     border: 1px solid ${(props) => props.theme.colors.gray_80};
     border-radius: 4px;
     font-size: 14px;
@@ -61,7 +66,7 @@ const Label = styled.label`
 const FormContainer = styled.div`
 	// margin-left: auto;
 	// margin-right: auto;
-	max-width: 400px;
+	// max-width: 400px;
 `;
 
 const RegisterForm = () => {
@@ -170,8 +175,9 @@ const RegisterForm = () => {
 
 						<ButtonRow>
 							<Button disabled={!capVal} primary dividerRight type="submit" title='Register' />
-							<Button layoutType='link' to='/' ghost={true} dividerRight type="button" title='Sign In' />
-
+							<Link to='/' >
+								<p className='text-white leading-4'>Sign in</p>
+							</Link>
 						</ButtonRow>
 					</form>
 

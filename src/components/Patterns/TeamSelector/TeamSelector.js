@@ -173,7 +173,10 @@ const TeamSelector = () => {
 		user,
 		setUser,
 		Get,
-		setActiveTeam
+		setActiveTeam,
+		setDashboards,
+		setLoadingDashboards,
+		CheckAuth
 	} = useContext(AppContext);
 	const [openTeamModal, setOpenTeamModal] = useState(false)
 	const [openTeamSelector, setOpenTeamSelector] = useState(false);
@@ -186,11 +189,21 @@ const TeamSelector = () => {
 	const ChangeActiveTeam = async ({ team_id, user_id }) => {
 		try {
 			if (team_id && user_id) {
-				await Get({ params: { id: team_id, user_id: user_id }, path: 'team', dataSetter: setActiveTeam, loader: setLoadingTeams })
+				const response = await Get({ params: { id: team_id, user_id: user_id }, path: 'team', dataSetter: setActiveTeam, loader: setLoadingTeams });
+				if (response) {
+					setActiveTeam(response)
+				}
+				console.log('team from team changer', response)
+
 				history.push(`/teams/${team_id}`);
 
 			}
 		} catch (err) { console.log(err) }
+		finally {
+			console.log('activeTeam from setter:', activeTeam)
+			await Get({ params: {}, path: 'dashboard', dataSetter: setDashboards, loader: setLoadingDashboards });
+
+		}
 	}
 	const handleTeamChange = async ({ team_id }) => {
 		try {

@@ -5,6 +5,7 @@ import Button from '../../Button/Button';
 import Container from '../../Container/Container';
 import SpinnerSmall from '../../Spinner/SpinnerSmall';
 import { AppContext } from '../../../context/Context';
+import { Link } from 'react-router-dom';
 
 const WarningText = styled.p`
     color: red;
@@ -14,14 +15,18 @@ const WarningText = styled.p`
 const ButtonRow = styled.div`
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: no-wrap;
     width: 100%;
+	align-items: center;
     margin-top: ${(props) => props.theme.grid.divider_4};
 `;
 const StyledInput = styled.input`
     background-color: ${(props) => props.theme.colors.white};
     height: 36px;
-    width: calc(100% - ${(props) => props.theme.grid.divider_6});
+	
+    width: 100%;
+
+    // width: calc(100% - ${(props) => props.theme.grid.divider_6});
     border: 1px solid ${(props) => props.theme.colors.gray_80};
     border-radius: 4px;
     font-size: 14px;
@@ -58,9 +63,9 @@ const Label = styled.label`
     display: inline-block;
 `;
 const FormContainer = styled.div`
-	margin-left: auto;
-	margin-right: auto;
-	max-width: 400px;
+	// margin-left: auto;
+	// margin-right: auto;
+	// max-width: 400px;
 `;
 
 const LoginForm = () => {
@@ -113,7 +118,9 @@ const LoginForm = () => {
 						</InputWrapper>
 						<ButtonRow>
 							<Button primary dividerRight type="submit" title='Sign In' />
-							<Button layoutType='link' to='/register' ghost={true} dividerRight type="button" title='Register' />
+							<Link to='/register' >
+								<p className='text-white leading-4'>Register</p>
+							</Link>
 
 						</ButtonRow>
 					</form>

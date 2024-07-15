@@ -121,17 +121,20 @@ const Profile = () => {
 
 				<div className="divide-y divide-gray-100 mb-10 border-b">
 
-					<div className="flex justify-between gap-x-6 py-5  border-gray-300">
-						<div className="flex min-w-0 gap-x-4">
+					<div className="flex justify-between gap-x-6 py-5 block">
 
-							<div className="min-w-0 flex-auto">
-								<p className="text-sm font-semibold leading-6 text-gray-900">{user[0]?.first_name} {user[0]?.last_name}</p>
-								<p className="mt-1 truncate text-xs leading-5 text-gray-500">{user[0]?.email}</p>
-							</div>
-
+						<div className="min-w-0 flex-auto">
+							<p className="text-sm font-semibold leading-6 text-gray-900">{user[0]?.first_name} {user[0]?.last_name}</p>
+							<p className="mt-1 truncate text-xs leading-5 text-gray-500">{user[0]?.email}</p>
 						</div>
-
+						<div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+							<a href="https://billing.stripe.com/p/login/28o7u21bRcMmaAg288" target="_blank" rel="noreferrer">
+								<p className="text-sm font-semibold leading-6 text-blue-600">Edit subscription details</p>
+							</a>
+							<p className="mt-1 truncate text-xs leading-5 text-gray-500">Link will open Stripe dashboard where you can edit your subscriptions</p>
+						</div>
 					</div>
+
 				</div>
 
 			)

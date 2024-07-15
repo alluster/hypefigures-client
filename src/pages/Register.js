@@ -7,6 +7,8 @@ import { AppContext } from '../context/Context';
 import LoginForm from '../components/Forms/Authentication/LoginForm';
 import { useHistory } from "react-router-dom";
 import RegisterForm from '../components/Forms/Authentication/RegisterForm';
+import Background from '../components/Background';
+import Footer from '../components/Navigation/Footer';
 
 const Content = styled.div`
 
@@ -41,12 +43,15 @@ const WelcomeTitle = styled.div`
     @media ${device.laptop} {
     }
 `;
-const Title = styled.h3`
+const Title = styled.h4`
     // text-align: center;
     font-weight: bold;
-    margin-bottom: ${(props) => props.theme.grid.divider_4};
+    margin-bottom: ${(props) => props.theme.grid.divider_1};
+	@media ${device.laptop} {
+	font-size: 32px;
+    }
 `;
-const Ingress = styled.h4`
+const Ingress = styled.p`
     // text-align: center;
     margin-bottom: ${(props) => props.theme.grid.divider_4};
 `;
@@ -104,33 +109,36 @@ const Register = () => {
 		}
 	}, []);
 	return (
-		<Container>
+		<div>
+			<Container>
+				<Background />
+				<Content>
+					<WelcomeTitleContainer>
+						<WelcomeTitle className='text-white'>
 
-			<Content>
-				<WelcomeTitleContainer>
-					<WelcomeTitle>
+							<Title>Create a free Account</Title>
 
-						<Title>Welcome to Hyperfigures! 🤗</Title>
-
-						<Ingress>
-							Please fill all required fields to add AI to your Sheets.
-						</Ingress>
-						<span className=" max-w-max items-center rounded-md bg-green-50 px-4 py-4 text-s font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+							<Ingress className='text-gray-300'>
+								Completelly free. No credit card needed.
+							</Ingress>
+							{/* <span className=" max-w-max items-center rounded-md bg-green-50 px-4 py-4 text-s font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
 							Free Account for limited time 💰
-						</span>
-						<RegisterForm />
+						</span> */}
+							<RegisterForm />
 
-					</WelcomeTitle>
-				</WelcomeTitleContainer>
+						</WelcomeTitle>
+					</WelcomeTitleContainer>
 
-				{/* <VideoContainer>
+					{/* <VideoContainer>
 						< src="https://demo.arcade.software/YGOVPgtYtFWemivsiuFA?embed&show_copy_link=true" title="Hyperfigures" frameBorder="0" loading="lazy" webkitallowfullscreen mozallowfullscreen allowfullscreen allow="clipboard-write" />
 
 					</VideoContainer>
 
 					 */}
-			</Content>
-		</Container>
+				</Content>
+
+			</Container>
+		</div>
 
 	);
 };

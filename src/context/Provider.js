@@ -165,7 +165,7 @@ const Provider = ({ children }) => {
 			dataSetter([]);
 			return [];
 		} finally {
-			loader(false);
+			setTimeout(() => loader(false), 100); // Adding a small delay
 		}
 	};
 
