@@ -17,9 +17,9 @@ const ButtonRow = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: no-wrap;
+	align-items: center;
     width: 100%;
     margin-top: ${(props) => props.theme.grid.divider_4};
-	align-items: center;
 `;
 const StyledInput = styled.input`
     background-color: ${(props) => props.theme.colors.white};
@@ -144,6 +144,8 @@ const RegisterForm = () => {
 
 						<InputWrapper>
 							<Label>Create a new Password *</Label>
+							<p className='mb-3 text-xs'>Include: capital letter, number, special character and be at least 8 letters long.</p>
+
 							<StyledInput
 								type="input"
 								{...register('password', { required: true })}
@@ -154,7 +156,9 @@ const RegisterForm = () => {
 							{errors.password && (
 								<WarningText>Password is required.</WarningText>
 							)}
+
 						</InputWrapper>
+
 						{/* <InputWrapper>
 							<Checkbox
 								label='By registering, you agree to Hyperfigures Terms of Use.'
@@ -174,11 +178,15 @@ const RegisterForm = () => {
 						<p className='mt-3 text-xs'>By registering you agree to Hyperfigures Terms of Use.</p>
 
 						<ButtonRow>
-							<Button disabled={!capVal} primary dividerRight type="submit" title='Register' />
+							<Button borderWhite disabled={!capVal} primary dividerRight type="submit" title='Register' />
+
 							<Link to='/' >
-								<p className='text-white leading-4'>Sign in</p>
+								<p className='text-sm'>
+									<span>Already have an account? </span><span className='text-blue-300 underline mt-4 leading-4'>Log in</span>
+								</p>
 							</Link>
 						</ButtonRow>
+
 					</form>
 
 			}

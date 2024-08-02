@@ -103,7 +103,7 @@ const FormCompiler = ({
 	noButtons,
 }) => {
 	return (
-		<form onSubmit={onSubmit()}>
+		<form autoComplete="off" onSubmit={onSubmit()}>
 			{fields.length > 0 &&
 				fields.map((item, i) => {
 					let name = item.name;

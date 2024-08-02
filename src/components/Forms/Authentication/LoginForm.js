@@ -117,10 +117,11 @@ const LoginForm = () => {
 							)}
 						</InputWrapper>
 						<ButtonRow>
-							<Button primary dividerRight type="submit" title='Sign In' />
+							<Button primary borderWhite dividerRight type="submit" title='Sign In' />
 							<Link to='/register' >
-								<p className='text-white leading-4'>Register</p>
-							</Link>
+								<p className='text-sm'>
+									<span>I don't have an account yet. </span><span className='text-blue-300 underline mt-4 leading-4'>Register</span>
+								</p>							</Link>
 
 						</ButtonRow>
 					</form>

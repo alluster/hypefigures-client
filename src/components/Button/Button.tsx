@@ -40,6 +40,13 @@ const StyledButtonBase = styled.button<ButtonProps>`
 		color: #ffffff;
 		background-color: #000B42;	
 	`};
+    ${({ borderWhite }) =>
+        borderWhite &&
+        `
+		border: 1px solid white;
+
+	`};
+
     ${({ white }) =>
         white &&
         `
@@ -151,6 +158,7 @@ const Button = ({
     small = true,
     back = false,
     white = false,
+    borderWhite = false,
     success = false,
     orange = false,
     dividerRight = false,
@@ -181,6 +189,7 @@ const Button = ({
             title={title}
             disabled={disabled}
             orange={orange}
+            borderWhite={borderWhite}
         >
             {title}
         </StyledButtonBase>

@@ -14,4 +14,5 @@ export type ButtonProps = {
     to?: string;
     layoutType?: 'default' | 'back' | 'link' | 'dropdown' | 'linkOutside';
     disabled?: boolean;
+    borderWhite?: boolean;
 };
