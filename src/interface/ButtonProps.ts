@@ -12,7 +12,13 @@ export type ButtonProps = {
     dividerRight?: boolean;
     children?: React.ReactNode;
     to?: string;
-    layoutType?: 'default' | 'back' | 'link' | 'dropdown' | 'linkOutside';
+    layoutType?:
+        | 'default'
+        | 'back'
+        | 'link'
+        | 'dropdown'
+        | 'linkOutside'
+        | 'iconBall';
     disabled?: boolean;
     borderWhite?: boolean;
 };

@@ -16,10 +16,11 @@ const SpinnerContainer = styled.div`
     }
 `;
 
-const SpinnerSmall = () => {
+const SpinnerSmall = ({ loadingMessage }) => {
 	return (
 		<SpinnerContainer>
 			<ScaleLoader color="#BDBDBD" />
+			<p>{loadingMessage || ''}</p>
 		</SpinnerContainer>
 	);
 };

@@ -4,13 +4,32 @@ import { Link } from 'react-router-dom';
 import { device } from '../../styles/device-braking-points';
 import { ButtonProps } from '../../interface/ButtonProps';
 import {
+    faArrowAltCircleUp,
     faArrowLeft,
+    faArrowUp,
     faChevronDown,
     faChevronUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useHistory } from 'react-router-dom';
 
+const CircleButton = styled.button<ButtonProps>`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: ${(props) => props.theme.colors.primary_100};
+    height: 44px;
+    width: 44px;
+    border-radius: 25px;
+    ${({ disabled }) =>
+        disabled &&
+        `        
+		    background-color: #c3c3c3;
+
+
+	`};
+`;
 const StyledButtonBase = styled.button<ButtonProps>`
     text-align: center;
     border-radius: 8px;
@@ -58,6 +77,7 @@ const StyledButtonBase = styled.button<ButtonProps>`
 
 
 	`};
+
     ${({ disabled }) =>
         disabled &&
         `        
@@ -133,6 +153,13 @@ const Icon = styled(FontAwesomeIcon)`
     margin-right: ${(props) => props.theme.grid.divider_1};
     align-self: center;
 `;
+
+const IconArrow = styled(FontAwesomeIcon)`
+    color: #f4f4f4;
+    font-size: 20px;
+    align-self: center;
+`;
+
 const IconDropdown = styled(FontAwesomeIcon)`
     color: ${(props) => props.theme.colors.white};
     font-size: 16px;
@@ -202,6 +229,17 @@ const Button = ({
                     <Icon icon={faArrowLeft} />
                     {title}
                 </StyledButtonBase>
+            );
+        case 'iconBall':
+            return (
+                <CircleButton
+                    type={type}
+                    disabled={disabled}
+                    onClick={!disabled ? onClick : null}
+                >
+                    <IconArrow icon={faArrowUp} />
+                    {title}
+                </CircleButton>
             );
         case 'link':
             return <Link to={to}>{StyledButton}</Link>;

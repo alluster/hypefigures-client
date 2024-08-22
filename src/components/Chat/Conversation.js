@@ -145,7 +145,9 @@ const Conversation = () => {
 				<Banner />
 				{
 					loadingChat ?
-						<SpinnerSmall />
+						<SpinnerSmall
+							loadingMessage='Loading your data...'
+						/>
 						:
 						<div>
 

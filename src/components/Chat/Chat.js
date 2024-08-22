@@ -4,8 +4,14 @@ import Button from '../Button/Button';
 import { AppContext } from '../../context/Context';
 const iconImage = '/integration-logos/hyperfigures.png'; // Import the icon image
 import { device } from '../../styles/device-braking-points';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
 // Styled components for the chat AI question component
+
+const InputWrapper = styled.div`
+display: flex;
+justify-content: center;
+`;
 
 const InputContainer = styled.form`
     bottom: 0px;	
@@ -14,6 +20,14 @@ const InputContainer = styled.form`
     margin-bottom: 50px;
     display: flex;
     flex-direction: row;
+	// border: 1px solid #ccc;
+    border-radius: 30px;
+	max-width: 800px;
+    background-color: #F4F4F4;
+	align-items: center;
+	padding-right: 10px;
+
+
     justify-content: center; /* Center the items horizontally */
     // align-items: center; /* Center the items vertically */
 		@media ${device.laptop} {
@@ -27,16 +41,16 @@ const InputContainer = styled.form`
 const InputField = styled.input`
     flex: 3;
     margin-right: 10px; /* Add margin to the right to create space between the input field and the button */
-    padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: white;
-    padding-left: 40px;
-    background-image: url(${iconImage});
+    // padding: 8px 10px;
+   
+    padding-left: 20px;
+    // background-image: url(${iconImage});
     background-repeat: no-repeat;
     background-position: 10px center;
-    background-size: 20px;
-	height: 24px;
+    background-size: 30px;
+	height: 60px;
+	font-size: 18px ;
+	font-weight: 400;
 `;
 
 const SendButton = styled(Button)`
@@ -68,15 +82,24 @@ const Chat = () => {
 	const handleQuestionChange = (e) => {
 		setQuestion(e.target.value);
 	};
+	const removeKeysToOptimizeData = (data) => {
+		if (!Array.isArray(data) || data.length === 0) {
+			throw new Error('Input data must be a non-empty array of objects.');
+		}
+		const keys = Object.keys(data[0]);
+		const valuesArray = data.map(item => keys.map(key => item[key]));
+		return [keys, ...valuesArray];
+	}
 
 	const combineDataTablesIntoCSVModel = useMemo(() => {
 		return (tables) => {
 			const combinedCSVData = [];
 			tables.forEach(table => {
 				console.log(table)
-				table && table.length > 0 && table[0].value.forEach(dataObject => {
+				let optimizedTable = removeKeysToOptimizeData(table[0].value);
+				console.log('optimizedTable:', optimizedTable)
+				optimizedTable && optimizedTable.length > 0 && optimizedTable.forEach(dataObject => {
 					const rowData = {
-						table_name: table[0].title,
 						...dataObject
 					};
 					combinedCSVData.push(rowData);
@@ -155,31 +178,34 @@ const Chat = () => {
 	// }, [])
 
 	return (
+		<InputWrapper>
+			<InputContainer>
 
-		<InputContainer>
+				<InputField
+					type="text"
+					value={question}
+					onChange={handleQuestionChange}
+					disabled={activeTeam[0]?.stripe_subscription != true && activeTeam[0]?.ai_requests > 3
+						? true : false} placeholder={activeTeam[0]?.stripe_subscription != true && activeTeam[0]?.ai_requests > 3
+							?
+							"Your plan seems to be too small for using the AI"
+							:
+							"Select data and ask me anything about it"
 
-			<InputField
-				type="text"
-				value={question}
-				onChange={handleQuestionChange}
-				disabled={activeTeam[0]?.stripe_subscription != true && activeTeam[0]?.ai_requests > 3
-					? true : false} placeholder={activeTeam[0]?.stripe_subscription != true && activeTeam[0]?.ai_requests > 3
-						?
-						"Your plan seems to be too small for using the AI"
-						:
-						"Select data and ask me anything about it"
-
-					}
-			/>
-			<SendButton
-				small
-				title="Send a question"
-				type='submit'
-				disabled={!question.length > 0 || activeTeam[0]?.stripe_subscription != true && activeTeam[0]?.ai_requests > 3
-					? true : false}
-				onClick={(e) => handleSendQuestion(e)}
-			/>
-		</InputContainer>
+						}
+				/>
+				<SendButton
+					iconBall
+					small
+					layoutType='iconBall'
+					title=""
+					type='submit'
+					disabled={!question.length > 0 || activeTeam[0]?.stripe_subscription != true && activeTeam[0]?.ai_requests > 3
+						? true : false}
+					onClick={(e) => handleSendQuestion(e)}
+				/>
+			</InputContainer>
+		</InputWrapper>
 
 	);
 }
